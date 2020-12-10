@@ -1,0 +1,21 @@
+.tagItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    background: #12AFCB;
+    border-radius: 40px;
+    padding: 3px 10px;
+}
+
+.tagItem + .tagItem {
+    margin-left: 6px;
+}
+
+.tagItem .tagName {
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 300;
+    margin: 0 0 0 5px;
+    padding: 0;
+}

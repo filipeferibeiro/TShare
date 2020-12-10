@@ -1,0 +1,29 @@
+.addItemTextField {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 15px;
+    flex-grow: 100;
+}
+
+.addItemTextField .add {
+    background: #FFD666;
+    border: 1px solid #D3E2E5;
+    display: flex;
+    align-items: center;
+    padding: 17px;
+    border-radius: 20px;
+    color: #FFF;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: opacity 0.5s;
+}
+
+.addItemTextField .add:hover {
+    opacity: 70%;
+}
+
+.addItemTextField .field {
+    flex-grow: 100;
+    margin-top: 0;
+}
