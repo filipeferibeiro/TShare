@@ -6,3 +6,8 @@ services:
     volumes:
       - .:/code
       - logvolume01:/var/log
+    dependsOn:
+      - db
+  db:
+    build: ./database
+
