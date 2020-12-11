@@ -6,6 +6,8 @@
     background: #12AFCB;
     border-radius: 40px;
     padding: 3px 10px;
+
+    cursor: pointer;
 }
 
 .tagItem + .tagItem {
@@ -18,4 +20,12 @@
     font-weight: 300;
     margin: 0 0 0 5px;
     padding: 0;
+}
+
+.delete {
+    transition: background-color 0.2s;
+}
+
+.delete:hover {
+    background-color: #E72E2E;
 }

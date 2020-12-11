@@ -3,11 +3,11 @@ import { FiPlus } from 'react-icons/fi';
 
 import './styles.css';
 
-interface AddFieldInterface extends InputHTMLAttributes<HTMLInputElement> {
+interface AddFieldProps extends InputHTMLAttributes<HTMLInputElement> {
     func(text:string): any;
 }
 
-const AddField: React.FC<AddFieldInterface> = ({ func }) => {
+const AddField: React.FC<AddFieldProps> = ({ func }) => {
     const [value, setValue] = useState<string>("");
 
     function handleAdd() {

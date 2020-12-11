@@ -18,11 +18,12 @@
     align-items: center;
     justify-content: center;
     margin: 24px 0 0 0;
-    padding: 20px 0;
+    padding: 18px 0;
 
     background: #37C77F;
     color: #FFF;
     border-radius: 20px;
+    font-size: 20px;
 
     cursor: pointer;
 
