@@ -1,7 +1,13 @@
 const { request } = require('express')
 const connection = require('../database/connection')
 
-exports.get = async (req, res) => {
+exports.getAll = async (req, res) => {
+    //Recupera todas as questões
+
+
+}
+
+exports.getById = async (req, res) => {
     //Recupera uma questão pelo ID
 
     const questionId = req.params.id
@@ -9,10 +15,10 @@ exports.get = async (req, res) => {
         //Recupera enunciado e autor
         const items = await connection('questions').where({id: questionId}).select('*')        
         //Recupera alternativas
-        items[0].alternatives = await connection('alternatives').where({question_id: questionId}).select('*')
+        items[0].alternatives = await connection('alternatives').where({question_id: questionId}).select('text', 'correct')
         //Recupera as tags das questões
-        items[0].tags = await connection.from('tags').innerJoin('tags_questions').on('tags.id', '=', 'tags_questions.tag_id').innerJoin('question_id', '=', questionId)
-        
+        const tag_result = await connection.from('tags').innerJoin({tq1:'tags_questions'},'tags.id', 'tq1.tag_id').where('tq1.question_id', questionId).select("tags.name")
+        items[0].tags = tag_result.map(tag => (tag.name))
 
         return res.status(200).json(items[0])
     } catch (error) {
