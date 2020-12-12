@@ -5,9 +5,18 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('questions').insert([
-        { stem: 'Questao1', author: 1},
-        { stem: 'Questao2', author: 1},
-        { stem: 'Questao3', author: 1}
+        {
+          "stem": "Quem roeu a roupa do rei de roma?",
+          "author": 2,
+          "description": "Blabla",
+          
+        },
+        {
+          "stem": "Cloroquina é eficaz contra COVID-19?",
+          "author": 1,
+          "description": "Fonte: Zapzap",
+        },
+
       ]);
     });
 };

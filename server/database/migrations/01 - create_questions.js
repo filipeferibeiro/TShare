@@ -3,7 +3,7 @@ exports.up = function(knex) {
       table.increments('id').primary();
       table.string('stem').notNullable();
       table.string('description').notNullable();
-      table.integer('author').unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE').index();      
+      table.integer('author').unsigned().notNullable().references('id').inTable('users').onDelete('NO ACTION').index();      
     })
   }
   

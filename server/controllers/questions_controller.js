@@ -1,3 +1,4 @@
+const { request } = require('express')
 const connection = require('../database/connection')
 
 exports.get = async (req, res) => {
@@ -10,7 +11,7 @@ exports.get = async (req, res) => {
         //Recupera alternativas
         items[0].alternatives = await connection('alternatives').where({question_id: questionId}).select('*')
         //Recupera as tags das questões
-       // items[0].tags = await connection('tags').innerJoin('tags_questions', 'tags.id', '=','tags_questions.tag_id').innerJoin().select('tags.name').where('')
+        items[0].tags = await connection.from('tags').innerJoin('tags_questions').on('tags.id', '=', 'tags_questions.tag_id').innerJoin('question_id', '=', questionId)
         
 
         return res.status(200).json(items[0])
@@ -23,14 +24,25 @@ exports.get = async (req, res) => {
 exports.post = async (req, res) => {
     const requestBody = req.body
     //Isolando o enunciado e autor da questão
-    const question = (({stem, author}) => ({stem, author}))(requestBody)
+    const question = (({stem, author, description}) => ({stem, author, description}))(requestBody)
 
     try {
+        //ALTERNATIVAS
+
         //Criando a questão e recuperando seu ID
         const questionId = (await connection('questions').insert(question).returning('id'))[0]
         //Criando as alternativas inserindo o ID da questão criada acima a elas
         const alternatives = requestBody.alternatives.map(alternative => ({...alternative, 'question_id': questionId}))
+        //Inserte as alternativas no banco
         await connection('alternatives').insert(alternatives).then()
+        
+        // TAGS
+        const tags = requestBody.tags
+        await connection('tags').insert(tags).then()
+        const inserted_tags = await connection.select('id').from('tags').whereIn('name', tags)
+        console.log(inserted_tags)
+        await connection('tags_questions').insert(inserted_tags.map(tag => ({...tag, 'question_id': questionId})))
+        
 
         res.status(201).send({message: "question created"})
     }
