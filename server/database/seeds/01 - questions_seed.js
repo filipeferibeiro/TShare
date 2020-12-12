@@ -6,13 +6,13 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('questions').insert([
         {
-          "stem": "Quem roeu a roupa do rei de roma?",
+          "title": "Quem roeu a roupa do rei de roma?",
           "author": 2,
           "description": "Blabla",
           
         },
         {
-          "stem": "Cloroquina é eficaz contra COVID-19?",
+          "title": "Cloroquina é eficaz contra COVID-19?",
           "author": 1,
           "description": "Fonte: Zapzap",
         },

@@ -30,7 +30,7 @@ exports.getById = async (req, res) => {
 exports.post = async (req, res) => {
     const requestBody = req.body
     //Isolando o enunciado e autor da questão
-    const question = (({stem, author, description}) => ({stem, author, description}))(requestBody)
+    const question = (({title, author, description}) => ({title, author, description}))(requestBody)
 
     try {
         //ALTERNATIVAS
