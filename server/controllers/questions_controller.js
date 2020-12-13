@@ -2,9 +2,15 @@ const { request } = require('express')
 const connection = require('../database/connection')
 
 exports.getAll = async (req, res) => {
-    //Recupera todas as questões
-
-
+    try {
+        const questions = await connection('questions').select('*')
+        
+        return res.status(200).json(questions)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({error: "server error"})
+    }
+    
 }
 
 exports.getById = async (req, res) => {
@@ -16,6 +22,7 @@ exports.getById = async (req, res) => {
         const items = await connection('questions').where({id: questionId}).select('*')        
         //Recupera alternativas
         items[0].alternatives = await connection('alternatives').where({question_id: questionId}).select('text', 'correct')
+        items[0].authorName = await (await connection('users').where({id: items[0].author}).select('name')).map(author => (author.name))[0]
         //Recupera as tags das questões
         const tag_result = await connection.from('tags').innerJoin({tq1:'tags_questions'},'tags.id', 'tq1.tag_id').where('tq1.question_id', questionId).select("tags.name")
         items[0].tags = tag_result.map(tag => (tag.name))
