@@ -1,10 +1,28 @@
 const { request } = require('express')
 const connection = require('../database/connection')
 
+async function getQuestionById(questionId) {
+    const items = await connection('questions').where({id: questionId}).select('*')        
+    //Recupera alternativas
+    items[0].alternatives = await connection('alternatives').where({question_id: questionId}).select('text', 'correct')
+    items[0].authorName = await (await connection('users').where({id: items[0].author}).select('name')).map(author => (author.name))[0]
+    //Recupera as tags das questões
+    const tag_result = await connection.from('tags').innerJoin({tq1:'tags_questions'},'tags.id', 'tq1.tag_id').where('tq1.question_id', questionId).select("tags.name")
+    items[0].tags = tag_result.map(tag => (tag.name))
+    
+    return items[0]
+
+}
+
 exports.getAll = async (req, res) => {
+    var questions = []
     try {
-        const questions = await connection('questions').select('*')
+        var allQuestions = await connection('questions').select('*')
         
+        for (let i = 0; i < allQuestions.length; i++) {
+            questions.push(await getQuestionById(allQuestions[i].id))
+        }         
+
         return res.status(200).json(questions)
     } catch (error) {
         console.log(error)
@@ -19,15 +37,10 @@ exports.getById = async (req, res) => {
     const questionId = req.params.id
     try {
         //Recupera enunciado e autor
-        const items = await connection('questions').where({id: questionId}).select('*')        
-        //Recupera alternativas
-        items[0].alternatives = await connection('alternatives').where({question_id: questionId}).select('text', 'correct')
-        items[0].authorName = await (await connection('users').where({id: items[0].author}).select('name')).map(author => (author.name))[0]
-        //Recupera as tags das questões
-        const tag_result = await connection.from('tags').innerJoin({tq1:'tags_questions'},'tags.id', 'tq1.tag_id').where('tq1.question_id', questionId).select("tags.name")
-        items[0].tags = tag_result.map(tag => (tag.name))
+        const question = await getQuestionById(questionId)
+        console.log(question)
 
-        return res.status(200).json(items[0])
+        return res.status(200).json(question)
     } catch (error) {
         console.log(error)
         return res.status(500).send({error: "server error"})
