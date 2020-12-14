@@ -51,10 +51,10 @@ exports.post = async (req, res) => {
         
         // TAGS
         const tags = requestBody.tags
-        await connection('tags').insert(tags).then()
+        await connection('tags').insert(tags.map(tag => ({'name':tag})))
         const inserted_tags = await connection.select('id').from('tags').whereIn('name', tags)
-        console.log(inserted_tags)
-        await connection('tags_questions').insert(inserted_tags.map(tag => ({...tag, 'question_id': questionId})))
+        const tag_links = inserted_tags.map(tag => ({'tag_id': tag.id, 'question_id': questionId}))
+        await connection('tags_questions').insert(tag_links)
         
 
         res.status(201).send({message: "question created"})
