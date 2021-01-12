@@ -49,8 +49,8 @@ exports.getById = async (req, res) => {
 }
 exports.post = async (req, res) => {
     const requestBody = req.body
-    //Isolando o enunciado e autor da questão
-    const question = (({title, author, description}) => ({title, author, description}))(requestBody)
+    //Isolando as informações pertinentes do corpo da requisição
+    const question = ({title, author, description, long_answer, question_type}) => ({title, author, description, long_answer, question_type})(requestBody)
 
     try {
         //ALTERNATIVAS
@@ -68,7 +68,6 @@ exports.post = async (req, res) => {
         const inserted_tags = await connection.select('id').from('tags').whereIn('name', tags)
         const tag_links = inserted_tags.map(tag => ({'tag_id': tag.id, 'question_id': questionId}))
         await connection('tags_questions').insert(tag_links)
-        
 
         res.status(201).send({message: "question created"})
     }
@@ -88,8 +87,6 @@ exports.put = async (req, res) => {
     } catch (error) {
         return res.status(500).send({error_msg: `${error}`})
     }
-    
-
 }
 
 exports.delete = async (req, res) => {
