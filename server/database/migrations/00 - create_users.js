@@ -6,6 +6,8 @@ exports.up = async function up(knex) {
             table.integer('reputation').notNullable().defaultTo(0),
             table.datetime('lastLogin').notNullable().defaultTo(new Date().toLocaleString())
             table.datetime('accountCreation').notNullable().defaultTo(new Date().toLocaleString())
+            table.string('login').unique().notNullable(),
+            table.string('password').notNullable()
         }
     )
 }
