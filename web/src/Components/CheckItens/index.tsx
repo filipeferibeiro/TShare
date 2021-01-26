@@ -15,6 +15,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 const CheckItens: React.FC<InputProps> = ({ name, label, deleteFunction, selectFunction, i, id }) => {
     function handleDelete() {
         if (deleteFunction) {
+            Array.from((document.querySelectorAll(`input[name="${name}"]:checked`) as any), (input:HTMLInputElement) => input.checked = false);
             deleteFunction(i);
         }
     }
