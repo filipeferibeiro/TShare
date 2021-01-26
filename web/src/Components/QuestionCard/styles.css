@@ -1,10 +1,11 @@
 .questionCardContainer {
-    border: 1px solid #D3E2E5;
-    background: #FFF;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+
     border-radius: 20px;
-    padding: 45px;
-    padding: 45px 45px 30px 45px;
-    color: #8FA7B2;
+    padding: 24px;
+    color: #FFF;
 
     width: 60vw;
     display: flex;
@@ -13,10 +14,11 @@
 }
 
 .questionCardContainer .userField .perfilPicture {
-    width: 60px;
-    height: 60px;
-    border: 1px solid #D3E2E5;
-    background: #E72E2E;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
     border-radius: 50%;
 
     display: flex;
@@ -34,13 +36,21 @@
 }
 
 .questionCardContainer .userField .left {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    border-radius: 90px;
+    padding: 4px 24px 4px 4px;
+
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
 .questionCardContainer .userField .left .userInfo .userName {
-    font-size: 20px;
+    font-size: 17px;
+    font-weight: 300;
+    color: #FFF;
 }
 
 .questionCardContainer .userField .left .userInfo .questionSubject {
@@ -52,6 +62,7 @@
     padding: 14px 26px;
     height: 48px;
     background: #6BBE94;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 60px;
     margin-right: 10px;
     
@@ -64,7 +75,7 @@
     align-items: center;
     cursor: pointer;
     
-    transition: background-color 0.3s;
+    transition: opacity 0.2s;
 }
 
 .questionCardContainer .userField .addBankBt svg {
@@ -72,7 +83,7 @@
 }
 
 .questionCardContainer .userField .addBankBt:hover {
-    background: #37C77F;
+    opacity: 80%;
 }
 
 .questionCardContainer .questionName {
@@ -95,8 +106,13 @@
     flex-direction: row;
     margin-top: 30px;
     align-items: center;
+    justify-content: space-between;
 }
 
+.questionCardContainer .cardActions .cardActionsLeft {
+    display: flex;
+    flex-direction: row;
+}
 .questionCardContainer .cardActions .action {
     display: flex;
     flex-direction: row;

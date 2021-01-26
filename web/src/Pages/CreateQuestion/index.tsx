@@ -8,6 +8,7 @@ import Field from './Components/Field';
 import './styles.css';
 
 import api from '../../Services/api';
+import OptionBar from './Components/OptionBar';
 
 interface Alternative {
     text: string;
@@ -112,6 +113,7 @@ const CreateQuestion = () => {
             <HeaderBar />
             <div className="containerQuestion">
                 <form onSubmit={handleCreateQuestion}>
+                    <OptionBar />
                     <Field
                         id="inputQuestionTitle"
                         label="Questão"

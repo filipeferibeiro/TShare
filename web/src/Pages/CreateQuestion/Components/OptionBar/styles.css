@@ -1,0 +1,33 @@
+.optionBarContainer {
+    height: 65px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    
+    border-radius: 47px;
+}
+
+.optionBarContainer p {
+    display: flex;
+    align-items: center;
+    padding: 21px 50px;
+    border-radius: 47px;
+    color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0);
+
+    cursor: pointer;
+}
+
+.optionBarContainer .selected {
+    background: #FFF;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    box-shadow: 2px 2px 11px rgba(255, 255, 255, 0.25);
+    height: 65px;
+    color: #000;
+}
