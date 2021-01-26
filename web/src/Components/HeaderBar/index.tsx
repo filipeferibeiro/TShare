@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPlus, FiUser, FiSearch, FiFolder, FiSettings, FiUsers } from 'react-icons/fi';
+import { ClickAwayListener } from '@material-ui/core';
 
 
 import './styles.css';
@@ -31,28 +32,32 @@ const HeaderBar = () => {
                 </div>
             </div>
             {menuStatus &&
-                    <div className="menu">
-                        <div className="back">
-                            <div className="menuProfile">
-                                <div className="picture">
-                                    <FiUser color="#FFF" size={17} />
+                    <ClickAwayListener
+                        onClickAway={() => setMenuStatus(false)}
+                    >
+                        <div className="menu">
+                            <div className="back">
+                                <div className="menuProfile">
+                                    <div className="picture">
+                                        <FiUser color="#FFF" size={17} />
+                                    </div>
+                                    <p>Fulano de Tal</p>
                                 </div>
-                                <p>Fulano de Tal</p>
-                            </div>
-                            <div className="menuItem">
-                                <FiFolder size={itemSize} color="#FFF" />
-                                <p>Banco de questões</p>
-                            </div>
-                            <div className="menuItem">
-                                <FiUsers size={itemSize} color="#FFF" />
-                                <p>Minhas conexões</p>
-                            </div>
-                            <div className="menuItem">
-                                <FiSettings size={itemSize} color="#FFF" />
-                                <p>Configurações</p>
+                                <div className="menuItem">
+                                    <FiFolder size={itemSize} color="#FFF" />
+                                    <p>Banco de questões</p>
+                                </div>
+                                <div className="menuItem">
+                                    <FiUsers size={itemSize} color="#FFF" />
+                                    <p>Minhas conexões</p>
+                                </div>
+                                <div className="menuItem">
+                                    <FiSettings size={itemSize} color="#FFF" />
+                                    <p>Configurações</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </ClickAwayListener>
                 }
         </>
     );

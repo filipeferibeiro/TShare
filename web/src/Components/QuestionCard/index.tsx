@@ -1,5 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import { FiPlus, FiUser, FiStar, FiMessageSquare, FiChevronRight } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import TagItem from '../TagItem';
 
 import './styles.css';
@@ -39,7 +40,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ userName, questionName, que
                     <p className="action"><FiStar color="#FFF" size={22} />{stars} Estrelas</p>
                     <p className="action"><FiMessageSquare color="#FFF" size={22} />{comments} Comentários</p>
                 </div>
-                    <p className="action">Ver Mais<FiChevronRight color="#FFF" size={22} /></p>
+                    <Link className="action" to="/QuestionDetail">Ver Mais<FiChevronRight color="#FFF" size={22} /></Link>
             </div>
         </div>
     )
