@@ -19,9 +19,9 @@ services:
       DB_PASSWORD: pizza123
       DB_USER: root
     volumes:
-      - ./server:/home/node/app
+      - ./server:/usr/backend
     ports:
       - "3000:3000"
     depends_on:
       - db
-    command: bash -c "knex migrate:latest"
+    command: sh -c "npm install -g knex && knex migrate:latest && node ./bin/www"
