@@ -1,0 +1,27 @@
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: pizza123
+      MYSQL_DATABASE: development
+    volumes:
+      - /var/lib/mysql
+    restart: always
+  api:
+    build: "./server"
+    container_name: backend
+    stdin_open: true
+    tty: true
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_PASSWORD: pizza123
+      DB_USER: root
+    volumes:
+      - ./server:/home/node/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    command: bash -c "knex migrate:latest"
