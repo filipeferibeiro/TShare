@@ -24,4 +24,4 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    command: sh -c "npm install -g knex && knex migrate:latest && node ./bin/www"
+    command: sh -c "npm install -g knex && knex migrate:latest && knex seed:run && node ./bin/www"
