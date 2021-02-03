@@ -1,16 +1,27 @@
 .containerQuestion {
-    border: 1px solid #D3E2E5;
-    background: #FFF;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
+
+    width: 100vw;
+    padding-top: 101px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    align-items: center;
+}
+
+.containerQuestion form {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
     border-radius: 20px;
     padding: 45px 100px;
 
     width: 60vw;
     display: flex;
     margin-bottom: 24px;
-}
-
-.containerQuestion form {
     flex-grow: 100;
+    flex-direction: column;
 }
 
 .containerQuestion .saveBt {
@@ -22,14 +33,16 @@
     border: none;
     width: 100%;
 
-    background: #37C77F;
+    background: rgba(55, 199, 127, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
     color: #FFF;
     border-radius: 20px;
     font-size: 20px;
 
     cursor: pointer;
 
-    transition: opacity 0.5s;
+    transition: opacity 0.2s;
 }
 
 .containerQuestion .saveBt:focus{
@@ -37,5 +50,5 @@
 }
 
 .containerQuestion .saveBt:hover {
-    opacity: 70%;
+    opacity: 80%;
 }

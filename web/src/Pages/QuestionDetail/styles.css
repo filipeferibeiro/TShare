@@ -1,4 +1,4 @@
-.homeConatiner {
+.questionDetailContainer {
     background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(6px);
 
@@ -8,4 +8,15 @@
     flex-direction: column;
     overflow-y: scroll;
     align-items: center;
+}
+
+.commentsBlock {
+    width: 60vw;
+}
+
+.commentsBlock p {
+    font-size: 20px;
+    color: #FFF;
+    margin-left: 24px;
+    margin-bottom: 24px;
 }

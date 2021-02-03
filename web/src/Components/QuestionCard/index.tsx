@@ -1,12 +1,12 @@
 import React, { InputHTMLAttributes } from 'react';
-import { FiPlus, FiUser, FiStar, FiMessageSquare } from 'react-icons/fi';
+import { FiPlus, FiUser, FiStar, FiMessageSquare, FiChevronRight } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import TagItem from '../TagItem';
 
 import './styles.css';
 
 interface QuestionCardProps extends InputHTMLAttributes<HTMLInputElement> {
     userName: string;
-    subject: string;
     questionName: string;
     questionDetail: string;
     stars: number;
@@ -14,7 +14,7 @@ interface QuestionCardProps extends InputHTMLAttributes<HTMLInputElement> {
     tags: string[];
 }
 
-const QuestionCard: React.FC<QuestionCardProps> = ({ userName, subject, questionName, questionDetail, stars, comments, tags }) => {
+const QuestionCard: React.FC<QuestionCardProps> = ({ userName, questionName, questionDetail, stars, comments, tags }) => {
     return (
         <div className="questionCardContainer">
             <div className="userField">
@@ -24,7 +24,6 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ userName, subject, question
                     </div>
                     <div className="userInfo">
                         <p className="userName">{userName}</p>
-                        <p className="questionSubject">Questão de {subject}</p>
                     </div>
                 </div>
                 <p className="addBankBt"><FiPlus color="#FFF" size={19} />Adicionar no banco</p>
@@ -37,8 +36,11 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ userName, subject, question
             </div>
 
             <div className="cardActions">
-                <p className="action"><FiStar color="#8FA7B2" size={22} />{stars} Estrelas</p>
-                <p className="action"><FiMessageSquare color="#8FA7B2" size={22} />{comments} Comentários</p>
+                <div className="cardActionsLeft">
+                    <p className="action"><FiStar color="#FFF" size={22} />{stars} Estrelas</p>
+                    <p className="action"><FiMessageSquare color="#FFF" size={22} />{comments} Comentários</p>
+                </div>
+                    <Link className="action" to="/QuestionDetail">Ver Mais<FiChevronRight color="#FFF" size={22} /></Link>
             </div>
         </div>
     )

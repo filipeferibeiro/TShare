@@ -9,10 +9,15 @@ body, input, button {
 }
 
 body {
-  background: #F5F8FA;
-  padding-top: 104px;
+  background: linear-gradient(137.22deg, #2A85B8 5.23%, #20272C 111.71%, rgba(255, 255, 255, 0) 111.71%);
   overflow-x: hidden;
   display: flex;
   justify-content: center;
+  width: 100vw;
   -webkit-font-smoothing: antialiased;
+}
+
+body::after {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
 }
