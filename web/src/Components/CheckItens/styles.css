@@ -17,7 +17,7 @@
     height: 25px;
     padding: 0;
     border-radius: 8px;
-
+    
     appearance: none;
     cursor: pointer;
     flex-grow: 0;
@@ -29,6 +29,10 @@
 
 .checkContainer .alternative:checked {
     background: #73D8A5;
+}
+
+.checkContainer .alternativeDetail:hover {
+    background: #F5F8FA;
 }
 
 .checkContainer .deleteBt {

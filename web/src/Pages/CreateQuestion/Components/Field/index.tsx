@@ -71,6 +71,14 @@ const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, f
                         <AddField id={id} func={func} />
                     </div>
                 }
+                {type.toLocaleLowerCase() === "justificative" &&
+                    <div className="tags">
+                        <div className="tagsBox">
+                            {children}
+                        </div>
+                        <AddField id={id} func={func} />
+                    </div>
+                }
             </div>
         );
     } else {

@@ -18,10 +18,12 @@ interface Alternative {
 const CreateQuestion = () => {
     const history = useHistory();
 
+    const [option, setOption] = useState([true, false, false]);
     const [alternatives, setAlternatives] = useState<Alternative[]>([]);
     const [tags, setTags] = useState<string[]>([]);
     const [questionTitle, setQuestionTitle] = useState<string>();
     const [questionDetail, setQuestionDetail] = useState<string>();
+    const [questionJustificative, setQuestionJustificative] = useState<string>();
 
     const maxTags = 4;;
     const maxAlternatives = 6;
@@ -80,6 +82,10 @@ const CreateQuestion = () => {
         return status;
     }
 
+    function selectedOption() {
+        return option.indexOf(true);
+    }
+
     function handleCreateQuestion(e: FormEvent) {
         e.preventDefault();
 
@@ -95,8 +101,12 @@ const CreateQuestion = () => {
                 description: questionDetail,
                 author: 1,
                 alternatives,
-                tags
+                tags,
+                long_answer: questionJustificative,
+                question_type: selectedOption()
             }
+
+            console.log(data)
 
             api.post('questions', data).then(() => {
                 alert("Questão cadastrada com sucesso!");
@@ -108,12 +118,26 @@ const CreateQuestion = () => {
         }
     }
 
+    function handleIsAlternative() {
+        if ((option[0] || option[1])) {
+            return true;
+        }
+        return false;
+    }
+    
+    function handleIsJustificative() {
+        if ((option[1] || option[2])) {
+            return true;
+        }
+        return false;
+    }
+
     return (
         <>
             <HeaderBar />
             <div className="containerQuestion">
                 <form onSubmit={handleCreateQuestion}>
-                    <OptionBar />
+                    <OptionBar option={option} setOption={setOption} />
                     <Field
                         id="inputQuestionTitle"
                         label="Questão"
@@ -135,26 +159,37 @@ const CreateQuestion = () => {
                         func={setQuestionDetail}
                     />
 
-                    <Field
-                        id="inputAlternatives"
-                        label="Alternativas"
-                        labelAlt="Selecione a correta"
-                        limit={maxAlternatives}
-                        type="alternatives"
-                        func={handleAlternatives}
-                    >
-                        {alternatives.map((alternative:Alternative, i) => (
-                            <CheckItens 
-                                id="checkAlternative"
-                                key={i} 
-                                name="alternatives" 
-                                label={alternative.text} 
-                                deleteFunction={handleDeleteAlternatives} 
-                                selectFunction={handleSelectAlternatives} 
-                                i={i} 
-                            />
-                        ))}
-                    </Field>
+                    {handleIsAlternative() && 
+                        <Field
+                            id="inputAlternatives"
+                            label="Alternativas"
+                            labelAlt="Selecione a correta"
+                            limit={maxAlternatives}
+                            type="alternatives"
+                            func={handleAlternatives}
+                        >
+                            {alternatives.map((alternative:Alternative, i) => (
+                                <CheckItens 
+                                    id="checkAlternative"
+                                    key={i} 
+                                    name="alternatives" 
+                                    label={alternative.text} 
+                                    deleteFunction={handleDeleteAlternatives} 
+                                    selectFunction={handleSelectAlternatives} 
+                                    i={i} 
+                                />
+                            ))}
+                        </Field>
+                    }
+
+                    {handleIsJustificative() &&
+                        <Field
+                            id="textAreaJustificative"
+                            label="Resposta"
+                            type="textarea"
+                            func={setQuestionJustificative}
+                        />
+                    }
 
                     <Field 
                         label="Disciplina"

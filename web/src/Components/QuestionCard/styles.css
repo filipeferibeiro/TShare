@@ -7,7 +7,7 @@
     padding: 24px;
     color: #FFF;
 
-    width: 60vw;
+    width: initial;
     display: flex;
     flex-direction: column;
     margin-bottom: 24px;
@@ -134,4 +134,22 @@
 
 .questionCardContainer .cardActions .action + .action{
     margin-left: 15px;
+}
+
+.questionCardContainer .answerField .choicesGroup {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-left: 22px;
+}
+
+.questionCardContainer .answerField .longAnswer {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-top: 10px;
+
+    color: #FFF;
 }
