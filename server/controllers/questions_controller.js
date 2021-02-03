@@ -2,7 +2,8 @@ const { request } = require('express')
 const connection = require('../database/connection')
 
 async function getQuestionById(questionId) {
-    const items = await connection('questions').where({id: questionId}).select('*')        
+    const items = await connection('questions').where({id: questionId}).select('*')
+    console.log(items)        
     //Recupera alternativas
     items[0].alternatives = await connection('alternatives').where({question_id: questionId}).select('text', 'correct')
     items[0].authorName = await (await connection('users').where({id: items[0].author}).select('name')).map(author => (author.name))[0]
@@ -12,7 +13,7 @@ async function getQuestionById(questionId) {
     
     return items[0]
 
-}
+}   
 
 exports.getAll = async (req, res) => {
     var questions = []

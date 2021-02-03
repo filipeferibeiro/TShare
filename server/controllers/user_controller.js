@@ -2,7 +2,7 @@ const connection = require('../database/connection')
 var bcrypt = require('bcrypt')
 var jwt = require('jsonwebtoken')
 
-exports.post = async (req, res) => {
+exports.newUser = async (req, res) => {
     
     var newUser = req.body
     try {
@@ -14,7 +14,7 @@ exports.post = async (req, res) => {
         const newUserId = await connection('users').insert(newUser).returning('id')
         
         if (newUserId){
-            return res.status(201).send({'message': `Usuário criado com sucesso com ID: ${newUserId}` })
+            res.status(201).send({'message': `Usuário criado com sucesso com ID: ${newUserId}` })
         }
         
     } catch (error) {
@@ -22,4 +22,12 @@ exports.post = async (req, res) => {
         return res.status(500).send({error: "server error"})
     }
    
+}
+
+exports.getById = async (req, res) => {
+    return res.status(200).send({'message': 'cu'})
+}
+
+exports.getAll = async (req, res) => {
+    return res.status(200).send({'message': 'cu'})
 }
