@@ -23,7 +23,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
     }
     
     function handleIsJustificative() {
-        if ((question.question_type === 0 || question.question_type === 2)) {
+        if ((question.question_type === 1 || question.question_type === 2)) {
             return true;
         }
         return false;
