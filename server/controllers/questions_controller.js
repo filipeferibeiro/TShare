@@ -51,7 +51,7 @@ exports.getById = async (req, res) => {
 exports.post = async (req, res) => {
     const requestBody = req.body
     //Isolando as informações pertinentes do corpo da requisição
-    const question = ({title, author, description, long_answer, question_type}) => ({title, author, description, long_answer, question_type})(requestBody)
+    const question = (({title, author, description, long_answer, question_type}) => ({title, author, description, long_answer, question_type}))(requestBody)
 
     try {
         //ALTERNATIVAS
