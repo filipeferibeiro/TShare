@@ -21,3 +21,21 @@ body::after {
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(6px);
 }
+
+.questionBlock {
+  width: 90vw;
+}
+
+.commentsBlock {
+  width: 90vw;
+}
+
+@media (min-width: 1000px) {
+  .questionBlock {
+      width: 70vw;
+  }
+
+  .commentsBlock {
+      width: 70vw;
+  }
+}

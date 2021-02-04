@@ -11,7 +11,7 @@
     border-radius: 20px;
     margin: 10px;
     padding: 12px 10px 12px 30px;
-    width: calc(100vw - 37px);
+    width: calc(100vw - 20px);
 
     display: flex;
     flex-wrap: wrap;
@@ -24,6 +24,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.headerContainer .logoArea img {
+    width: auto;
+    height: 42px;
 }
 
 .headerContainer .searchArea {

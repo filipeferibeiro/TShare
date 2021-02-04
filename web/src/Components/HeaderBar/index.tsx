@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FiPlus, FiUser, FiSearch, FiFolder, FiSettings, FiUsers } from 'react-icons/fi';
 import { ClickAwayListener } from '@material-ui/core';
 
-
+import logo from '../../assets/logo.svg';
 import './styles.css';
 
 const HeaderBar = () => {
@@ -16,7 +16,7 @@ const HeaderBar = () => {
             <div className="headerContainer">
                 <div className="left">
                     <div className="logoArea">
-                        TShareLogo
+                        <img src={logo} alt="TShareLogo"/>
                     </div>
                     <div className="searchArea">
                         <FiSearch color="#FFF" size={24} />

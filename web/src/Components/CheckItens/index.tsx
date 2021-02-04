@@ -8,27 +8,36 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     deleteFunction?(i:number): any;
     selectFunction?(i:number): any;
-    i: number;
+    i?: number;
     id?: string;
+    detail?: boolean
+    selected?: boolean
 }
 
-const CheckItens: React.FC<InputProps> = ({ name, label, deleteFunction, selectFunction, i, id }) => {
+const CheckItens: React.FC<InputProps> = ({ name, label, deleteFunction, selectFunction, i, id, detail, selected }) => {
     function handleDelete() {
-        if (deleteFunction) {
+        if (deleteFunction && i !== undefined) {
             Array.from((document.querySelectorAll(`input[name="${name}"]:checked`) as any), (input:HTMLInputElement) => input.checked = false);
             deleteFunction(i);
         }
     }
     function handleSelect() {
-        if (selectFunction) {
+        if (selectFunction && i !== undefined) {
             selectFunction(i);
         }
     }
 
     return (
         <div className="checkContainer">
-            <p id={`${id}DeleteBt`} className="deleteBt" onClick={handleDelete}><FiX color="#E72E2E" size={16} /></p>
-            <input id={id} className="alternative" type="radio" name={name} onChange={handleSelect} />
+            {(detail) &&
+                <input id={id} className="alternative" type="radio" name={name} readOnly disabled checked={selected} />
+            }
+            {!detail &&
+                <>
+                    <p id={`${id}DeleteBt`} className="deleteBt" onClick={handleDelete}><FiX color="#E72E2E" size={16} /></p>
+                    <input id={id} className="alternative" type="radio" name={name} onChange={handleSelect} />
+                </>
+            }
             <label>{label}</label>
         </div>
     );
