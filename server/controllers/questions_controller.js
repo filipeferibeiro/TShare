@@ -10,9 +10,9 @@ async function getQuestionById(questionId) {
     //Recupera as tags das questões
     const tag_result = await connection.from('tags').innerJoin({tq1:'tags_questions'},'tags.id', 'tq1.tag_id').where('tq1.question_id', questionId).select("tags.name")
     items[0].tags = tag_result.map(tag => (tag.name))
-    
+    //Recupera comentários
+    items[0].comments = await connection('comments').where({question_id: questionId})
     return items[0]
-
 }   
 
 exports.getAll = async (req, res) => {

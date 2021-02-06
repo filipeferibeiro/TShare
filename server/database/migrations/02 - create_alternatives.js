@@ -1,10 +1,16 @@
 exports.up = async function up(knex){
-    return knex.schema.createTable('alternatives', table => {
-        table.increments('id').primary(),
-        table.string('text')
-        table.boolean('correct')
-        table.integer('question_id').unsigned().notNullable().references('id').inTable('questions').onDelete('CASCADE').index();
+
+    knex.schema.hasTable('alternatives').then(function (exists) {
+        if (!exists){
+            return knex.schema.createTable('alternatives', table => {
+                table.increments('id').primary(),
+                table.string('text')
+                table.boolean('correct')
+                table.integer('question_id').unsigned().notNullable().references('id').inTable('questions').onDelete('CASCADE').index();
+            })
+        }
     })
+    
 }
 
 
