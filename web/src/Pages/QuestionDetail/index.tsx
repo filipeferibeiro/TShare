@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useCallback, useEffect, useState } from 'react'
 import { FiPlus, FiX } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import HeaderBar from '../../Components/HeaderBar';
@@ -9,22 +9,59 @@ import { Question } from '../Home';
 
 import './styles.css';
 
+export interface Comment {
+    id: number,
+    text: string,
+    authorId: number,
+    name: string,
+    creationDate: string
+}
+
 const QuestionDetail: React.FC = () => {
     const [question, setQuestion] = useState<Question>();
+    const [comments, setComments] = useState([]);
     const [commentBoxStatus, setCommentBoxStatus] = useState(false);
     const [comment, setComment] = useState("");
 
     const history = useHistory();
-    const idQuestion = history.location.state;
-
-    useEffect(() => {
+    const idQuestion = history.location.state as number;
+    
+    const handleGetQuestion = useCallback(() => {
         api.get(`questions/${idQuestion}`).then(response => {
             setQuestion(response.data);
-        });
+        })
     }, [idQuestion]);
+    
+    const handleGetComments = useCallback(() => {
+        api.get(`comments/${idQuestion}`).then(response => {
+            setComments(response.data);
+        })
+    }, [idQuestion]);
+
+    useEffect(() => {
+        handleGetQuestion();
+        handleGetComments();
+
+    }, [idQuestion, handleGetComments, handleGetQuestion]);
+    
 
     function handleAddComment(e: FormEvent) {
         e.preventDefault();
+
+        const data = {
+            text: comment,
+            question_id: idQuestion,
+            author_id: 1
+        }
+
+        api.post('comments', data).then(() => {
+            handleGetComments();
+            alert("Comentário feito com sucesso!");
+            setCommentBoxStatus(false);
+        }).catch(() => {
+            alert("Erro ao fazer o comentário, tente novamente.")
+        });
+
     }
 
     function handleCloseCommentBox() {
@@ -62,11 +99,11 @@ const QuestionDetail: React.FC = () => {
                                 <p className="title">Comentários</p>
                                 <p className="addCommentBt" onClick={handleOpenCommentBox}><FiPlus color="#FFF" size={19} />Novo comentário</p>
                             </div>
-                            <QuestionCommentCard />
-                            <QuestionCommentCard />
-                            <QuestionCommentCard />
-                            <QuestionCommentCard />
-                            <QuestionCommentCard />
+                            {comments.map((_comment:Comment) => 
+                                <QuestionCommentCard 
+                                    comment={_comment}
+                                />
+                            )}
                         </div>
                     </>
                 }

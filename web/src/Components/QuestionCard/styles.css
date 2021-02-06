@@ -93,6 +93,7 @@
 
 .questionCardContainer .questionDetail {
     opacity: 80%;
+    white-space: pre-line;
 }
 
 .questionCardContainer .tagsContainer {

@@ -132,8 +132,6 @@ const CreateQuestion = () => {
         } else {
             const data = makeData()
 
-            console.log(data)
-
             api.post('questions', data).then(() => {
                 alert("Questão cadastrada com sucesso!");
 

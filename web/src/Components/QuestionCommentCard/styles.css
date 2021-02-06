@@ -57,8 +57,10 @@
     margin: 0;
     opacity: 80%;
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
+    color: #FFF;
     word-wrap:break-word;
+    white-space: pre-line;
 }
 
 .questionCommentContainer .cardActions {
