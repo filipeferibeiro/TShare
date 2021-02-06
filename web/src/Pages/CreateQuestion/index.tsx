@@ -86,25 +86,51 @@ const CreateQuestion = () => {
         return option.indexOf(true);
     }
 
+    function makeData() {
+        let data = {
+            title: questionTitle,
+            description: questionDetail,
+            author: 1,
+            tags,
+            alternatives: [] as any,
+            long_answer: "" as any,
+            question_type: selectedOption()
+        }
+
+        if (handleIsAlternative()) {
+            data = {
+                ...data,
+                alternatives: alternatives
+            }
+            if (option[1]) {
+                data = {
+                    ...data,
+                    long_answer: questionJustificative
+                }
+            }
+        }
+
+        if (handleIsJustificative()) {
+            data = {
+                ...data,
+                long_answer: questionJustificative
+            }
+        }
+
+        return data;
+    }
+
     function handleCreateQuestion(e: FormEvent) {
         e.preventDefault();
 
-        if (alternatives.length < 2) {
+        if (alternatives.length < 2 && (option[0] || option[1])) {
             alert("Você deve ter pelo menos 2 alternativas!");
-        } else if (!hasAlternativeCheck()) {
+        } else if (!hasAlternativeCheck() && (option[0] || option[1])) {
             alert("Você deve marcar uma alternativa como correta!");
         } else if (tags.length < 1) {
             alert("Você deve ter pelo menos uma tag!");
         } else {
-            const data = {
-                title: questionTitle,
-                description: questionDetail,
-                author: 1,
-                alternatives,
-                tags,
-                long_answer: questionJustificative,
-                question_type: selectedOption()
-            }
+            const data = makeData()
 
             console.log(data)
 
@@ -137,7 +163,9 @@ const CreateQuestion = () => {
             <HeaderBar />
             <div className="containerQuestion">
                 <form onSubmit={handleCreateQuestion}>
-                    <OptionBar option={option} setOption={setOption} />
+                    <div className="optionBar">
+                        <OptionBar option={option} setOption={setOption} />
+                    </div>
                     <Field
                         id="inputQuestionTitle"
                         label="Questão"

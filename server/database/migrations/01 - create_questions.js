@@ -1,4 +1,4 @@
-exports.up = function(knex) {
+exports.up = async function up(knex) {
 
     knex.schema.hasTable('questions').then(function(exists) {
       	if (!exists) {
@@ -14,6 +14,6 @@ exports.up = function(knex) {
     })    
   }
   
-  exports.down = function(knex) {
-    return knex.schema.dropTable('questions');
-  }
+exports.down = async function down(knex) {
+	return knex.schema.dropTable('questions');
+}

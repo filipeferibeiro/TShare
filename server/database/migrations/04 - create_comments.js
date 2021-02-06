@@ -5,10 +5,10 @@ exports.up = async function up(knex){
             return knex.schema.createTable('comments', table => {
                 table.increments('id').primary(),
                 table.text('text').notNullable(),
-                table.integer('questionId').notNullable().references('id').inTable('questions').onDelete('CASCADE').index(),
-                table.integer('authorId').notNullable().references('id').inTable('users').onDelete('CASCADE').index(),
-                table.datetime('creationDate').notNullable(),
-                table.integer('score').notNullable().defaultsTo(0)
+                table.integer('question_id').unsigned().notNullable().references('id').inTable('questions').onDelete('CASCADE').index(),
+                table.integer('author_id').unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE').index(),
+                table.datetime('creation_date').notNullable(),
+                table.integer('score').notNullable().defaultsTo(0)  
             })
         }
     })

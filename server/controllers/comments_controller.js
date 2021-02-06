@@ -3,27 +3,26 @@ const knex = require('knex')
 
 exports.getByQuestionId = async (req, res) => {
     
-    const questionId = req.params.id
+    const question_id = req.params.id
     try {
         const comments = await connection('comments').select(
             'comments.id',
             'comments.text',
-            'comments.authorId',
+            'comments.author_id',
             'users.name',
-            'comments.creationDate'
+            'comments.creation_date'
             )
         .from('comments')
         .where(
-            {questionId: questionId})
+            {question_id: question_id})
         .innerJoin(
             'users',
-            'comments.authorId',
+            'comments.author_id',
             'users.id'
             )
-            
-        
-       
+
         return res.status(200).json(comments)
+
     } catch (error) {
         console.log(error)
         return res.status(500).send({error: "server error"})
@@ -34,15 +33,15 @@ exports.getByQuestionId = async (req, res) => {
 
 exports.post = async (req, res) => {
     const text = req.body.text
-    const questionId = req.body.questionId
-    const authorId = req.body.authorId
-    const creationDate = new Date()
+    const question_id = req.body.question_id
+    const author_id = req.body.author_id
+    const creation_date = new Date()
 
     const comment = {
         text: text,
-        questionId: questionId,
-        authorId: authorId,
-        creationDate: creationDate,
+        question_id: question_id,
+        author_id: author_id,
+        creation_date: creation_date,
     }
 
     try {

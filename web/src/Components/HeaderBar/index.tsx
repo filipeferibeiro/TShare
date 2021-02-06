@@ -31,6 +31,18 @@ const HeaderBar = () => {
                     <Link id="newQuestionBt" className="newQuestionBt" to="/CreateQuestion"><FiPlus color="#FFF" size={19} />Nova questão</Link>
                 </div>
             </div>
+            <div className="headerContainerMobile">
+                <div className="searchArea">
+                    <FiSearch color="#FFF" size={24} />
+                    <input type="text" placeholder="Pesquisar..." />
+                </div>
+                <div id="menuBt" className="perfilPicture" onClick={() => setMenuStatus(!menuStatus)}>
+                    <FiUser color="#FFF" size={24} />
+                </div>
+            </div>
+            <div className="footerContainerMobile">
+                Implementar futuramente
+            </div>
             {menuStatus &&
                     <ClickAwayListener
                         onClickAway={() => setMenuStatus(false)}

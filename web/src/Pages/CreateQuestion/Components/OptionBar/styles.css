@@ -1,9 +1,10 @@
 .optionBarContainer {
-    height: 65px;
     margin-bottom: 24px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    overflow-x: hidden;
+    max-width: 800px;
 
     background: rgba(255, 255, 255, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -28,6 +29,12 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-sizing: border-box;
     box-shadow: 2px 2px 11px rgba(255, 255, 255, 0.25);
-    height: 65px;
     color: #000;
+}
+
+@media (max-width: 800px) {
+    .optionBarContainer p {
+        padding: 15px 20px;
+        font-size: 13px;
+    }
 }
