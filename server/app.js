@@ -1,15 +1,15 @@
 require('dotenv').config()
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const cors = require('cors')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var questionsRouter = require('./routes/questions');
-var commentsRouter = require('./routes/comments')
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const questionsRouter = require('./routes/questions');
+const commentsRouter = require('./routes/comments');
 // var loginRouter = require('./routes/login')
 
 var app = express();

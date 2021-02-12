@@ -40,7 +40,7 @@ exports.put = async (req, res) => {
     const updatedAlternative = req.body
     const alternativeId = req.params.id
     try {
-        await connection('alternatives').where({id: questionId}).update(updatedQuestion)
+        await connection('alternatives').where({id: alternativeId}).update(updatedAlternative)
         return res.status(200).send({message: "Alternative updated"})    
     } catch (error) {
         return res.status(500).send({error_msg: `${error}`})
@@ -52,7 +52,7 @@ exports.put = async (req, res) => {
 exports.delete = async (req, res) => {
     const id = req.params.id
     try {
-        const items = await connection('alternatives').where({id: id}).del()
+        await connection('alternatives').where({id: id}).del()
         return res.status(200).send({message: "Alternative deleted"})
     } catch (error) {
         console.log(error)

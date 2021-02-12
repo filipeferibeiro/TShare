@@ -16,10 +16,10 @@ async function getQuestionById(questionId) {
 }   
 
 exports.getAll = async (req, res) => {
-    var questions = []
+    let questions = [];
     try {
-        var allQuestions = await connection('questions').select('*')
-        
+        const allQuestions = await connection('questions').select('*');
+
         for (let i = 0; i < allQuestions.length; i++) {
             questions.push(await getQuestionById(allQuestions[i].id))
         }         
@@ -93,7 +93,7 @@ exports.put = async (req, res) => {
 exports.delete = async (req, res) => {
     const id = req.params.id
     try {
-        const items = await connection('questions').where({id: id}).del()
+        await connection('questions').where({id: id}).del()
         return res.status(200).send({message: "Question deleted"})
     } catch (error) {
         console.log(error)

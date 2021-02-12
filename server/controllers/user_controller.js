@@ -1,15 +1,13 @@
 const connection = require('../database/connection')
-var bcrypt = require('bcrypt')
-var jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.newUser = async (req, res) => {
-    
-    var newUser = req.body
+
+    let newUser = req.body
     try {
         const salt = bcrypt.genSaltSync(7)
-        const hash = bcrypt.hashSync(newUser.password, salt )
-
-        newUser.password = hash
+        newUser.password = bcrypt.hashSync(newUser.password, salt)
         
         const newUserId = await connection('users').insert(newUser).returning('id')
         
