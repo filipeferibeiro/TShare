@@ -4,7 +4,12 @@ const jwt = require('jsonwebtoken');
 
 exports.newUser = async (req, res) => {
 
-    let newUser = req.body
+    let newUser = {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    }
+        
     try {
         const salt = bcrypt.genSaltSync(7)
         newUser.password = bcrypt.hashSync(newUser.password, salt)

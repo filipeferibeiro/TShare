@@ -1,8 +1,7 @@
 
 exports.seed = function(knex) {
     // Deletes ALL existing entries
-    return knex('tags_questions').del()
-      .then(function () {
+   if (knex('tags_questions').select("*").lenght == 0){
         // Inserts seed entries
         return knex('tags_questions').insert([
             {
@@ -22,7 +21,6 @@ exports.seed = function(knex) {
               "question_id": 2,
             },
           ])
-        } 
-    )
+      } 
 }
           

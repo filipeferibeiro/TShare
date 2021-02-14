@@ -1,11 +1,11 @@
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('questions').del()
-    .then(function () {
+  if (knex('questions').select('*').length == 0){
       // Inserts seed entries
       return knex('questions').insert([
         {
+          "id": 0,
           "title": "Quem roeu a roupa do rei de roma?",
           "author": 2,
           "description": "Blabla",
@@ -13,6 +13,7 @@ exports.seed = function(knex) {
           "long_answer": "Rattus norvegicus"
         },
         {
+          "id": 1,
           "title": "Cloroquina é eficaz contra COVID-19?",
           "author": 1,
           "description": "Fonte: Zapzap",
@@ -20,5 +21,5 @@ exports.seed = function(knex) {
         },
 
       ]);
-    });
+  }
 };

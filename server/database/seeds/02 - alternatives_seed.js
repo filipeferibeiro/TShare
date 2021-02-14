@@ -1,9 +1,7 @@
 
 exports.seed = function(knex) {
     // Deletes ALL existing entries
-    return knex('alternatives').del()
-      .then(function () {
-        // Inserts seed entries
+    if (knex('questions').select('*').length == 0){
         return knex('alternatives').insert([
             {
               "text": "O rato",
@@ -46,7 +44,6 @@ exports.seed = function(knex) {
                 "question_id": 2
               }
           ])
-        } 
-    )
+    } 
 }
           
