@@ -1,0 +1,173 @@
+.containerLogin {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 50px;
+
+    width: 100vw;
+    height: 100%;
+}
+
+.containerLogin .side {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerLogin .left {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 96px;
+}
+
+.containerLogin .left .text {
+    font-size: 48px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 32px;
+}
+
+.containerLogin .logoArea {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.containerLogin .logoArea img {
+    width: auto;
+    height: 171px;
+}
+
+.containerLogin .logoArea .logoText {
+    font-family: 'Ubuntu';
+    font-size: 90px;
+    font-weight: 600;
+    color: #60AB85;
+}
+
+.containerLogin #right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 60%;
+    height: fit-content;
+
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    backdrop-filter: blur(6px);
+
+    border-radius: 20px;
+    padding: 24px;
+}
+
+.containerLogin #right .backButton {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+
+    color: #FFF;
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition: opacity 0.2s;
+}
+
+.containerLogin #right .backButton:hover {
+    opacity: 80%;
+}
+
+.containerLogin #right .backButton svg {
+    margin-right: 5px;
+}
+
+.containerLogin #right .rememberMe {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 100%;
+    margin: 15px 0;
+    margin-left: 31px;
+
+    color: #FFF;
+}
+
+.containerLogin #right .rememberMe input[type=checkbox] {
+    appearance: none;
+
+    width: 25px;
+    height: 25px;
+
+    margin-right: 12px;
+
+    background: rgba(255, 255, 255, 0.5);
+    border: 3px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    backdrop-filter: blur(6px);
+    
+    border-radius: 8px;
+}
+.containerLogin #right .rememberMe input[type=checkbox]:checked {
+    background: #73D8A5;
+}
+
+.containerLogin #right .separator {
+    width: 100%;
+    margin: 40px 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.containerLogin #right .registerButton button {
+    margin: 0 21px;
+}
+
+
+@media (max-width: 800px) {
+    .containerLogin .containerLogin {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .containerLogin .left {
+        height: auto;
+        margin: 0 20px;
+    }
+
+    .containerLogin .logoArea {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .containerLogin .logoArea img {
+        height: 50px;
+    }
+
+    .containerLogin .left .text {
+        font-size: 28px;
+    }
+
+    .containerLogin .logoArea .logoText {
+        font-size: 30px;
+    }
+
+    .containerLogin .side {
+        height: fit-content;
+    }
+
+    .containerLogin #right {
+        padding: 10px;
+        margin-top: 20px;
+        width: 98%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        backdrop-filter: none;
+    }
+}

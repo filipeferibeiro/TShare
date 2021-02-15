@@ -1,0 +1,21 @@
+.input {
+    padding: 23px 30px;
+    width: 100%;
+    
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    backdrop-filter: blur(6px);
+
+    border-radius: 20px;
+
+    font-size: 17px;
+}
+
+.input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.input + .input {
+    margin-top: 25px;
+}

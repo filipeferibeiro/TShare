@@ -24,7 +24,7 @@ const HeaderBar = () => {
                     </div>
                 </div>
                 <div className="perfilArea">
-                    <Link id="homeBt" className="homeBt" to="/">Início</Link>
+                    <Link id="homeBt" className="homeBt" to="/Home">Início</Link>
                     <div id="menuBt" className="perfilPicture" onClick={() => setMenuStatus(!menuStatus)}>
                         <FiUser color="#FFF" size={24} />
                     </div>
