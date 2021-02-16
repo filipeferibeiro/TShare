@@ -34,10 +34,6 @@ const Login = () => {
         setIsRegister(false);
     }
 
-    function handleHomePage() {
-        history.push('/Home');
-    }
-
     function handleAddNewUser(e: FormEvent) {
         e.preventDefault();
 
@@ -61,6 +57,16 @@ const Login = () => {
         });
     }
 
+    function handleLoginForm(e: FormEvent) {
+        e.preventDefault();
+
+        handleLogin(emailLogin, passwordLogin);
+
+        if (authenticated) {
+            history.push('/Home');
+        }
+    }
+
     return (
         <div className="containerLogin">
             <div className="side">
@@ -76,13 +82,15 @@ const Login = () => {
                 <div id="right">
                     {!isRegister && 
                         <>
-                            <Input placeholder="E-mail" type="text" value={emailLogin} onChange={setEmailLogin} />
-                            <Input placeholder="Senha" type="password" value={passwordLogin} onChange={setPasswordLogin} />
-                            <div className="rememberMe">
-                                <input type="checkbox" />
-                                <label htmlFor="">Lembrar usuário</label>
-                            </div>
-                            <Button text="Entrar" style={{ background: '#37c77f99' }} onClick={() => {handleLogin(emailLogin, passwordLogin); handleHomePage()}} />
+                            <form onSubmit={handleLoginForm}>
+                                <Input placeholder="E-mail" type="email" value={emailLogin} onChange={setEmailLogin} required />
+                                <Input placeholder="Senha" type="password" value={passwordLogin} onChange={setPasswordLogin} required />
+                                <div className="rememberMe">
+                                    <input type="checkbox" />
+                                    <label htmlFor="">Lembrar usuário</label>
+                                </div>
+                                <Button text="Entrar" type="submit" style={{ background: '#37c77f99' }} />
+                            </form>
                             <hr className="separator" />
                             <Button text="Cadastrar" style={{ background: '#FFD66699', width: '90%' }} onClick={handleToggleOnRegisterForm} />
                         </>
@@ -91,17 +99,17 @@ const Login = () => {
                         <>
                             <p className="backButton" onClick={handleToggleOffRegisterForm}><FiChevronLeft size={25} color="#FFF" />Voltar</p>
                             <form onSubmit={handleAddNewUser}>
-                                <Input placeholder="Nome" type="text" value={name} onChange={setName} />
-                                <Input placeholder="Data de nascimento" type="text" value={birthday} onChange={setBirthday} />
-                                <Input placeholder="E-mail" type="text" value={emailRegister} onChange={setEmailRegister} />
-                                <Input placeholder="Senha" type="password" value={passwordRegister} onChange={setPasswordRegister} />
+                                <Input placeholder="Nome" type="text" value={name} onChange={setName} required />
+                                <Input placeholder="Data de nascimento" type="text" onFocus={(e) => e.target.type='date'} value={birthday} onChange={setBirthday} required />
+                                <Input placeholder="E-mail" type="email" value={emailRegister} onChange={setEmailRegister} required />
+                                <Input placeholder="Senha" type="password" value={passwordRegister} onChange={setPasswordRegister} required />
 
                                 <hr className="separator" />
                                 
-                                <Input placeholder="Escola" type="text" value={school} onChange={setSchool} />
-                                <Input placeholder="Disciplina" type="text" value={mainSubject} onChange={setMainSubject} />
-                                <Input placeholder="Formação" type="text" value={formation} onChange={setFormation} />
-                                <Button text="Cadastrar" type="submit" style={{ background: '#37c77f99', marginTop: '50px' }} />
+                                <Input placeholder="Escola" type="text" value={school} onChange={setSchool} required />
+                                <Input placeholder="Disciplina" type="text" value={mainSubject} onChange={setMainSubject} required />
+                                <Input placeholder="Formação" type="text" value={formation} onChange={setFormation} required />
+                                <Button text="Cadastrar" type="submit" style={{ background: '#37c77f99', marginTop: '20px' }} />
                             </form>
                         </>
                     }

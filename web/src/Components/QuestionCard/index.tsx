@@ -41,6 +41,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
                     </div>
                 </div>
                 <p className="addBankBt"><FiPlus color="#FFF" size={19} />Adicionar no banco</p>
+                <p className="addBankBt addBankBtMobile"><FiPlus color="#FFF" size={19} /></p>
             </div>
             <p className="questionName">{question.title}</p>
             <p className="questionDetail">{question.description}</p>

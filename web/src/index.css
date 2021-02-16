@@ -10,6 +10,7 @@ body, input, button {
 
 body {
   background: linear-gradient(137.22deg, #2A85B8 5.23%, #20272C 111.71%, rgba(255, 255, 255, 0) 111.71%);
+  background-attachment: fixed;
   overflow-x: hidden;
   display: flex;
   justify-content: center;
@@ -17,17 +18,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body::after {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(6px);
-}
-
-.questionBlock {
-  width: 90vw;
-}
-
-.commentsBlock {
-  width: 90vw;
+#root {
+  width: fit-content;
 }
 
 .hidden {
@@ -52,14 +44,4 @@ body::after {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-@media (min-width: 1000px) {
-  .questionBlock {
-      width: 70vw;
-  }
-
-  .commentsBlock {
-      width: 70vw;
-  }
 }

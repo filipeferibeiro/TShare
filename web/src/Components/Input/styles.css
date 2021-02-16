@@ -6,6 +6,8 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-sizing: border-box;
     backdrop-filter: blur(6px);
+    border-bottom: 3px solid transparent;
+    border-bottom-width: 80%;
 
     border-radius: 20px;
 
@@ -17,5 +19,10 @@
 }
 
 .input + .input {
-    margin-top: 25px;
+    margin-top: 20px;
+}
+
+.input:focus {
+    outline: none;
+    border-bottom: 3px solid rgb(194, 163, 78);
 }
