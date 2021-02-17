@@ -17,14 +17,13 @@ async function checkUser(email, password){
 
 exports.login = async (req, res, next) => {
     
-    const id = req.body.id
     const email = req.body.email
     const password = req.body.password
 
     try {       
         await connection('users').where('email', '=', email ).update({lastLogin: new Date().toISOString().slice(0, 19).replace('T', ' ')})
         if (checkUser(email, password)){
-            const token = jwt.sign( {id: id} , process.env.SECRET, { expiresIn: 86400 })
+            const token = jwt.sign( {email: email} , process.env.SECRET, { expiresIn: 86400 })
             
             return res.status(200).json({auth: true, token: token})
         } else {

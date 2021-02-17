@@ -1,6 +1,5 @@
 const connection = require('../database/connection')
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
 
 exports.newUser = async (req, res) => {
 
@@ -12,13 +11,9 @@ exports.newUser = async (req, res) => {
         
     try {
         const salt = bcrypt.genSaltSync(7)
-        newUser.password = bcrypt.hashSync(newUser.password, salt)
-        
-        const newUserId = await connection('users').insert(newUser).returning('id')
-        
-        if (newUserId){
-            res.status(201).send({'message': `Usuário criado com sucesso com ID: ${newUserId}` })
-        }
+        newUser.password = bcrypt.hashSync(newUser.password, salt)        
+        await connection('users').insert(newUser)    
+        res.status(201).send({'message': `Usuário criado com sucesso` })
         
     } catch (error) {
         console.log(error)
@@ -28,7 +23,9 @@ exports.newUser = async (req, res) => {
 }
 
 exports.getById = async (req, res) => {
-    return res.status(200).send({'message': 'cu'})
+    const userId = req.query.id
+
+    return await connection('users').select("*").where("id","=", userId)
 }
 
 exports.getAll = async (req, res) => {
