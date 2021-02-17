@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiPlus, FiUser, FiSearch, FiFolder, FiSettings, FiUsers } from 'react-icons/fi';
+import { FiPlus, FiUser, FiSearch, FiFolder, FiSettings, FiUsers, FiLogOut } from 'react-icons/fi';
 import { ClickAwayListener } from '@material-ui/core';
 
 import logo from '../../assets/logo.svg';
 import './styles.css';
+import { Context, Ctx } from '../../Context/AuthContext';
 
 const HeaderBar = () => {
     let itemSize = 25;
 
     const [menuStatus, setMenuStatus] = useState(false);
+    const { handleLogOut } = useContext<Ctx>(Context);
 
     return (
         <>
@@ -49,12 +51,12 @@ const HeaderBar = () => {
                     >
                         <div className="menu">
                             <div className="back">
-                                <div className="menuProfile">
+                                <Link className="menuProfile" to="/Profile">
                                     <div className="picture">
                                         <FiUser color="#FFF" size={17} />
                                     </div>
                                     <p>Fulano de Tal</p>
-                                </div>
+                                </Link>
                                 <div className="menuItem">
                                     <FiFolder size={itemSize} color="#FFF" />
                                     <p>Banco de questões</p>
@@ -66,6 +68,10 @@ const HeaderBar = () => {
                                 <div className="menuItem">
                                     <FiSettings size={itemSize} color="#FFF" />
                                     <p>Configurações</p>
+                                </div>
+                                <div className="menuItem logOut" onClick={handleLogOut}>
+                                    <FiLogOut size={itemSize} color="#E72E2E" />
+                                    <p>Sair</p>
                                 </div>
                             </div>
                         </div>

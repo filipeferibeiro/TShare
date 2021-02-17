@@ -169,6 +169,9 @@
 
     padding: 4px;
 
+    text-decoration: none;
+    color: #FFF;
+
     cursor: pointer;
     transition: opacity 0.2s;
 }
@@ -210,9 +213,18 @@
     backdrop-filter: blur(6px);
 }
 
+
 .menu .menuItem p {
     margin-left: 10px;
     color: #FFF;
+}
+
+.menu .logOut p {
+    color: #E72E2E;
+}
+
+.menu .logOut:hover {
+    background-color: #e72e2e3a;
 }
 
 .headerContainerMobile {

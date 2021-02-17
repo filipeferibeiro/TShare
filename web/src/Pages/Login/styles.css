@@ -61,6 +61,10 @@
     padding: 24px;
 }
 
+.containerLogin #right form {
+    width: 100%;
+}
+
 .containerLogin #right .backButton {
     display: flex;
     align-items: center;

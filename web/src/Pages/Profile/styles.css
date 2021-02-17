@@ -1,0 +1,127 @@
+.containerProfile {
+    width: 100vw;
+    padding: 0 10px;
+    margin-top: 101px;
+}
+
+.containerProfile .right {
+    margin-top: 25px;
+}
+
+.block {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    backdrop-filter: blur(4px);
+    /* Note: backdrop-filter has minimal browser support */
+    
+    border-radius: 20px;
+    padding: 24px;
+}
+
+.containerProfile .ad {
+    margin-top: 20px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    font-size: 40px;
+}
+
+.containerProfile .menuProfile .editProfileButton {
+    background: transparent;
+    width: 100%;
+    padding: 15px 0;
+    border-radius: 100px;
+    border: 1px solid #FFF;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    
+    font-size: 16px;
+    color: #FFF;
+
+    transition: background-color 0.2s;
+}
+
+.containerProfile .menuProfile .editProfileButton:hover {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: #FFD66699;
+}
+
+.containerProfile .menuProfile .editProfileButton svg {
+    margin-right: 12px;
+}
+
+
+
+.containerProfile .menuProfile .profile {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    border-radius: 90px;
+    padding: 4px 24px 4px 4px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.containerProfile .menuProfile .profile .userInfo .userName {
+    font-size: 17px;
+    font-weight: 300;
+    color: #FFF;
+}
+
+.containerProfile .menuProfile .profile .perfilPicture {
+    width: 58px;
+    height: 58px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.containerProfile .menuProfile .item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+
+    color: #FFF;
+    cursor: default;
+}
+
+.containerProfile .menuProfile .item:hover {
+    background: #666;
+}
+
+.containerProfile .menuProfile .item svg {
+    margin-right: 10px;
+}
+
+.containerProfile .menuProfile .item + .item {
+    margin-top: 10px;
+}
+
+@media (min-width: 1100px) {
+    .containerProfile {
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-gap: 20px;
+    }
+
+    .containerProfile .right {
+        margin-top: 0;
+    }
+   
+}

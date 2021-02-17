@@ -8,7 +8,7 @@ import Field from './Components/Field';
 import './styles.css';
 
 import api from '../../Services/api';
-import OptionBar from './Components/OptionBar';
+import OptionBar from '../../Components/OptionBar';
 
 interface Alternative {
     text: string;
@@ -135,7 +135,7 @@ const CreateQuestion = () => {
             api.post('questions', data).then(() => {
                 alert("Questão cadastrada com sucesso!");
 
-                history.push('/');
+                history.push('/Home');
             }).catch(() => {
                 alert("Erro ao cadastrar questão, tente novamente.")
             });
@@ -162,7 +162,15 @@ const CreateQuestion = () => {
             <div className="containerQuestion">
                 <form onSubmit={handleCreateQuestion}>
                     <div className="optionBar">
-                        <OptionBar option={option} setOption={setOption} />
+                        <OptionBar
+                            option={option}
+                            setOption={setOption}
+                            options={[
+                                "Objetiva",
+                                "Objetiva Justificada",
+                                "Discursiva"
+                            ]}
+                        />
                     </div>
                     <Field
                         id="inputQuestionTitle"

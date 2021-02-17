@@ -4,7 +4,6 @@
     flex-direction: row;
     justify-content: space-between;
     overflow-x: hidden;
-    max-width: 800px;
 
     background: rgba(255, 255, 255, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -18,9 +17,10 @@
     align-items: center;
     padding: 21px 50px;
     border-radius: 47px;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 300;
     border: 1px solid rgba(255, 255, 255, 0);
-
+    text-align: center;
     cursor: pointer;
 }
 
@@ -30,11 +30,11 @@
     box-sizing: border-box;
     box-shadow: 2px 2px 11px rgba(255, 255, 255, 0.25);
     color: #000;
+    font-weight: 400;
 }
 
 @media (max-width: 800px) {
     .optionBarContainer p {
-        padding: 15px 20px;
-        font-size: 13px;
+        padding: 10px 20px;
     }
 }

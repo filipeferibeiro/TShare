@@ -1,17 +1,20 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import api from '../Services/api';
 
 interface Ctx {
     authenticated: boolean,
     loading: boolean,
-    handleLogin(email: string, password: string): any
+    handleLogin(email: string, password: string): any,
+    handleLogOut(): any
 }
 
-const Context = createContext<Ctx>({ authenticated: false, handleLogin() {}, loading: true });
+const Context = createContext<Ctx>({ authenticated: false, handleLogin() {}, loading: true, handleLogOut() {} });
 
 const AuthProvider: React.FC = ({ children }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const history = useHistory();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -35,17 +38,29 @@ const AuthProvider: React.FC = ({ children }) => {
             setAuthenticated(true);
 
             localStorage.setItem('token', JSON.stringify(token));
-            api.defaults.headers['x-access-token'] = token ;
+            api.defaults.headers['x-access-token'] = token;
         }).catch(() => {
             alert("Login :(")
         });
     }
 
-    return (
-        <Context.Provider value={{ authenticated, handleLogin, loading }}>
-            {children}
-        </Context.Provider>
-    )
+    function handleLogOut() {
+        setAuthenticated(false);
+        localStorage.removeItem('token');
+        api.defaults.headers['x-access-token'] = undefined;
+        history.push('/');
+    }
+
+    if (loading) {
+        return <div>Loading...</div>
+    } else {
+        return (
+            <Context.Provider value={{ authenticated, handleLogin, loading, handleLogOut }}>
+                {children}
+            </Context.Provider>
+        );
+    }
+
 }
 
 export { Context, AuthProvider };

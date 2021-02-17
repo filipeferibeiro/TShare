@@ -99,8 +99,9 @@ const QuestionDetail: React.FC = () => {
                                 <p className="title">Comentários</p>
                                 <p className="addCommentBt" onClick={handleOpenCommentBox}><FiPlus color="#FFF" size={19} />Novo comentário</p>
                             </div>
-                            {comments.map((_comment:Comment) => 
-                                <QuestionCommentCard 
+                            {comments.map((_comment:Comment, index) => 
+                                <QuestionCommentCard
+                                    key={index}
                                     comment={_comment}
                                 />
                             )}

@@ -1,7 +1,4 @@
 .containerQuestion {
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(6px);
-
     width: 100vw;
     padding-top: 101px;
     display: flex;

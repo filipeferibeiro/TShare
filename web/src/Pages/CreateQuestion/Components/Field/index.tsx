@@ -35,7 +35,7 @@ const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, f
                 }
                 </div>
                 {type.toLocaleLowerCase() === "text" &&
-                    <Input id={id} type="text" value={inputValue} onChange={setInputValue} required />
+                    <Input id={id} type="text" value={inputValue} onChange={handleInputValue} required />
                 }
                 {type.toLocaleLowerCase() === "textarea" && 
                     <textarea id={id} value={inputValue} onChange={(e) => handleInputValue(e.target.value)} required />
