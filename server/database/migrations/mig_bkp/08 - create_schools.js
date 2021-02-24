@@ -1,6 +1,6 @@
 exports.up = async function up(knex){
     return knex.schema.createTable('school', table => {
-        table.increments('id').primary(),
+        table.increments('id').primary()
         table.integer('author').unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE').index() //Depois mudar pra Teachers
     })
     

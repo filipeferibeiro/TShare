@@ -7,7 +7,9 @@
 }
 
 .addItemTextField .add {
-    background: #FFD666;
+    background: rgba(255, 214, 102, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     padding: 18px;
@@ -15,11 +17,11 @@
     color: #FFF;
     cursor: pointer;
     margin-left: 10px;
-    transition: opacity 0.5s;
+    transition: opacity 0.2s;
 }
 
 .addItemTextField .add:hover {
-    opacity: 70%;
+    opacity: 80%;
 }
 
 .addItemTextField .field {

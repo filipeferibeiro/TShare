@@ -11,9 +11,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     labelAlt?: string;
     limit?: number;
     func(text: string): any;
+    id?: string;
 }
 
-const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, func, hidden }) => {
+const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, func, hidden, id }) => {
     const [inputValue, setInputValue] = useState<string>("");
 
     function handleInputValue(value:string) {
@@ -33,10 +34,10 @@ const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, f
                 }
                 </div>
                 {type.toLocaleLowerCase() === "text" &&
-                    <input type="text" value={inputValue} onChange={(e) => handleInputValue(e.target.value)} />
+                    <input id={id} type="text" value={inputValue} onChange={(e) => handleInputValue(e.target.value)} required />
                 }
                 {type.toLocaleLowerCase() === "textarea" && 
-                    <textarea value={inputValue} onChange={(e) => handleInputValue(e.target.value)} />
+                    <textarea id={id} value={inputValue} onChange={(e) => handleInputValue(e.target.value)} required />
                 }
                 {type.toLocaleLowerCase() === "image" &&
                     <div className="imageField">
@@ -46,7 +47,7 @@ const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, f
                 {type.toLocaleLowerCase() === "alternatives" &&
                     <div className="alternatives">
                         {children}
-                        <AddField func={func} />
+                        <AddField id={id} func={func} />
                     </div>
                 }
                 {type.toLocaleLowerCase() === "subject" &&
@@ -67,7 +68,15 @@ const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, f
                         <div className="tagsBox">
                             {children}
                         </div>
-                        <AddField func={func} />
+                        <AddField id={id} func={func} />
+                    </div>
+                }
+                {type.toLocaleLowerCase() === "justificative" &&
+                    <div className="tags">
+                        <div className="tagsBox">
+                            {children}
+                        </div>
+                        <AddField id={id} func={func} />
                     </div>
                 }
             </div>

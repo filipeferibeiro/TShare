@@ -1,16 +1,31 @@
 .containerQuestion {
-    border: 1px solid #D3E2E5;
-    background: #FFF;
-    border-radius: 20px;
-    padding: 45px 100px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
 
-    width: 60vw;
+    width: 100vw;
+    padding-top: 101px;
     display: flex;
-    margin-bottom: 24px;
+    flex-direction: column;
+    overflow-y: scroll;
+    align-items: center;
 }
 
 .containerQuestion form {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 45px 45px;
+
+    display: flex;
+    margin-bottom: 24px;
     flex-grow: 100;
+    flex-direction: column;
+}
+
+.containerQuestion form .optionBar {
+    display: flex;
+    justify-content: center;
 }
 
 .containerQuestion .saveBt {
@@ -19,17 +34,46 @@
     justify-content: center;
     margin: 24px 0 0 0;
     padding: 18px 0;
+    border: none;
+    width: 100%;
 
-    background: #37C77F;
+    background: rgba(55, 199, 127, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
     color: #FFF;
     border-radius: 20px;
     font-size: 20px;
 
     cursor: pointer;
 
-    transition: opacity 0.5s;
+    transition: opacity 0.2s;
+}
+
+.containerQuestion .saveBt:focus{
+    outline: none;
 }
 
 .containerQuestion .saveBt:hover {
-    opacity: 70%;
+    opacity: 80%;
+}
+
+@media (min-width: 1130px) {
+    .containerQuestion form {
+        width: 60vw;
+    }
+}
+
+@media (max-width: 800px) {
+    .containerQuestion {
+        padding-top: 0;
+    }
+    
+    .containerQuestion form {
+        width: 100vw;
+        padding: 81px 20px 101px 20px;
+        background: rgba(0, 0, 0, 0.2);
+        border: none;
+        margin: 0;
+        border-radius: 0;
+    }
 }

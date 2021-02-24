@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: pizza123
+      MYSQL_DATABASE: development
+    volumes:
+      - /var/lib/mysql
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  api:
+    build: "./server"
+    container_name: backend
+    stdin_open: true
+    tty: true
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_PASSWORD: pizza123
+      DB_USER: root
+    volumes:
+      - ./server:/usr/backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - db
+    command: sh -c "npm install -g knex && knex migrate:latest && knex seed:run && node ./bin/www"

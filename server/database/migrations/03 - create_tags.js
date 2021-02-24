@@ -1,7 +1,12 @@
 exports.up = async function up(knex){
-    return knex.schema.createTable('tags', table => {
-        table.increments('id').primary(),
-        table.string('name')
+
+    knex.schema.hasTable('tags').then(function(exists){
+        if (!exists) {
+            return knex.schema.createTable('tags', table => {
+                table.increments('id').primary()
+                table.string('name')
+            })
+        }
     })
 }
 
