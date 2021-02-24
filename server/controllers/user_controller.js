@@ -1,5 +1,5 @@
 const connection = require('../database/connection')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 exports.newUser = async (req, res) => {
 
