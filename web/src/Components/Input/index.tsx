@@ -8,7 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<InputProps> = ({ onChange, ...rest }) => {
     return (
-        <input className="input" onChange={e => onChange(e.target.value)} { ...rest } />
+        <input className="glass-l2 input" onChange={e => onChange(e.target.value)} { ...rest } />
     );
 }
 

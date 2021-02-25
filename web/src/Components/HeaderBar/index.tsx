@@ -15,12 +15,12 @@ const HeaderBar = () => {
 
     return (
         <>
-            <div className="headerContainer">
+            <div className="glass-l1 headerContainer">
                 <div className="left">
                     <div className="logoArea">
                         <img src={logo} alt="TShareLogo"/>
                     </div>
-                    <div className="searchArea">
+                    <div className="glass-l2 searchArea">
                         <FiSearch color="#FFF" size={24} />
                         <input type="text" placeholder="Pesquisar..." />
                     </div>
@@ -49,7 +49,7 @@ const HeaderBar = () => {
                     <ClickAwayListener
                         onClickAway={() => setMenuStatus(false)}
                     >
-                        <div className="menu">
+                        <div className="glass-l1 menu">
                             <div className="back">
                                 <Link className="menuProfile" to="/Profile">
                                     <div className="picture">
@@ -57,10 +57,10 @@ const HeaderBar = () => {
                                     </div>
                                     <p>Fulano de Tal</p>
                                 </Link>
-                                <div className="menuItem">
+                                <Link className="menuItem" to="/QuestionBank">
                                     <FiFolder size={itemSize} color="#FFF" />
                                     <p>Banco de questões</p>
-                                </div>
+                                </Link>
                                 <div className="menuItem">
                                     <FiUsers size={itemSize} color="#FFF" />
                                     <p>Minhas conexões</p>

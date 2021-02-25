@@ -33,7 +33,7 @@ const Profile = () => {
             <HeaderBar />
             <div className="containerProfile">
                 <div className="left">
-                    <div className="block menuProfile">
+                    <div className="glass-l1 block menuProfile">
                         <div className="profile">
                             <div className="perfilPicture">
                                 <FiUser color="#FFF" size={26} />
@@ -48,7 +48,7 @@ const Profile = () => {
                         <p className="item"><FiFolder color="#FFF" size={24} />34 Questões Compartilhadas</p>
                         <p className="item"><FiBook color="#FFF" size={24} />Professor de Matemática</p>
                     </div>
-                    <div className="block ad">
+                    <div className="glass-l1 block ad">
                         ANUNCIO
                     </div>
                 </div>

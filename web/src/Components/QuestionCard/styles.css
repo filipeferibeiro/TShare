@@ -1,9 +1,4 @@
 .questionCardContainer {
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-sizing: border-box;
-
-    border-radius: 20px;
     padding: 24px;
     color: #FFF;
 
@@ -45,6 +40,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    text-decoration: none;
 }
 
 .questionCardContainer .userField .left .userInfo .userName {

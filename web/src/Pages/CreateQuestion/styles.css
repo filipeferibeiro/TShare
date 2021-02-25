@@ -57,9 +57,12 @@
     .containerQuestion form {
         max-width: 1100px;
 
-        background: rgba(255, 255, 255, 0.4);
+        background: rgba(255, 255, 255, 0.15);
         border: 1px solid rgba(255, 255, 255, 0.18);
         box-sizing: border-box;
+        backdrop-filter: blur(8px);
+        /* Note: backdrop-filter has minimal browser support */
+
         border-radius: 20px;
         padding: 45px;
     }

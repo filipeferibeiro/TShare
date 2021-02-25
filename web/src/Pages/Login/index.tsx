@@ -24,7 +24,7 @@ const Login = () => {
     const [mainSubject, setMainSubject] = useState("");
     const [formation, setFormation] = useState("");
 
-    const { authenticated, handleLogin } = useContext<Ctx>(Context);
+    const { authenticated, isTokenValid, handleLogin } = useContext<Ctx>(Context);
 
     function handleToggleOnRegisterForm() {
         setIsRegister(true);
@@ -47,7 +47,7 @@ const Login = () => {
             formation 
         };
 
-        api.post('/', data).then(() => {
+        api.post('/users', data).then(() => {
             alert("Usuário cadastrado com sucesso!");
 
             handleToggleOffRegisterForm();
@@ -67,7 +67,7 @@ const Login = () => {
         }
     }
 
-    if (authenticated) {
+    if (authenticated && isTokenValid) {
         history.push('/Home');
         return <div>Redirecting...</div>
     } else {
@@ -83,7 +83,7 @@ const Login = () => {
                     </div>
                 </div>
                 <div className="side">
-                    <div id="right">
+                    <div className="right">
                         {!isRegister && 
                             <>
                                 <form onSubmit={handleLoginForm}>

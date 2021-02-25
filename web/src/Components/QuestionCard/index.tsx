@@ -30,16 +30,16 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
     }
 
     return (
-        <div className="questionCardContainer">
+        <div className="glass-l1 questionCardContainer">
             <div className="userField">
-                <div className="left">
+                <Link className="left" to="/Profile">
                     <div className="perfilPicture">
                         <FiUser color="#FFF" size={26} />
                     </div>
                     <div className="userInfo">
                         <p className="userName">{question.authorName}</p>
                     </div>
-                </div>
+                </Link>
                 <p className="addBankBt"><FiPlus color="#FFF" size={19} />Adicionar no banco</p>
                 <p className="addBankBt addBankBtMobile"><FiPlus color="#FFF" size={19} /></p>
             </div>

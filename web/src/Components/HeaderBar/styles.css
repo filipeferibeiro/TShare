@@ -3,12 +3,6 @@
     top: 0;
     left: 0;
     height: 72px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-sizing: border-box;
-    backdrop-filter: blur(6px);
-
-    border-radius: 20px;
     margin: 10px;
     padding: 12px 10px 12px 30px;
     width: calc(100vw - 20px);
@@ -33,11 +27,6 @@
 
 .headerContainer .searchArea {
     height: 48px;
-    background: rgba(255, 255, 255, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-sizing: border-box;
-    backdrop-filter: blur(6px);
-
     border-radius: 15px;
     margin-left: 25px;
 
@@ -145,14 +134,7 @@
     padding: 0 20px;
     padding-bottom: 20px;
 
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-sizing: border-box;
-    backdrop-filter: blur(6px);
-    border-radius: 20px;
     color: #FFF;
-    
-    transition: all 0.5s ease-in-out;
     
     z-index: 3;
 }
@@ -202,6 +184,8 @@
     padding: 10px;
     border-radius: 8px;
     margin-top: 6px;
+
+    text-decoration: none;
 
     cursor: pointer;
     transition: background-color 0.2s;

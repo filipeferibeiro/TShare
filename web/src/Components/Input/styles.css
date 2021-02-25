@@ -2,14 +2,8 @@
     padding: 23px 30px;
     width: 100%;
     
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-sizing: border-box;
-    backdrop-filter: blur(6px);
     border-bottom: 3px solid transparent;
     border-bottom-width: 80%;
-
-    border-radius: 20px;
 
     font-size: 17px;
 }

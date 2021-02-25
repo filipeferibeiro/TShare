@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import HeaderBar from '../../Components/HeaderBar';
 import CheckItens from '../../Components/CheckItens';
@@ -9,6 +9,7 @@ import './styles.css';
 
 import api from '../../Services/api';
 import OptionBar from '../../Components/OptionBar';
+import { Context, Ctx } from '../../Context/AuthContext';
 
 interface Alternative {
     text: string;
@@ -24,6 +25,8 @@ const CreateQuestion = () => {
     const [questionTitle, setQuestionTitle] = useState<string>();
     const [questionDetail, setQuestionDetail] = useState<string>();
     const [questionJustificative, setQuestionJustificative] = useState<string>();
+
+    const { id } = useContext<Ctx>(Context);
 
     const maxTags = 4;;
     const maxAlternatives = 6;
@@ -90,7 +93,7 @@ const CreateQuestion = () => {
         let data = {
             title: questionTitle,
             description: questionDetail,
-            author: 1,
+            author: id,
             tags,
             alternatives: [] as any,
             long_answer: "" as any,
@@ -130,7 +133,7 @@ const CreateQuestion = () => {
         } else if (tags.length < 1) {
             alert("Você deve ter pelo menos uma tag!");
         } else {
-            const data = makeData()
+            const data = makeData();
 
             api.post('questions', data).then(() => {
                 alert("Questão cadastrada com sucesso!");
@@ -160,7 +163,7 @@ const CreateQuestion = () => {
         <>
             <HeaderBar />
             <div className="containerQuestion">
-                <form onSubmit={handleCreateQuestion}>
+                <form className="glass-l1" onSubmit={handleCreateQuestion}>
                     <div className="optionBar">
                         <OptionBar
                             option={option}

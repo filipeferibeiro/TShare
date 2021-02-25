@@ -25,7 +25,7 @@
 
 .containerLogin .left .text {
     font-size: 22px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
     margin-top: 32px;
 }
 
@@ -47,7 +47,7 @@
     color: #60AB85;
 }
 
-.containerLogin #right {
+.containerLogin .right {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,11 +61,11 @@
     padding: 24px;
 }
 
-.containerLogin #right form {
+.containerLogin .right form {
     width: 100%;
 }
 
-.containerLogin #right .backButton {
+.containerLogin .right .backButton {
     display: flex;
     align-items: center;
     width: 100%;
@@ -79,15 +79,15 @@
     transition: opacity 0.2s;
 }
 
-.containerLogin #right .backButton:hover {
+.containerLogin .right .backButton:hover {
     opacity: 80%;
 }
 
-.containerLogin #right .backButton svg {
+.containerLogin .right .backButton svg {
     margin-right: 5px;
 }
 
-.containerLogin #right .rememberMe {
+.containerLogin .right .rememberMe {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -99,7 +99,7 @@
     color: #FFF;
 }
 
-.containerLogin #right .rememberMe input[type=checkbox] {
+.containerLogin .right .rememberMe input[type=checkbox] {
     appearance: none;
 
     width: 25px;
@@ -117,21 +117,21 @@
     cursor: pointer;
 }
 
-.containerLogin #right .rememberMe input[type=checkbox]:focus {
+.containerLogin .right .rememberMe input[type=checkbox]:focus {
     outline: none;
 }
 
-.containerLogin #right .rememberMe input[type=checkbox]:checked {
+.containerLogin .right .rememberMe input[type=checkbox]:checked {
     background: #73D8A5;
 }
 
-.containerLogin #right .separator {
+.containerLogin .right .separator {
     width: 100%;
     margin: 30px 0;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.containerLogin #right .registerButton button {
+.containerLogin .right .registerButton button {
     margin: 0 21px;
 }
 
@@ -143,7 +143,7 @@
         grid-template-columns: 1fr 1fr;
     }
 
-    .containerLogin .side #right {
+    .containerLogin .side .right {
         display: flex;
         flex-direction: column;
         align-items: center;

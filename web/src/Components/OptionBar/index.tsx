@@ -27,7 +27,7 @@ const OptionBar: React.FC<InputProps> = ({ option, setOption, options }) => {
     }
 
     return (
-        <div className="optionBarContainer">
+        <div className="glass-l1 optionBarContainer">
             {options.map((op, index) => (
                 <p key={index} className={handleIsSelected(index)} onClick={() => handleOptions(index)}>{op}</p>
             ))}

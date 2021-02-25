@@ -5,15 +5,20 @@ import api from '../Services/api';
 interface Ctx {
     authenticated: boolean,
     loading: boolean,
+    isTokenValid: boolean,
+    id: number,
     handleLogin(email: string, password: string): any,
-    handleLogOut(): any
+    handleLogOut(): any,
+    handleCheckToken(): any
 }
 
-const Context = createContext<Ctx>({ authenticated: false, handleLogin() {}, loading: true, handleLogOut() {} });
+const Context = createContext<Ctx>({ authenticated: false, handleLogin() {}, loading: true, handleLogOut() {}, isTokenValid: false, id: -1, handleCheckToken() {} });
 
 const AuthProvider: React.FC = ({ children }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isTokenValid, setIsTokenValid] = useState(false);
+    const [id, setId] = useState(-1);
     const history = useHistory();
 
     useEffect(() => {
@@ -21,6 +26,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
         if (token) {
             api.defaults.headers['x-access-token'] = JSON.parse(token);
+            handleCheckToken();
             setAuthenticated(true);
         }
 
@@ -29,7 +35,6 @@ const AuthProvider: React.FC = ({ children }) => {
 
     async function handleLogin(email: string, password: string) {
         const body = {
-            id: 4,
             email,
             password
         }
@@ -39,6 +44,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
             localStorage.setItem('token', JSON.stringify(token));
             api.defaults.headers['x-access-token'] = token;
+
+            handleCheckToken();
         }).catch(() => {
             alert("Login :(")
         });
@@ -50,12 +57,25 @@ const AuthProvider: React.FC = ({ children }) => {
         api.defaults.headers['x-access-token'] = undefined;
         history.push('/');
     }
+    
+    async function handleCheckToken() {
+        api.get('checkToken').then(({ data: { id } }) => {
+            setIsTokenValid(true);
+            setId(id);
+        }).catch(() => {
+            setIsTokenValid(false);
+            setId(-1);
+            handleLogOut();
+            
+            alert("Sua sessão expirou ou não é válida.");
+        });
+    }
 
     if (loading) {
         return <div>Loading...</div>
     } else {
         return (
-            <Context.Provider value={{ authenticated, handleLogin, loading, handleLogOut }}>
+            <Context.Provider value={{ authenticated, handleLogin, loading, handleLogOut, isTokenValid, id, handleCheckToken }}>
                 {children}
             </Context.Provider>
         );

@@ -1,0 +1,123 @@
+.containerQuestionBank {
+    width: 100vw;
+    height: 100vh;
+    margin-top: 101px;
+    padding: 44px;
+
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 44px;
+}
+
+.containerQuestionBank .banks .banksTitle {
+    color: #FFF;
+    font-size: 38px;
+    font-family: 'Ubuntu';
+    font-weight: 400;
+    margin-bottom: 20px;
+
+    cursor: default;
+}
+
+.containerQuestionBank .banks .banksList {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerQuestionBank .banks .banksList .bankItem {
+    display: flex;
+    align-items: center;
+    
+    padding: 23px 20px;
+    
+    font-size: 17px;
+    color: #FFF;
+    
+    background: transparent;
+    border: 1px solid transparent;
+    
+    border-radius: 20px;
+
+    transition: 0.2s;
+
+    cursor: pointer;
+}
+
+.containerQuestionBank .banks .banksList .bankItem:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    backdrop-filter: blur(15px);
+}
+
+.containerQuestionBank .banks .banksList .selected {
+    background: rgba(107, 190, 148, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    box-shadow: 0px 0px 11px 1px rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+
+    transition: 0.2s;
+}
+
+.containerQuestionBank .banks .banksList .selected:hover {
+    background: rgba(107, 190, 148, 0.6);
+    opacity: 80%;
+}
+
+
+.containerQuestionBank .banks .banksList .bankItem + .bankItem {
+    margin-top: 10px;
+}
+
+.containerQuestionBank .banks .banksList .bankItem svg {
+    margin-right: 10px;
+}
+
+.containerQuestionBank .content {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerQuestionBank .content .contentTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    justify-content: space-between;
+}
+
+.containerQuestionBank .content .contentTop .contentTitle {
+    color: #FFF;
+    font-size: 48px;
+    font-family: 'Ubuntu';
+    font-weight: 400;
+    margin-bottom: 20px;
+
+    cursor: default;
+}
+
+.containerQuestionBank .content .contentTop .contentEditBt {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 5px;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+
+    cursor: pointer;
+}
+
+.containerQuestionBank .content .contentTop .contentEditBt:hover {
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    backdrop-filter: blur(15px);
+}
+
+@media(min-width: 1100px) {
+    .containerQuestionBank {
+        max-width: 1100px;
+    }
+}
