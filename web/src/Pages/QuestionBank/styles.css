@@ -2,6 +2,7 @@
     width: 100vw;
     height: 100vh;
     margin-top: 101px;
+    margin-bottom: 20px;
     padding: 44px;
 
     display: grid;
@@ -79,7 +80,7 @@
     flex-direction: column;
 }
 
-.containerQuestionBank .content .contentTop {
+.containerQuestionBank .contentTop {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -87,7 +88,7 @@
     justify-content: space-between;
 }
 
-.containerQuestionBank .content .contentTop .contentTitle {
+.containerQuestionBank .contentTop .contentTitle {
     color: #FFF;
     font-size: 48px;
     font-family: 'Ubuntu';
@@ -97,7 +98,7 @@
     cursor: default;
 }
 
-.containerQuestionBank .content .contentTop .contentEditBt {
+.containerQuestionBank .contentTop .contentEditBt {
     background: transparent;
     border: 1px solid transparent;
     padding: 5px;
@@ -109,7 +110,7 @@
     cursor: pointer;
 }
 
-.containerQuestionBank .content .contentTop .contentEditBt:hover {
+.containerQuestionBank .contentTop .contentEditBt:hover {
     background: rgba(255, 255, 255, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-sizing: border-box;

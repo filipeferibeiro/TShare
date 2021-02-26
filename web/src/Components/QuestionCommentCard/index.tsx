@@ -1,7 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import { FiStar, FiUser } from 'react-icons/fi';
-
-import { Comment } from '../../Pages/QuestionDetail';
+import { Comment } from '../../Interfaces/interfaces';
 
 import './styles.css';
 

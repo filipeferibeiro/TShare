@@ -1,14 +1,36 @@
-import React, { useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FiBook, FiBriefcase, FiEdit, FiFolder, FiMail, FiUser } from 'react-icons/fi';
 import Button from '../../Components/Button';
-import HeaderBar from '../../Components/HeaderBar';
 import QuestionCard from '../../Components/QuestionCard';
 import OptionBar from '../../Components/OptionBar';
 
 import './styles.css';
+import { useHistory } from 'react-router-dom';
+import api from '../../Services/api';
+import { User } from '../../Interfaces/interfaces';
+import { Context, Ctx } from '../../Context/AuthContext';
 
 const Profile = () => {
+    const [user, setUser] = useState<User>();
     const [option, setOption] = useState([true, false, false]);
+
+    const history = useHistory();
+    const { id } = useContext<Ctx>(Context);
+    const idParam = history.location.state as number;
+
+    const handleGetUser = useCallback(() => {
+        api.get(`users/?id=${idParam}`).then(response => {
+            setUser(response.data[0]);
+        })
+    }, [idParam]);
+
+    useEffect(() => {
+        handleGetUser();
+    }, [idParam, handleGetUser]);
+
+    function handleIsLoggedUser() {
+        return id === idParam;
+    }
 
     const mock = {
         id: 1,
@@ -30,7 +52,6 @@ const Profile = () => {
 
     return (
         <>
-            <HeaderBar />
             <div className="containerProfile">
                 <div className="left">
                     <div className="glass-l1 block menuProfile">
@@ -39,12 +60,14 @@ const Profile = () => {
                                 <FiUser color="#FFF" size={26} />
                             </div>
                             <div className="userInfo">
-                                <p className="userName">Fulano de Tal</p>
+                                <p className="userName">{user?.name}</p>
                             </div>
                         </div>
-                        <Button className="editProfileButton"><FiEdit color="#FFF" size={22} />Editar perfil</Button>
-                        <p className="item"><FiMail color="#FFF" size={24} />mail@mail.com</p>
-                        <p className="item"><FiBriefcase color="#FFF" size={24} />Intituto de algum lugar</p>
+                        {handleIsLoggedUser() && 
+                            <Button className="editProfileButton"><FiEdit color="#FFF" size={22} />Editar perfil</Button>
+                        }
+                        <p className="item"><FiMail color="#FFF" size={24} />{user?.email}</p>
+                        <p className="item"><FiBriefcase color="#FFF" size={24} />Instituto de Algum Lugar</p>
                         <p className="item"><FiFolder color="#FFF" size={24} />34 Questões Compartilhadas</p>
                         <p className="item"><FiBook color="#FFF" size={24} />Professor de Matemática</p>
                     </div>
@@ -63,9 +86,9 @@ const Profile = () => {
                         ]}
                     />
                     <div className="listContent">
-                        <QuestionCard stars={10} comments={4} question={mock} />
-                        <QuestionCard stars={10} comments={4} question={mock} />
-                        <QuestionCard stars={10} comments={4} question={mock} />
+                        <QuestionCard id={1} stars={10} comments={4} question={mock} />
+                        <QuestionCard id={2} stars={10} comments={4} question={mock} />
+                        <QuestionCard id={3} stars={10} comments={4} question={mock} />
                     </div>
                 </div>
             </div>

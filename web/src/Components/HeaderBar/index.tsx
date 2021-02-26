@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPlus, FiUser, FiSearch, FiFolder, FiSettings, FiUsers, FiLogOut } from 'react-icons/fi';
 import { ClickAwayListener } from '@material-ui/core';
@@ -6,12 +6,25 @@ import { ClickAwayListener } from '@material-ui/core';
 import logo from '../../assets/logo.svg';
 import './styles.css';
 import { Context, Ctx } from '../../Context/AuthContext';
+import api from '../../Services/api';
+import { User } from '../../Interfaces/interfaces';
 
 const HeaderBar = () => {
     let itemSize = 25;
-
+    
+    const [user, setUser] = useState<User>();
     const [menuStatus, setMenuStatus] = useState(false);
-    const { handleLogOut } = useContext<Ctx>(Context);
+    const { handleLogOut, id } = useContext<Ctx>(Context);
+
+    const handleGetUser = useCallback(() => {
+        api.get(`users/?id=${id}`).then(response => {
+            setUser(response.data[0]);
+        })
+    }, [id]);
+
+    useEffect(() => {
+        handleGetUser();
+    }, [id, handleGetUser]);
 
     return (
         <>
@@ -51,11 +64,17 @@ const HeaderBar = () => {
                     >
                         <div className="glass-l1 menu">
                             <div className="back">
-                                <Link className="menuProfile" to="/Profile">
+                                <Link
+                                    className="menuProfile"
+                                    to={{
+                                        pathname: "/Profile",
+                                        state: id
+                                    }}
+                                >
                                     <div className="picture">
                                         <FiUser color="#FFF" size={17} />
                                     </div>
-                                    <p>Fulano de Tal</p>
+                                    <p>{user?.name}</p>
                                 </Link>
                                 <Link className="menuItem" to="/QuestionBank">
                                     <FiFolder size={itemSize} color="#FFF" />

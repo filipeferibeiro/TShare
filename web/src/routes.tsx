@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Route, BrowserRouter, Switch, Redirect, RouteProps } from 'react-router-dom';
+import HeaderBar from './Components/HeaderBar';
 import { AuthProvider, Context } from './Context/AuthContext';
 import CreateQuestion from './Pages/CreateQuestion';
 import Home from './Pages/Home';
@@ -9,14 +10,18 @@ import QuestionBank from './Pages/QuestionBank';
 import QuestionDetail from './Pages/QuestionDetail';
 
 const PrivateRoute: React.FC<RouteProps> = ({ ...rest }) => {
-    const { authenticated, isTokenValid } = useContext(Context);
+    const { authenticated, loading } = useContext(Context);
 
-    if (!authenticated || !isTokenValid) {
+    if (!authenticated && !loading) {
         return <Redirect to="/" />
     }
 
-    return <Route {...rest} />
-
+    return (
+        <>
+            <HeaderBar />
+            <Route {...rest} />
+        </>
+    );
 }
 
 const Routes = () => {

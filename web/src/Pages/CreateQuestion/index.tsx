@@ -1,6 +1,5 @@
 import React, { FormEvent, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import HeaderBar from '../../Components/HeaderBar';
 import CheckItens from '../../Components/CheckItens';
 import TagItem from '../../Components/TagItem';
 import Field from './Components/Field';
@@ -161,7 +160,6 @@ const CreateQuestion = () => {
 
     return (
         <>
-            <HeaderBar />
             <div className="containerQuestion">
                 <form className="glass-l1" onSubmit={handleCreateQuestion}>
                     <div className="optionBar">

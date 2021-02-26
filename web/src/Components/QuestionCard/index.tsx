@@ -1,20 +1,13 @@
-import React, { InputHTMLAttributes } from 'react';
+import React from 'react';
 import { FiPlus, FiUser, FiStar, FiMessageSquare, FiChevronRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { Question } from '../../Pages/Home';
+import { QuestionCardProps } from '../../Interfaces/interfaces';
 import CheckItens from '../CheckItens';
 import TagItem from '../TagItem';
 
 import './styles.css';
 
-interface QuestionCardProps extends InputHTMLAttributes<HTMLInputElement> {
-    stars: number;
-    comments: number;
-    detail?: boolean;
-    question: Question;
-}
-
-const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, detail }) => {
+const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, detail, id }) => {
     function handleIsAlternative() {
         if ((question.question_type === 0 || question.question_type === 1)) {
             return true;
@@ -30,9 +23,16 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
     }
 
     return (
-        <div className="glass-l1 questionCardContainer">
+        <div id={`questionCardContainer-${id}`} className="glass-l1 questionCardContainer">
             <div className="userField">
-                <Link className="left" to="/Profile">
+                <Link
+                    id={`user-${id}`}
+                    className="left"
+                    to={{
+                        pathname: "/Profile",
+                        state: question.author
+                    }}
+                >
                     <div className="perfilPicture">
                         <FiUser color="#FFF" size={26} />
                     </div>
@@ -40,8 +40,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
                         <p className="userName">{question.authorName}</p>
                     </div>
                 </Link>
-                <p className="addBankBt"><FiPlus color="#FFF" size={19} />Adicionar no banco</p>
-                <p className="addBankBt addBankBtMobile"><FiPlus color="#FFF" size={19} /></p>
+                <button id={`addBank-${id}`} className="addBankBt"><FiPlus color="#FFF" size={19} />Adicionar no banco</button>
+                <button id={`addBankM-${id}`} className="addBankBt addBankBtMobile"><FiPlus color="#FFF" size={19} /></button>
             </div>
             <p className="questionName">{question.title}</p>
             <p className="questionDetail">{question.description}</p>
@@ -80,7 +80,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
                     <p className="action"><FiMessageSquare color="#FFF" size={22} />{comments} Comentários</p>
                 </div>
                 {!detail &&
-                    <Link 
+                    <Link
+                        id={`seeMore-${id}`}
                         className="action" 
                         to={{
                             pathname: "/QuestionDetail",

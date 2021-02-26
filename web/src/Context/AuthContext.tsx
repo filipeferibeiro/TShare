@@ -1,5 +1,6 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Loading from '../Pages/Loading';
 import api from '../Services/api';
 
 interface Ctx {
@@ -21,18 +22,6 @@ const AuthProvider: React.FC = ({ children }) => {
     const [id, setId] = useState(-1);
     const history = useHistory();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-
-        if (token) {
-            api.defaults.headers['x-access-token'] = JSON.parse(token);
-            handleCheckToken();
-            setAuthenticated(true);
-        }
-
-        setLoading(false);
-    }, []);
-
     async function handleLogin(email: string, password: string) {
         const body = {
             email,
@@ -40,8 +29,6 @@ const AuthProvider: React.FC = ({ children }) => {
         }
 
         api.post('login', body).then(({ data: { token } }) => {
-            setAuthenticated(true);
-
             localStorage.setItem('token', JSON.stringify(token));
             api.defaults.headers['x-access-token'] = token;
 
@@ -51,28 +38,40 @@ const AuthProvider: React.FC = ({ children }) => {
         });
     }
 
-    function handleLogOut() {
+    const handleLogOut = useCallback(() => {
         setAuthenticated(false);
         localStorage.removeItem('token');
         api.defaults.headers['x-access-token'] = undefined;
         history.push('/');
-    }
+    }, [history]);
     
-    async function handleCheckToken() {
+    const handleCheckToken = useCallback(() => {
         api.get('checkToken').then(({ data: { id } }) => {
-            setIsTokenValid(true);
+            setAuthenticated(true);
             setId(id);
+            setLoading(false);
         }).catch(() => {
-            setIsTokenValid(false);
             setId(-1);
+            setLoading(false);
             handleLogOut();
             
             alert("Sua sessão expirou ou não é válida.");
         });
-    }
+    }, [handleLogOut]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            api.defaults.headers['x-access-token'] = JSON.parse(token);
+            handleCheckToken();
+        } else {
+            setLoading(false);
+        }
+    }, [handleCheckToken]);
 
     if (loading) {
-        return <div>Loading...</div>
+        return <Loading />
     } else {
         return (
             <Context.Provider value={{ authenticated, handleLogin, loading, handleLogOut, isTokenValid, id, handleCheckToken }}>
@@ -80,7 +79,6 @@ const AuthProvider: React.FC = ({ children }) => {
             </Context.Provider>
         );
     }
-
 }
 
 export { Context, AuthProvider };
