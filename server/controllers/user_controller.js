@@ -22,12 +22,22 @@ exports.newUser = async (req, res) => {
    
 }
 
-exports.getById = async (req, res) => {
-    const userId = req.query.id
-
-    return await connection('users').select("*").where("id","=", userId)
-}
-
 exports.getAll = async (req, res) => {
-    return res.status(200).send({'message': 'cu'})
+    try {
+        connection('users').select("id", "name", "email", "reputation", "lastLogin", "accountCreation").modify((queryBuilder) => {
+            if (req.query.id) {
+             queryBuilder.where("id","=", req.query.id)
+            }
+            if (req.query.email) {
+                queryBuilder.where("email", "=", req.query.email)
+            }
+        })
+        .then((results) => {
+            res.status(200).json(results) 
+        })
+       
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({error: "server error"})
+    }
 }
