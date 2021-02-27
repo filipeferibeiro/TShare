@@ -7,17 +7,23 @@
 }
 
 .addItemTextField .add {
+    display: flex;
+    justify-content: center;
+    height: 55px;
+    align-items: center;
     background: rgba(255, 214, 102, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-sizing: border-box;
-    display: flex;
-    align-items: center;
     padding: 18px;
     border-radius: 20px;
     color: #FFF;
     cursor: pointer;
     margin-left: 10px;
     transition: opacity 0.2s;
+}
+
+.addItemTextField .addMobile {
+    display: none;
 }
 
 .addItemTextField .add:hover {
@@ -27,4 +33,20 @@
 .addItemTextField .field {
     flex-grow: 100;
     margin-top: 0;
+}
+
+@media (max-width: 800px) {
+    .addItemTextField .add {
+        display: none;
+    }
+
+    .addItemTextField .addMobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 55px;
+        height: 55px;
+        border-radius: 500px;
+    }
 }

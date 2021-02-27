@@ -5,9 +5,10 @@ import './styles.css';
 interface InputProps {
     option: boolean[];
     setOption(option: boolean[]): any;
+    options: string[];
 }
 
-const OptionBar: React.FC<InputProps> = ({ option, setOption }) => {
+const OptionBar: React.FC<InputProps> = ({ option, setOption, options }) => {
     function handleOptions(index:number) {
         if (index === 0) {
             setOption([true, false, false])
@@ -26,10 +27,10 @@ const OptionBar: React.FC<InputProps> = ({ option, setOption }) => {
     }
 
     return (
-        <div className="optionBarContainer">
-            <p className={handleIsSelected(0)} onClick={() => handleOptions(0)}>Objetiva</p>
-            <p className={handleIsSelected(1)} onClick={() => handleOptions(1)}>Objetiva Justificada</p>
-            <p className={handleIsSelected(2)} onClick={() => handleOptions(2)}>Discursiva</p>
+        <div className="glass-l1 optionBarContainer">
+            {options.map((op, index) => (
+                <p key={index} className={handleIsSelected(index)} onClick={() => handleOptions(index)}>{op}</p>
+            ))}
         </div>
     );
 }

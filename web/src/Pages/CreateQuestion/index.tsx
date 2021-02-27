@@ -1,6 +1,5 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import HeaderBar from '../../Components/HeaderBar';
 import CheckItens from '../../Components/CheckItens';
 import TagItem from '../../Components/TagItem';
 import Field from './Components/Field';
@@ -8,7 +7,8 @@ import Field from './Components/Field';
 import './styles.css';
 
 import api from '../../Services/api';
-import OptionBar from './Components/OptionBar';
+import OptionBar from '../../Components/OptionBar';
+import { Context, Ctx } from '../../Context/AuthContext';
 
 interface Alternative {
     text: string;
@@ -24,6 +24,8 @@ const CreateQuestion = () => {
     const [questionTitle, setQuestionTitle] = useState<string>();
     const [questionDetail, setQuestionDetail] = useState<string>();
     const [questionJustificative, setQuestionJustificative] = useState<string>();
+
+    const { id } = useContext<Ctx>(Context);
 
     const maxTags = 4;;
     const maxAlternatives = 6;
@@ -90,7 +92,7 @@ const CreateQuestion = () => {
         let data = {
             title: questionTitle,
             description: questionDetail,
-            author: 1,
+            author: id,
             tags,
             alternatives: [] as any,
             long_answer: "" as any,
@@ -130,12 +132,12 @@ const CreateQuestion = () => {
         } else if (tags.length < 1) {
             alert("Você deve ter pelo menos uma tag!");
         } else {
-            const data = makeData()
+            const data = makeData();
 
             api.post('questions', data).then(() => {
                 alert("Questão cadastrada com sucesso!");
 
-                history.push('/');
+                history.push('/Home');
             }).catch(() => {
                 alert("Erro ao cadastrar questão, tente novamente.")
             });
@@ -158,11 +160,18 @@ const CreateQuestion = () => {
 
     return (
         <>
-            <HeaderBar />
             <div className="containerQuestion">
-                <form onSubmit={handleCreateQuestion}>
+                <form className="glass-l1" onSubmit={handleCreateQuestion}>
                     <div className="optionBar">
-                        <OptionBar option={option} setOption={setOption} />
+                        <OptionBar
+                            option={option}
+                            setOption={setOption}
+                            options={[
+                                "Objetiva",
+                                "Objetiva Justificada",
+                                "Discursiva"
+                            ]}
+                        />
                     </div>
                     <Field
                         id="inputQuestionTitle"

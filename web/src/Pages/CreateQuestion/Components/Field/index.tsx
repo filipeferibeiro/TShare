@@ -1,6 +1,7 @@
 import React, { InputHTMLAttributes, useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import AddField from '../../../../Components/AddField';
+import Input from '../../../../Components/Input';
 import Slider from '../../../../Components/Slider';
 
 import './styles.css';
@@ -34,10 +35,10 @@ const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, f
                 }
                 </div>
                 {type.toLocaleLowerCase() === "text" &&
-                    <input id={id} type="text" value={inputValue} onChange={(e) => handleInputValue(e.target.value)} required />
+                    <Input id={id} type="text" value={inputValue} onChange={handleInputValue} required />
                 }
                 {type.toLocaleLowerCase() === "textarea" && 
-                    <textarea id={id} value={inputValue} onChange={(e) => handleInputValue(e.target.value)} required />
+                    <textarea className="glass-l2" id={id} value={inputValue} onChange={(e) => handleInputValue(e.target.value)} required />
                 }
                 {type.toLocaleLowerCase() === "image" &&
                     <div className="imageField">

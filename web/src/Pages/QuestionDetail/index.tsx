@@ -1,21 +1,12 @@
 import React, { FormEvent, useCallback, useEffect, useState } from 'react'
 import { FiPlus, FiX } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
-import HeaderBar from '../../Components/HeaderBar';
 import QuestionCard from '../../Components/QuestionCard';
 import QuestionCommentCard from '../../Components/QuestionCommentCard';
+import { Comment, Question } from '../../Interfaces/interfaces';
 import api from '../../Services/api';
-import { Question } from '../Home';
 
 import './styles.css';
-
-export interface Comment {
-    id: number,
-    text: string,
-    authorId: number,
-    name: string,
-    creationDate: string
-}
 
 const QuestionDetail: React.FC = () => {
     const [question, setQuestion] = useState<Question>();
@@ -82,12 +73,12 @@ const QuestionDetail: React.FC = () => {
 
     return (
         <>
-            <HeaderBar />
             <div className="questionDetailContainer">
                 {question &&
                     <>
                         <div className="questionBlock">
                             <QuestionCard
+                                id={1}
                                 detail
                                 question={question}
                                 stars={10}
@@ -99,8 +90,9 @@ const QuestionDetail: React.FC = () => {
                                 <p className="title">Comentários</p>
                                 <p className="addCommentBt" onClick={handleOpenCommentBox}><FiPlus color="#FFF" size={19} />Novo comentário</p>
                             </div>
-                            {comments.map((_comment:Comment) => 
-                                <QuestionCommentCard 
+                            {comments.map((_comment:Comment, index) => 
+                                <QuestionCommentCard
+                                    key={index}
                                     comment={_comment}
                                 />
                             )}

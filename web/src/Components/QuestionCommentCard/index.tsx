@@ -1,7 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import { FiStar, FiUser } from 'react-icons/fi';
-
-import { Comment } from '../../Pages/QuestionDetail';
+import { Comment } from '../../Interfaces/interfaces';
 
 import './styles.css';
 
@@ -11,7 +10,7 @@ interface QuestionCommentCardProps extends InputHTMLAttributes<HTMLInputElement>
 
 const QuestionCommentCard: React.FC<QuestionCommentCardProps> = ({ comment }) => {
     return (
-        <div className="questionCommentContainer">
+        <div className="glass-l1 questionCommentContainer">
             <div className="userField">
                 <div className="left">
                     <div className="perfilPicture">

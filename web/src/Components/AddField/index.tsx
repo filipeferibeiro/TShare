@@ -1,5 +1,6 @@
 import React, { InputHTMLAttributes, useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
+import Input from '../Input';
 
 import './styles.css';
 
@@ -18,11 +19,11 @@ const AddField: React.FC<AddFieldProps> = ({ func, id }) => {
 
     return (
         <div className="addItemTextField">
-            <input id={id} className="field" type="text" value={value} onChange={(e) => setValue(e.target.value)}/>
+            <Input id={id} type="text" value={value} onChange={setValue} />
             <p id={`${id}AddBt`} className="add" onClick={handleAdd}><FiPlus color="#FFF" size={19} />Adicionar</p>
+            <p id={`${id}AddBt`} className="add addMobile" onClick={handleAdd}><FiPlus color="#FFF" size={19} /></p>
         </div>
     );
 }
 
 export default AddField;
-
