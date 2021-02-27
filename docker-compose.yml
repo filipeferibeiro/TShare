@@ -33,3 +33,12 @@ services:
     links:
       - db
     command: sh -c "npm install -g knex && knex migrate:latest && knex seed:run && node ./bin/www"
+  ui:
+    build: "./web"
+    container_name: frontend
+    ports:
+      - "3333:3333"
+    depends_on:
+      - api
+    volumes:
+      - ./server:/usr/frontend
