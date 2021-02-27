@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/questions_controller')
+const utils = require('../utils/jwt-verify')
 
-router.get('/:id', controller.getById)
-router.get('/', controller.getAll)
-router.post('/', controller.post);
-router.put('/:id', controller.put);
-router.delete('/:id', controller.delete);
+
+router.get('/questions/:id', utils.verifyJWT, controller.getById)
+router.get('/questions/',utils.verifyJWT,  controller.getAll)
+router.post('/questions/',utils.verifyJWT, controller.post);
+router.put('/questions/:id',utils.verifyJWT,  controller.put);
+router.delete('/questions/:id',utils.verifyJWT,  controller.delete);
 
 module.exports = router;

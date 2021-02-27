@@ -1,13 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user_controller')
-const loginController = require('../controllers/login_controller')
+const utils = require('../utils/jwt-verify')
 
-/* GET users listing. */
-router.get('/', userController.getAll)
-router.post('/', userController.newUser)
-router.get('/:id', userController.getById)
-router.post('/login', loginController.login)
-// router.post('/logout', loginController.logout)
+router.get('/users', utils.verifyJWT, userController.getAll)
+router.post('/users', userController.newUser)
 
 module.exports = router;

@@ -57,10 +57,10 @@ exports.post = async (req, res) => {
 }
 
 exports.put = async (req, res) => {
-    const updatedcomment = req.body
+    const updatedComment = req.body
     const commentId = req.params.id
     try {
-        await connection('comments').where({id: questionId}).update(updatedQuestion)
+        await connection('comments').where({id: commentId}).update(updatedComment)
         return res.status(200).send({message: "comment updated"})    
     } catch (error) {
         return res.status(500).send({error_msg: `${error}`})
