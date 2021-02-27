@@ -13,7 +13,7 @@
     justify-content: space-between;
     align-items: center;
 
-    color: #8FA7B2;
+    color: #FFF;
 }
 
 .field .nameField .left {
@@ -41,9 +41,6 @@
 
 .field input, textarea {
     height: 55px;
-    border-radius: 20px;
-    background: #F5F8FA;
-    border: 1px solid #D3E2E5;
     padding: 0 20px;
     font-size: 16px;
 

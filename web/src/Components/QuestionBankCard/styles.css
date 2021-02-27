@@ -1,0 +1,78 @@
+.containerBankCard {
+    padding: 22px;
+}
+
+.containerBankCard + .containerBankCard {
+    margin-top: 20px;
+}
+
+.containerBankCard .titleContainer {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+}
+
+.containerBankCard .titleContainer .remove {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 46px;
+    padding: 13px;
+
+    margin-right: 15px;
+    
+    background: #E72E2E;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius: 100px;
+
+    transition: 0.2s;
+}
+
+.containerBankCard .titleContainer .remove:hover {
+    opacity: 80%;
+}
+
+.containerBankCard .titleContainer .title {
+    color: #FFF;
+    font-size: 19px;
+
+    opacity: 85%;
+}
+
+.containerBankCard .cardActions {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.containerBankCard .cardActions .cardActionsLeft {
+    display: flex;
+    flex-direction: row;
+}
+.containerBankCard .cardActions .action {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    text-decoration: none;
+    color: #FFF;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.containerBankCard .cardActions .action:hover {
+    opacity: 70%;
+}
+
+.containerBankCard .cardActions .action svg {
+    margin-right: 6px;
+}
+
+.containerBankCard .cardActions .action + .action{
+    margin-left: 15px;
+}

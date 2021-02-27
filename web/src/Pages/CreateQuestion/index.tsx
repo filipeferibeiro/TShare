@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
-import HeaderBar from '../../Components/HeaderBar';
+import React, { FormEvent, useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import CheckItens from '../../Components/CheckItens';
 import TagItem from '../../Components/TagItem';
 import Field from './Components/Field';
 
 import './styles.css';
+
+import api from '../../Services/api';
+import OptionBar from '../../Components/OptionBar';
+import { Context, Ctx } from '../../Context/AuthContext';
 
 interface Alternative {
     text: string;
@@ -12,10 +16,16 @@ interface Alternative {
 }
 
 const CreateQuestion = () => {
+    const history = useHistory();
+
+    const [option, setOption] = useState([true, false, false]);
     const [alternatives, setAlternatives] = useState<Alternative[]>([]);
     const [tags, setTags] = useState<string[]>([]);
     const [questionTitle, setQuestionTitle] = useState<string>();
     const [questionDetail, setQuestionDetail] = useState<string>();
+    const [questionJustificative, setQuestionJustificative] = useState<string>();
+
+    const { id } = useContext<Ctx>(Context);
 
     const maxTags = 4;;
     const maxAlternatives = 6;
@@ -63,24 +73,108 @@ const CreateQuestion = () => {
         setTags(tags.filter((_, index) => index !== i));
     }
 
-    function handleSend() {
-        const data = {
-            stem: questionTitle,
-            author: 1,
-            detail: questionDetail,
-            alternatives,
-            tags
-        };
+    function hasAlternativeCheck() {
+        let status:boolean = false;
+        alternatives.forEach((alternative:Alternative) => {
+            if (alternative.correct) {
+                status = true;
+            }
+        });
 
-        console.log(JSON.stringify(data));
+        return status;
+    }
+
+    function selectedOption() {
+        return option.indexOf(true);
+    }
+
+    function makeData() {
+        let data = {
+            title: questionTitle,
+            description: questionDetail,
+            author: id,
+            tags,
+            alternatives: [] as any,
+            long_answer: "" as any,
+            question_type: selectedOption()
+        }
+
+        if (handleIsAlternative()) {
+            data = {
+                ...data,
+                alternatives: alternatives
+            }
+            if (option[1]) {
+                data = {
+                    ...data,
+                    long_answer: questionJustificative
+                }
+            }
+        }
+
+        if (handleIsJustificative()) {
+            data = {
+                ...data,
+                long_answer: questionJustificative
+            }
+        }
+
+        return data;
+    }
+
+    function handleCreateQuestion(e: FormEvent) {
+        e.preventDefault();
+
+        if (alternatives.length < 2 && (option[0] || option[1])) {
+            alert("Você deve ter pelo menos 2 alternativas!");
+        } else if (!hasAlternativeCheck() && (option[0] || option[1])) {
+            alert("Você deve marcar uma alternativa como correta!");
+        } else if (tags.length < 1) {
+            alert("Você deve ter pelo menos uma tag!");
+        } else {
+            const data = makeData();
+
+            api.post('questions', data).then(() => {
+                alert("Questão cadastrada com sucesso!");
+
+                history.push('/Home');
+            }).catch(() => {
+                alert("Erro ao cadastrar questão, tente novamente.")
+            });
+        }
+    }
+
+    function handleIsAlternative() {
+        if ((option[0] || option[1])) {
+            return true;
+        }
+        return false;
+    }
+    
+    function handleIsJustificative() {
+        if ((option[1] || option[2])) {
+            return true;
+        }
+        return false;
     }
 
     return (
         <>
-            <HeaderBar />
             <div className="containerQuestion">
-                <form action="">
+                <form className="glass-l1" onSubmit={handleCreateQuestion}>
+                    <div className="optionBar">
+                        <OptionBar
+                            option={option}
+                            setOption={setOption}
+                            options={[
+                                "Objetiva",
+                                "Objetiva Justificada",
+                                "Discursiva"
+                            ]}
+                        />
+                    </div>
                     <Field
+                        id="inputQuestionTitle"
                         label="Questão"
                         type="text"
                         func={setQuestionTitle}
@@ -94,29 +188,43 @@ const CreateQuestion = () => {
                     />
 
                     <Field
+                        id="textAreaQuestionDetail"
                         label="Detalhamento"
                         type="textarea"
                         func={setQuestionDetail}
                     />
 
-                    <Field
-                        label="Alternativas"
-                        labelAlt="Selecione a correta"
-                        limit={maxAlternatives}
-                        type="alternatives"
-                        func={handleAlternatives}
-                    >
-                        {alternatives.map((alternative:Alternative, i) => (
-                            <CheckItens 
-                                key={i} 
-                                name="alternatives" 
-                                label={alternative.text} 
-                                deleteFunction={handleDeleteAlternatives} 
-                                selectFunction={handleSelectAlternatives} 
-                                i={i} 
-                            />
-                        ))}
-                    </Field>
+                    {handleIsAlternative() && 
+                        <Field
+                            id="inputAlternatives"
+                            label="Alternativas"
+                            labelAlt="Selecione a correta"
+                            limit={maxAlternatives}
+                            type="alternatives"
+                            func={handleAlternatives}
+                        >
+                            {alternatives.map((alternative:Alternative, i) => (
+                                <CheckItens 
+                                    id="checkAlternative"
+                                    key={i} 
+                                    name="alternatives" 
+                                    label={alternative.text} 
+                                    deleteFunction={handleDeleteAlternatives} 
+                                    selectFunction={handleSelectAlternatives} 
+                                    i={i} 
+                                />
+                            ))}
+                        </Field>
+                    }
+
+                    {handleIsJustificative() &&
+                        <Field
+                            id="textAreaJustificative"
+                            label="Resposta"
+                            type="textarea"
+                            func={setQuestionJustificative}
+                        />
+                    }
 
                     <Field 
                         label="Disciplina"
@@ -126,17 +234,18 @@ const CreateQuestion = () => {
                     />
 
                     <Field
+                        id="inputTags"
                         label="Tags"
                         type="tags"
                         limit={maxTags}
                         func={handleTags}
                     >
                         {tags.map((tag:string, i) => (
-                            <TagItem key={i} label={tag} i={i} deleteFunction={handleDeleteTags} />
+                            <TagItem id="tagItem" key={i} label={tag} i={i} deleteFunction={handleDeleteTags} />
                         ))}
                     </Field>
 
-                    <p className="saveBt" onClick={handleSend}>Salvar questão</p>
+                    <button id="saveQuestionBt" type="submit" className="saveBt">Salvar questão</button>
                 </form>
             </div>
         </>

@@ -1,44 +1,94 @@
-import React, { InputHTMLAttributes } from 'react';
-import { FiPlus, FiUser, FiStar, FiMessageSquare } from 'react-icons/fi';
+import React from 'react';
+import { FiPlus, FiUser, FiStar, FiMessageSquare, FiChevronRight } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+import { QuestionCardProps } from '../../Interfaces/interfaces';
+import CheckItens from '../CheckItens';
 import TagItem from '../TagItem';
 
 import './styles.css';
 
-interface QuestionCardProps extends InputHTMLAttributes<HTMLInputElement> {
-    userName: string;
-    subject: string;
-    questionName: string;
-    questionDetail: string;
-    stars: number;
-    comments: number;
-    tags: string[];
-}
+const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, detail, id }) => {
+    function handleIsAlternative() {
+        if ((question.question_type === 0 || question.question_type === 1)) {
+            return true;
+        }
+        return false;
+    }
+    
+    function handleIsJustificative() {
+        if ((question.question_type === 1 || question.question_type === 2)) {
+            return true;
+        }
+        return false;
+    }
 
-const QuestionCard: React.FC<QuestionCardProps> = ({ userName, subject, questionName, questionDetail, stars, comments, tags }) => {
     return (
-        <div className="questionCardContainer">
+        <div id={`questionCardContainer-${id}`} className="glass-l1 questionCardContainer">
             <div className="userField">
-                <div className="left">
+                <Link
+                    id={`user-${id}`}
+                    className="left"
+                    to={{
+                        pathname: "/Profile",
+                        state: question.author
+                    }}
+                >
                     <div className="perfilPicture">
                         <FiUser color="#FFF" size={26} />
                     </div>
                     <div className="userInfo">
-                        <p className="userName">{userName}</p>
-                        <p className="questionSubject">Questão de {subject}</p>
+                        <p className="userName">{question.authorName}</p>
                     </div>
-                </div>
-                <p className="addBankBt"><FiPlus color="#FFF" size={19} />Adicionar no banco</p>
+                </Link>
+                <button id={`addBank-${id}`} className="addBankBt"><FiPlus color="#FFF" size={19} />Adicionar no banco</button>
+                <button id={`addBankM-${id}`} className="addBankBt addBankBtMobile"><FiPlus color="#FFF" size={19} /></button>
             </div>
-            <p className="questionName">{questionName}</p>
-            <p className="questionDetail">{questionDetail}</p>
+            <p className="questionName">{question.title}</p>
+            <p className="questionDetail">{question.description}</p>
 
+            {detail && 
+                <div className="answerField">
+                    {handleIsAlternative() &&
+                        <>
+                            <p className="choicesGroup">Alternativas</p>
+                            {question.alternatives.map((alternative, index) => (
+                                <CheckItens
+                                    detail
+                                    key={index}
+                                    name="alternativesDetail"
+                                    label={alternative.text}
+                                    selected={alternative.correct === 1}
+                                />
+                            ))}
+                        </>
+                    }
+                    {handleIsJustificative() &&
+                        <>
+                            <p className="choicesGroup">Resposta</p>
+                            <p className="longAnswer">{question.long_answer}</p>
+                        </>
+                    }
+                </div>
+            }
             <div className="tagsContainer">
-                {tags.map((tag, i) => <TagItem label={tag} i={i} />)}
+                {question.tags.map((tag, i) => <TagItem label={tag} i={i} key={i} />)}
             </div>
 
             <div className="cardActions">
-                <p className="action"><FiStar color="#8FA7B2" size={22} />{stars} Estrelas</p>
-                <p className="action"><FiMessageSquare color="#8FA7B2" size={22} />{comments} Comentários</p>
+                <div className="cardActionsLeft">
+                    <p className="action"><FiStar color="#FFF" size={22} />{stars} Estrelas</p>
+                    <p className="action"><FiMessageSquare color="#FFF" size={22} />{comments} Comentários</p>
+                </div>
+                {!detail &&
+                    <Link
+                        id={`seeMore-${id}`}
+                        className="action" 
+                        to={{
+                            pathname: "/QuestionDetail",
+                            state: question.id
+                        }}
+                    >Ver Mais<FiChevronRight color="#FFF" size={22} /></Link>
+                }
             </div>
         </div>
     )

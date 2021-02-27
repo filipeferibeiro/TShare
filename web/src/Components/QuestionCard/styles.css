@@ -1,22 +1,19 @@
 .questionCardContainer {
-    border: 1px solid #D3E2E5;
-    background: #FFF;
-    border-radius: 20px;
-    padding: 45px;
-    padding: 45px 45px 30px 45px;
-    color: #8FA7B2;
+    padding: 24px;
+    color: #FFF;
 
-    width: 60vw;
+    width: initial;
     display: flex;
     flex-direction: column;
     margin-bottom: 24px;
 }
 
 .questionCardContainer .userField .perfilPicture {
-    width: 60px;
-    height: 60px;
-    border: 1px solid #D3E2E5;
-    background: #E72E2E;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
     border-radius: 50%;
 
     display: flex;
@@ -34,13 +31,23 @@
 }
 
 .questionCardContainer .userField .left {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    border-radius: 90px;
+    padding: 4px 24px 4px 4px;
+
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    text-decoration: none;
 }
 
 .questionCardContainer .userField .left .userInfo .userName {
-    font-size: 20px;
+    font-size: 17px;
+    font-weight: 300;
+    color: #FFF;
 }
 
 .questionCardContainer .userField .left .userInfo .questionSubject {
@@ -52,8 +59,8 @@
     padding: 14px 26px;
     height: 48px;
     background: #6BBE94;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 60px;
-    margin-right: 10px;
     
     font-size: 17px;
     font-weight: 300;
@@ -64,7 +71,11 @@
     align-items: center;
     cursor: pointer;
     
-    transition: background-color 0.3s;
+    transition: opacity 0.2s;
+}
+
+.questionCardContainer .userField .addBankBtMobile {
+    display: none;
 }
 
 .questionCardContainer .userField .addBankBt svg {
@@ -72,7 +83,7 @@
 }
 
 .questionCardContainer .userField .addBankBt:hover {
-    background: #37C77F;
+    opacity: 80%;
 }
 
 .questionCardContainer .questionName {
@@ -82,6 +93,7 @@
 
 .questionCardContainer .questionDetail {
     opacity: 80%;
+    white-space: pre-line;
 }
 
 .questionCardContainer .tagsContainer {
@@ -95,6 +107,12 @@
     flex-direction: row;
     margin-top: 30px;
     align-items: center;
+    justify-content: space-between;
+}
+
+.questionCardContainer .cardActions .cardActionsLeft {
+    display: flex;
+    flex-direction: row;
 }
 
 .questionCardContainer .cardActions .action {
@@ -102,6 +120,8 @@
     flex-direction: row;
     align-items: center;
 
+    text-decoration: none;
+    color: #FFF;
     font-size: 14px;
     cursor: pointer;
 }
@@ -116,4 +136,47 @@
 
 .questionCardContainer .cardActions .action + .action{
     margin-left: 15px;
+}
+
+.questionCardContainer .answerField .choicesGroup {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-left: 22px;
+}
+
+.questionCardContainer .answerField .longAnswer {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-top: 10px;
+
+    color: #FFF;
+}
+
+@media (max-width: 800px) {
+    .questionCardContainer {
+        padding: 24px 15px;
+    }
+
+    .questionCardContainer .userField .addBankBt {
+        display: none;
+    }
+
+    .questionCardContainer .userField .addBankBtMobile svg {
+        margin-right: 0;
+    }
+
+    .questionCardContainer .userField .addBankBtMobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 55px;
+        height: 55px;
+        padding: 0;
+        border-radius: 500px;
+    }
 }
