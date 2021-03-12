@@ -24,11 +24,11 @@ export interface Question {
 };
 
 export interface Comment {
-    id: number,
-    text: string,
-    authorId: number,
-    name: string,
-    creationDate: string
+    id: number;
+    text: string;
+    authorId: number;
+    name: string;
+    creationDate: string;
 };
 
 export interface QuestionCardProps {
@@ -37,4 +37,15 @@ export interface QuestionCardProps {
     comments: number;
     detail?: boolean;
     question: Question;
+}
+
+export interface Banks {
+    id: number;
+    title: string;
+}
+
+export interface PopupDialogProps {
+    popupDialogStatus: boolean;
+    setPopupDialogStatus(status: boolean): any;
+    title: string;
 }

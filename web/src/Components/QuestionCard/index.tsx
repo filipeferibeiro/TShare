@@ -1,13 +1,21 @@
-import React from 'react';
-import { FiPlus, FiUser, FiStar, FiMessageSquare, FiChevronRight } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FiPlus, FiUser, FiStar, FiMessageSquare, FiChevronRight, FiMinus } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { QuestionCardProps } from '../../Interfaces/interfaces';
+import Button from '../Button';
 import CheckItens from '../CheckItens';
+import PopupDialog from '../PopupDialog';
 import TagItem from '../TagItem';
 
 import './styles.css';
 
 const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, detail, id }) => {
+    const [popupAddToBankStatus, setPopupAddToBankStatus] = useState(false);
+
+    function handleOpenPopupAddToBank() {
+        setPopupAddToBankStatus(true);
+    }
+
     function handleIsAlternative() {
         if ((question.question_type === 0 || question.question_type === 1)) {
             return true;
@@ -23,6 +31,40 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
     }
 
     return (
+        <>
+        <PopupDialog
+            popupDialogStatus={popupAddToBankStatus}
+            setPopupDialogStatus={setPopupAddToBankStatus}
+            title="Adicionar/Remover do banco"
+        >
+            <p className="questionName">{question.title}</p>
+            <div className="listBanks">
+                <div className="bankItem">
+                    <p className="bankName glass-l2">Banco 1</p>
+                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
+                </div>
+                <div className="bankItem">
+                    <p className="bankName glass-l2">Banco 2</p>
+                    <Button className="removeBank"><FiMinus color="#FFF" size={22} />Remover</Button>
+                </div>
+                <div className="bankItem">
+                    <p className="bankName glass-l2">Banco 3</p>
+                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
+                </div>
+                <div className="bankItem">
+                    <p className="bankName glass-l2">Banco 4</p>
+                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
+                </div>
+                <div className="bankItem">
+                    <p className="bankName glass-l2">Banco 5</p>
+                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
+                </div>
+                <div className="bankItem">
+                    <p className="bankName glass-l2">Banco 6</p>
+                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
+                </div>
+            </div>
+        </PopupDialog>
         <div id={`questionCardContainer-${id}`} className="glass-l1 questionCardContainer">
             <div className="userField">
                 <Link
@@ -40,8 +82,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
                         <p className="userName">{question.authorName}</p>
                     </div>
                 </Link>
-                <button id={`addBank-${id}`} className="addBankBt"><FiPlus color="#FFF" size={19} />Adicionar no banco</button>
-                <button id={`addBankM-${id}`} className="addBankBt addBankBtMobile"><FiPlus color="#FFF" size={19} /></button>
+                <button id={`addBank-${id}`} className="addBankBt" onClick={handleOpenPopupAddToBank}><FiPlus color="#FFF" size={19} /></button>
             </div>
             <p className="questionName">{question.title}</p>
             <p className="questionDetail">{question.description}</p>
@@ -91,6 +132,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
                 }
             </div>
         </div>
+        </>
     )
 }
 
