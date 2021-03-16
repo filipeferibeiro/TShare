@@ -11,7 +11,8 @@ exports.getBanks = async (req, res) => {
                 queryBuilder.where("author", "=", req.query.author)
             }
         }).then((results) => {
-           res.status(200).json(results)
+            console.log("Bancos de questões encontrados")
+            res.status(200).json(results)
         })
 
         
@@ -27,9 +28,11 @@ exports.post = async(req, res) => {
         title: req.body.title,
         author: req.body.author
     }
+
+    console.log(question_bank)
     
     try {
-        connection("question_banks").insert(question_bank)
+        await connection("question_banks").insert(question_bank)
         return res.status(201).send({"message": `Banco de questões ${question_bank.title} criado com sucesso`})
     } catch (error) {
         return res.status(500).send({"error": error})
@@ -41,8 +44,8 @@ exports.checkBanksOfQuestion = async (req, res) => {
     const questionId = req.query.id
     try {
         
-        connection("question_banks").innerJoin('questionbanks_questions as bq1', 'question_banks.id', '=', 'bq.question_bank_id')
-        .innerJoin('questionbanks_questions as bq2', questionId, '=', 'bq2.question_bank_id').then((results) => {
+        await connection("question_banks").innerJoin('question_banks_questions as bq1', 'question_banks.id', '=', 'bq.question_bank_id')
+        .innerJoin('question_banks_questions as bq2', questionId, '=', 'bq2.question_bank_id').then((results) => {
             return res.status(200).json(results)
         })
 
