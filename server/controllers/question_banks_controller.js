@@ -43,12 +43,12 @@ exports.checkBanksOfQuestion = async (req, res) => {
     
     const questionId = req.query.id
     try {
-        
-        await connection("question_banks").innerJoin('question_banks_questions as bq1', 'question_banks.id', '=', 'bq.question_bank_id')
-        .innerJoin('question_banks_questions as bq2', questionId, '=', 'bq2.question_bank_id').then((results) => {
+
+        await connection("question_banks").select("*").whereIn("id", connection('question_banks_questions').select("id").where("question_id", "=", questionId)).then((results) => {
             return res.status(200).json(results)
         })
-
+    
+       
     } catch (error) {
         console.log(error)
         return res.status(500).send({error: "server error"})

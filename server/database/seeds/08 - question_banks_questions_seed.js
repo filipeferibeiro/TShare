@@ -1,7 +1,7 @@
 exports.seed = function (knex) {
     // Deletes ALL existing entries
     return knex.raw('SET foreign_key_checks = 0')
-        .then(knex.raw("TRUNCATE table question_banks")
+        .then(knex.raw("TRUNCATE table question_banks_questions")
             .then(knex.raw("SET foreign_key_checks = 1")
                 .then(function () {
                     // Inserts seed entries
