@@ -55,3 +55,39 @@ exports.checkBanksOfQuestion = async (req, res) => {
     }
 
 }
+
+exports.addQuestionToBank = async(req, res) => {
+    if (req.query.questionId && req.query.questionBankId){
+        
+        const link = {
+            question_id: req.query.questionId,
+            question_bank_id: req.query.questionBankId
+
+        }
+    
+        try {
+            await connection("question_banks_questions").insert(link).then((results) => {
+                return res.status(200).json(results)
+            })
+        } catch (error) {
+            return res.status(500).send({error: "server error"})
+        }
+       
+    }
+}
+exports.getBankQuestions = async (req, res) => {
+    
+    const questionBankId = req.query.questionBankId
+    try {
+
+        await connection("questions").select("*").whereIn("id", connection('question_banks_questions').select("id").where("question_bank_id", "=", questionBankId)).then((results) => {
+            return res.status(200).json(results)
+        })
+    
+       
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({error: "server error"})
+    }
+
+}
