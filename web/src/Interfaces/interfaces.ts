@@ -32,9 +32,9 @@ export interface Comment {
 };
 
 export interface QuestionCardProps {
-    id: number;
-    stars: number;
-    comments: number;
+    id?: number;
+    stars?: number;
+    comments?: number;
     detail?: boolean;
     question: Question;
 }

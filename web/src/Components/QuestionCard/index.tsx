@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FiPlus, FiUser, FiStar, FiMessageSquare, FiChevronRight, FiMinus } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { QuestionCardProps } from '../../Interfaces/interfaces';
+import { Context, Ctx } from '../../Context/AuthContext';
+import { Banks, QuestionCardProps } from '../../Interfaces/interfaces';
+import api from '../../Services/api';
 import Button from '../Button';
 import CheckItens from '../CheckItens';
 import PopupDialog from '../PopupDialog';
@@ -9,8 +11,60 @@ import TagItem from '../TagItem';
 
 import './styles.css';
 
+interface OptionBt {
+    idBank: number
+}
+
 const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, detail, id }) => {
     const [popupAddToBankStatus, setPopupAddToBankStatus] = useState(false);
+    const [banks, setBanks] = useState<Banks[]>([]);
+    const [banksAdded, setBanksAdded] = useState<Banks[]>([]);
+
+    const { id: userID } = useContext<Ctx>(Context);
+
+    const handleGetBanks = useCallback(() => {
+        api.get(`questionBanks?author=${userID}`).then(response => {
+            setBanks(response.data);
+        });
+
+        handleCheckQuestionBanks(question.id); // eslint-disable-next-line
+    }, [userID]);
+    
+    function handleAddQuestionToBank(questionId: number, questionBankId:number) {
+        api.get(`addQuestionToBank?questionId=${questionId}&questionBankId=${questionBankId}`).then(() => {
+            handleCheckQuestionBanks(question.id);
+            alert('Questão Adicionada com Sucesso ao banco!');
+        }).catch(() => {
+            alert('Erro ao adcionar questão ao banco!');
+        });
+    }
+    
+    function handleCheckQuestionBanks(id: number) {
+        api.get(`questionBanksCheck?id=${id}`).then((response) => {
+            setBanksAdded(response.data);
+        }).catch(() => {
+            alert('Erro!');
+        });
+    }
+
+    const HandleOptionBt: React.FC<OptionBt> = ({ idBank }) => {
+        const filtered = banksAdded.filter((bank) => {
+            return bank.id === idBank;
+        });
+
+        if (filtered.length > 0) {
+            return (<Button className="removeBank"><FiMinus color="#FFF" size={22} />Remover</Button>);
+        }
+        return (<Button onClick={() => handleAddQuestionToBank(question.id, idBank)}><FiPlus color="#FFF" size={22} />Adicionar</Button>)
+    }
+
+    useEffect(() => {
+        if (popupAddToBankStatus) {
+            handleGetBanks();
+        } else {
+            setBanks([]);
+        }
+    }, [popupAddToBankStatus, handleGetBanks])
 
     function handleOpenPopupAddToBank() {
         setPopupAddToBankStatus(true);
@@ -39,30 +93,15 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
         >
             <p className="questionName">{question.title}</p>
             <div className="listBanks">
-                <div className="bankItem">
-                    <p className="bankName glass-l2">Banco 1</p>
-                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
-                </div>
-                <div className="bankItem">
-                    <p className="bankName glass-l2">Banco 2</p>
-                    <Button className="removeBank"><FiMinus color="#FFF" size={22} />Remover</Button>
-                </div>
-                <div className="bankItem">
-                    <p className="bankName glass-l2">Banco 3</p>
-                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
-                </div>
-                <div className="bankItem">
-                    <p className="bankName glass-l2">Banco 4</p>
-                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
-                </div>
-                <div className="bankItem">
-                    <p className="bankName glass-l2">Banco 5</p>
-                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
-                </div>
-                <div className="bankItem">
-                    <p className="bankName glass-l2">Banco 6</p>
-                    <Button><FiPlus color="#FFF" size={22} />Adicionar</Button>
-                </div>
+                {banks.length === 0 &&
+                    <p className="noBanks">Você ainda não possui nenhum banco de questões.</p>
+                }
+                {banks.map((bank, index) => (
+                    <div key={index} className="bankItem">
+                        <p className="bankName glass-l2">{bank.title}</p>
+                        <HandleOptionBt idBank={bank.id} />
+                    </div>
+                ))}
             </div>
         </PopupDialog>
         <div id={`questionCardContainer-${id}`} className="glass-l1 questionCardContainer">
