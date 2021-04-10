@@ -44,7 +44,7 @@ exports.checkBanksOfQuestion = async (req, res) => {
     const questionId = req.query.id
     try {
 
-        await connection("question_banks").select("*").whereIn("id", connection('question_banks_questions').select("id").where("question_id", "=", questionId)).then((results) => {
+        await connection("question_banks").select("*").whereIn("id", connection('question_banks_questions').select("question_bank_id").where("question_id", "=", questionId)).then((results) => {
             return res.status(200).json(results)
         })
     
@@ -80,7 +80,7 @@ exports.getBankQuestions = async (req, res) => {
     const questionBankId = req.query.questionBankId
     try {
 
-        await connection("questions").select("*").whereIn("id", connection('question_banks_questions').select("id").where("question_bank_id", "=", questionBankId)).then((results) => {
+        await connection("questions").select("*").whereIn("id", connection('question_banks_questions').select("question_id").where("question_bank_id", "=", questionBankId)).then((results) => {
             return res.status(200).json(results)
         })
     
