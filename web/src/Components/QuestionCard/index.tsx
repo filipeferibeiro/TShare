@@ -31,7 +31,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
     }, [userID]);
     
     function handleAddQuestionToBank(questionId: number, questionBankId:number) {
-        api.get(`addQuestionToBank?questionId=${questionId}&questionBankId=${questionBankId}`).then(() => {
+        api.post(`addQuestionToBank?questionId=${questionId}&questionBankId=${questionBankId}`).then(() => {
             handleCheckQuestionBanks(question.id);
             alert('Questão Adicionada com Sucesso ao banco!');
         }).catch(() => {
@@ -40,7 +40,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
     }
     
     function handleCheckQuestionBanks(id: number) {
-        api.get(`questionBanksCheck?id=${id}`).then((response) => {
+        api.get(`questionBanksCheck?id=${id}&author=${userID}`).then((response) => {
             setBanksAdded(response.data);
         }).catch(() => {
             alert('Erro!');
