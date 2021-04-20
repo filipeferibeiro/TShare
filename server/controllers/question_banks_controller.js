@@ -18,7 +18,7 @@ exports.getBanks = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ error: "server error" })
+        return res.status(500).send({error: "server error"})
     }
 }
 
@@ -33,9 +33,9 @@ exports.post = async (req, res) => {
 
     try {
         await connection("question_banks").insert(question_bank)
-        return res.status(201).send({ "message": `Banco de questões ${question_bank.title} criado com sucesso` })
+        return res.status(201).send({"message": `Banco de questões ${question_bank.title} criado com sucesso`})
     } catch (error) {
-        return res.status(500).send({ "error": error })
+        return res.status(500).send({"error": error})
     }
 }
 
@@ -60,7 +60,7 @@ exports.checkBanksOfQuestion = async (req, res) => {
             })
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ error: "server error" })
+        return res.status(500).send({error: "server error"})
     }
 
 }
@@ -74,16 +74,15 @@ exports.addQuestionToBank = async (req, res) => {
         }
 
         try {
-            await connection("question_banks_questions").insert(link).then((results) => {
-                return res.status(201).send({ message: "Questão adicionada ao banco" })
+            await connection("question_banks_questions").insert(link).then(() => {
+                return res.status(201).send({message: "Questão adicionada ao banco"})
             })
         } catch (error) {
-            return res.status(500).send({ error: "server error" })
+            return res.status(500).send({error: "server error"})
         }
 
-    }
-    else {
-        return res.status(400).send({ error: "invalid input" })
+    } else {
+        return res.status(400).send({error: "invalid input"})
     }
 }
 exports.getBankQuestions = async (req, res) => {
@@ -103,7 +102,47 @@ exports.getBankQuestions = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        return res.status(500).send({ error: "server error" })
+        return res.status(500).send({error: "server error"})
     }
 
+}
+
+exports.removeQuestionFromBank = async (req, res) => {
+
+    const questionId = req.query.questionId
+    const bankId = req.query.questionBankId
+
+    try {
+        await connection("question_banks_questions")
+            .del("*")
+            .where("question_id", "=", questionId)
+            .andWhere("question_bank_id", "=", bankId)
+            .then(() => {
+                    return res.status(204).json({"message": "Questão removida do banco"})
+                }
+            )
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({error: "server error"})
+    }
+
+}
+
+exports.updateBank = async (req, res) => {
+
+    const bankId = req.query.questionBankId
+    const newTitle = req.body.title
+
+    try {
+        connection("question_banks")
+            .where('id', '=', bankId)
+            .update({title: newTitle})
+            .then(() => {
+                    return res.status(204).json({"message": "Questão removida do banco"})
+                }
+            )
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({error: "server error"})
+    }
 }

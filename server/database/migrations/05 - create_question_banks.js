@@ -4,7 +4,7 @@ exports.up = async function up(knex) {
         if (!exists) {
             return knex.schema.createTable('question_banks', table => {
                 table.increments('id').primary()
-                table.string('title'),
+                table.string('title')
                 table.integer('author').unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE').index(); //Depois mudar pra Teachers
             })
         }
