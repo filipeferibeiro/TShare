@@ -1,0 +1,26 @@
+.iconBt {
+    width: 46px;
+    height: 46px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: 0.2s;
+
+    cursor: pointer;
+}
+
+.iconBt:hover {
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    backdrop-filter: blur(15px);
+}
+
+.iconBt:focus {
+    outline: none;
+}

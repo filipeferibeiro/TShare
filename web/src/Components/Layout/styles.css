@@ -1,0 +1,139 @@
+.container .content {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 250px 4fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "navBar header header"
+                         "navBar main navSocial"
+    ;
+    /* grid-column-gap: 30px; */
+    grid-row-gap: 20px;
+}
+
+header {
+    position: sticky;
+    top: 20px;
+    display: grid;
+    grid-template-columns: 48px 48px 48px;
+    grid-column-gap: 20px;
+    justify-content: flex-end;
+
+    margin: 20px 20px 0 0;
+
+    grid-area: header;
+}
+
+header .userProfile {
+    width: 46px;
+    height: 46px;
+
+    cursor: pointer;
+
+    transition: all .2s;
+}
+
+header .userProfile:hover {
+    opacity: 80%;
+}
+
+main {
+    align-items: center;
+
+    margin-left: 40px;
+    margin-right: 4px;
+    margin-bottom: 15px;
+
+    overflow-y: scroll;
+
+    grid-area: main;
+}
+
+nav {
+    position: sticky;
+    top: 20px;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    grid-area: navBar;
+
+    width: 100%;
+
+    margin: 20px 20px;
+    max-width: 250px;
+}
+
+.navBar .nav-item {
+    margin-top: 10px;
+}
+
+
+.navBar #logout-bt {
+    position: absolute;
+    bottom: 0;
+}
+
+.navBar #logout-bt:hover {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    backdrop-filter: blur(15px);
+    background: rgba(231, 46, 46, 0.35);
+}
+
+.navSocial {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+
+    grid-area: navSocial;
+
+    margin-right: 4px;
+    padding-right: 10px;
+    margin-left: 10px;
+}
+
+.container {
+    background: linear-gradient(137.22deg, #2A85B8 5.23%, #20272C 111.71%, rgba(255, 255, 255, 0) 111.71%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+.navBar #new-question-bt {
+    width: 100%;
+    margin: 20px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(96, 171, 133, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    border-radius: 42px;
+
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 400;
+    color: #FFF;
+    padding: 14px 26px;
+
+    transition: opacity 0.3s;
+}
+
+.navBar #new-question-bt:hover {
+    opacity: 80%;
+}
+
+.navBar #new-question-bt svg {
+    margin-right: 10px;
+}

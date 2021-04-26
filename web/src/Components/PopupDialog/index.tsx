@@ -23,7 +23,7 @@ const PopupDialog: React.FC<PopupDialogProps> = ({ popupDialogStatus, setPopupDi
                 <ClickAwayListener
                     onClickAway={handleClosePopupDialog}
                 >
-                    <div className="content">
+                    <div className="popup-content">
                         <div className="contentTop">
                             <p>{title}</p>
                             <FiX onClick={handleClosePopupDialog} size={28} color="#000" />

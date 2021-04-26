@@ -10,7 +10,7 @@ interface QuestionCommentCardProps extends InputHTMLAttributes<HTMLInputElement>
 
 const QuestionCommentCard: React.FC<QuestionCommentCardProps> = ({ comment }) => {
     return (
-        <div className="glass-l1 questionCommentContainer">
+        <div className="glass-d1 questionCommentContainer">
             <div className="userField">
                 <div className="left">
                     <div className="perfilPicture">

@@ -39,6 +39,11 @@ export interface QuestionCardProps {
     question: Question;
 }
 
+export interface QuestionBankCardProps extends QuestionCardProps {
+    idBank: number;
+    updateFunc?(): any;
+}
+
 export interface Banks {
     id: number;
     title: string;
@@ -48,4 +53,14 @@ export interface PopupDialogProps {
     popupDialogStatus: boolean;
     setPopupDialogStatus(status: boolean): any;
     title: string;
+}
+
+export interface PopupSearchProps {
+    popupDialogStatus: boolean;
+    setPopupDialogStatus(status: boolean): any;
+}
+
+export interface SocialCardProps {
+    name: string;
+    status?: boolean
 }

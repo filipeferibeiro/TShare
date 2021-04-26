@@ -4,6 +4,13 @@
   box-sizing: border-box;
 }
 
+#root {
+  width: fit-content;
+  height: 100vh;
+
+  z-index: 1;
+}
+
 body, input, button {
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
@@ -12,22 +19,34 @@ button:focus, input:focus {
   outline: none;
 }
 
-body {
-  background: linear-gradient(137.22deg, #2A85B8 5.23%, #20272C 111.71%, rgba(255, 255, 255, 0) 111.71%);
-  background-attachment: fixed;
-  overflow-x: hidden;
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  -webkit-font-smoothing: antialiased;
+.glass-d1 {
+  background: linear-gradient(98.94deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-sizing: border-box;
+
+  border-radius: 20px;
+} 
+
+.glass-d2 {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-sizing: border-box;
+
+  border-radius: 20px;
+} 
+
+.glass-d3 {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-sizing: border-box;
+  
+  border-radius: 20px;
 }
 
 .glass-l1 {
   background: linear-gradient(98.94deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-sizing: border-box;
-  backdrop-filter: blur(15px);
-  /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 20px;
 } 
@@ -36,8 +55,6 @@ body {
   background: rgba(255, 255, 255, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-sizing: border-box;
-  backdrop-filter: blur(15px);
-  /* Note: backdrop-filter has minimal browser support */
 
   border-radius: 20px;
 } 
@@ -46,17 +63,12 @@ body {
   background: rgba(255, 255, 255, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-sizing: border-box;
-  backdrop-filter: blur(15px);
-  /* Note: backdrop-filter has minimal browser support */
-
+  
   border-radius: 20px;
-} 
+}
 
-#root {
-  width: fit-content;
-  height: 100vh;
-
-  z-index: 1;
+.glass {
+  backdrop-filter: blur(15px);
 }
 
 .hidden {
@@ -66,19 +78,23 @@ body {
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
+  border-radius: 100px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: transparent;
+  border-radius: 100px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
+  border-radius: 100px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+  border-radius: 100px;
 }

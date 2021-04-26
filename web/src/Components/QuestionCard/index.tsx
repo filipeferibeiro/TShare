@@ -104,7 +104,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
                 ))}
             </div>
         </PopupDialog>
-        <div id={`questionCardContainer-${id}`} className="glass-l1 questionCardContainer">
+        <div id={`questionCardContainer-${id}`} className="glass-d1 questionCardContainer">
             <div className="userField">
                 <Link
                     id={`user-${id}`}
