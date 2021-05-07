@@ -1,5 +1,4 @@
 const connection = require('../database/connection')
-const knex = require('knex')
 
 exports.getByQuestionId = async (req, res) => {
     

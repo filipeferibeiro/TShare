@@ -9,10 +9,13 @@ import { useHistory } from 'react-router-dom';
 import api from '../../Services/api';
 import { User } from '../../Interfaces/interfaces';
 import { Context, Ctx } from '../../Context/AuthContext';
+import PopupDialog from '../../Components/PopupDialog';
 
 const Profile = () => {
     const [user, setUser] = useState<User>();
     const [option, setOption] = useState([true, false, false]);
+
+    const [popupEditProfileStatus, setPopupEditProfileStatus] = useState(false);
 
     const history = useHistory();
     const { id } = useContext<Ctx>(Context);
@@ -30,6 +33,10 @@ const Profile = () => {
 
     function handleIsLoggedUser() {
         return id === idParam;
+    }
+
+    function handleOpenEditProfilePopup() {
+        setPopupEditProfileStatus(true);
     }
 
     const mock = {
@@ -52,46 +59,53 @@ const Profile = () => {
 
     return (
         <>
-            <div className="containerProfile">
-                <div className="left">
-                    <div className="glass-l1 block menuProfile">
-                        <div className="profile">
-                            <div className="perfilPicture">
-                                <FiUser color="#FFF" size={26} />
-                            </div>
-                            <div className="userInfo">
-                                <p className="userName">{user?.name}</p>
-                            </div>
+        <div className="containerProfile">
+            <div className="left">
+                <div className="glass-l1 block menuProfile">
+                    <div className="profile">
+                        <div className="perfilPicture">
+                            <FiUser color="#FFF" size={26} />
                         </div>
-                        {handleIsLoggedUser() && 
-                            <Button className="editProfileButton"><FiEdit color="#FFF" size={22} />Editar perfil</Button>
-                        }
-                        <p className="item"><FiMail color="#FFF" size={24} />{user?.email}</p>
-                        <p className="item"><FiBriefcase color="#FFF" size={24} />Instituto de Algum Lugar</p>
-                        <p className="item"><FiFolder color="#FFF" size={24} />34 Questões Compartilhadas</p>
-                        <p className="item"><FiBook color="#FFF" size={24} />Professor de Matemática</p>
+                        <div className="userInfo">
+                            <p className="userName">{user?.name}</p>
+                        </div>
                     </div>
-                    <div className="glass-l1 block ad">
-                        ANUNCIO
-                    </div>
+                    {handleIsLoggedUser() && 
+                        <Button className="editProfileButton" onClick={handleOpenEditProfilePopup}><FiEdit color="#FFF" size={22} />Editar perfil</Button>
+                    }
+                    <p className="item"><FiMail color="#FFF" size={24} />{user?.email}</p>
+                    <p className="item"><FiBriefcase color="#FFF" size={24} />Instituto de Algum Lugar</p>
+                    <p className="item"><FiFolder color="#FFF" size={24} />34 Questões Compartilhadas</p>
+                    <p className="item"><FiBook color="#FFF" size={24} />Professor de Matemática</p>
                 </div>
-                <div className="right">
-                    <OptionBar
-                        option={option}
-                        setOption={setOption}
-                        options={[
-                            "Mais estrelas",
-                            "Mais comentadas",
-                            "Comentários votados"
-                        ]}
-                    />
-                    <div className="listContent">
-                        <QuestionCard id={1} stars={10} comments={4} question={mock} />
-                        <QuestionCard id={2} stars={10} comments={4} question={mock} />
-                        <QuestionCard id={3} stars={10} comments={4} question={mock} />
-                    </div>
+                <div className="glass-l1 block ad">
+                    ANUNCIO
                 </div>
             </div>
+            <div className="right">
+                <OptionBar
+                    option={option}
+                    setOption={setOption}
+                    options={[
+                        "Mais estrelas",
+                        "Mais comentadas",
+                        "Comentários votados"
+                    ]}
+                />
+                <div className="listContent">
+                    <QuestionCard id={1} stars={10} comments={4} question={mock} />
+                    <QuestionCard id={2} stars={10} comments={4} question={mock} />
+                    <QuestionCard id={3} stars={10} comments={4} question={mock} />
+                </div>
+            </div>
+        </div>
+        <PopupDialog
+            popupDialogStatus={popupEditProfileStatus}
+            setPopupDialogStatus={setPopupEditProfileStatus}
+            title="Editar perfil"
+        >
+            <p>Nada ainda</p>
+        </PopupDialog>
         </>
     );
 }

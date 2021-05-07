@@ -1,8 +1,11 @@
-import React, { FormEvent, useCallback, useEffect, useState } from 'react'
-import { FiPlus, FiX } from 'react-icons/fi';
+import React, { FormEvent, useCallback, useContext, useEffect, useState } from 'react'
+import { FiPlus } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
+import Button from '../../Components/Button';
+import PopupDialog from '../../Components/PopupDialog';
 import QuestionCard from '../../Components/QuestionCard';
 import QuestionCommentCard from '../../Components/QuestionCommentCard';
+import { Context, Ctx } from '../../Context/AuthContext';
 import { Comment, Question } from '../../Interfaces/interfaces';
 import api from '../../Services/api';
 
@@ -16,6 +19,7 @@ const QuestionDetail: React.FC = () => {
 
     const history = useHistory();
     const idQuestion = history.location.state as number;
+    const { id } = useContext<Ctx>(Context);
     
     const handleGetQuestion = useCallback(() => {
         api.get(`questions/${idQuestion}`).then(response => {
@@ -42,7 +46,7 @@ const QuestionDetail: React.FC = () => {
         const data = {
             text: comment,
             question_id: idQuestion,
-            author_id: 1
+            author_id: id
         }
 
         api.post('comments', data).then(() => {
@@ -54,21 +58,10 @@ const QuestionDetail: React.FC = () => {
         });
 
     }
-
-    function handleCloseCommentBox() {
-        setCommentBoxStatus(false);
-    }
     
     function handleOpenCommentBox() {
         setComment("");
         setCommentBoxStatus(true);
-    }
-
-    function setClassHidden() {
-        if (!commentBoxStatus) {
-            return "hidden";
-        }
-        return "";
     }
 
     return (
@@ -100,19 +93,16 @@ const QuestionDetail: React.FC = () => {
                     </>
                 }
             </div>
-            <div className={`newCommentContainer ${setClassHidden()}`}>
-                <div className="commentBox">
-                    <div className="commentBoxHeader">
-                        <p>Novo comentário</p>
-                        <FiX onClick={handleCloseCommentBox} size={28} color="#000" />
-                    </div>
-                    <hr className="separator" />
-                    <form onSubmit={handleAddComment}>
-                        <textarea className="commentField" value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Digite seu comentário" required />
-                        <button className="publishButton" type="submit">Publicar</button>
-                    </form>
-                </div>
-            </div>
+            <PopupDialog
+                popupDialogStatus={commentBoxStatus}
+                setPopupDialogStatus={setCommentBoxStatus}
+                title="Novo comentário"
+            >
+                <form className="commentBox" onSubmit={handleAddComment}>
+                    <textarea className="commentField" value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Digite seu comentário" required />
+                    <Button className="publishButton" type="submit">Publicar</Button>
+                </form>
+            </PopupDialog>
         </>
     );
 }
