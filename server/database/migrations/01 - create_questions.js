@@ -9,6 +9,7 @@ exports.up = async function up(knex) {
 				table.integer('author').unsigned().references('id').inTable('users').onDelete('CASCADE').index()
 				table.text('long_answer')
 				table.integer('question_type').unsigned().notNullable().defaultTo(0)
+				table.integer('score').notNullable().defaultTo(0)
         	})
       	}
     })    

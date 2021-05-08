@@ -101,3 +101,39 @@ exports.delete = async (req, res) => {
     }
 
 }
+
+exports.vote = async (req, res) => {
+    const userId = req.params.userId
+    const questionId = req.params.questionId
+    const value = req.params.value
+    
+    try {
+         // Checar se já votou
+        await connection('question_votes').where({question_id: questionId, user_id: userId}).select(1).then(async (voteCheck) => {
+            if (voteCheck.length === 0) {
+                // Caso o voto não exista, cria o link em 'question_votes' e atualiza o score da questão
+                await connection('question_votes').insert({question_id: questionId, user_id: userId, vote: value}).then(async () => {
+                    await connection('questions').where('id', '=', questionId).increment('score')
+                    return res.status(201).send({message: "Voto computado"})
+                })
+            }
+    
+            else {
+                // Update em voto existente, atualiza o score existente
+                await connection('question_votes').where({question_id: questionId, user_id: userId}).update({vote: value}).then(async () => {
+                    if (direction === 1) {
+                        await connection('questions').where('id', '=', questionId).increment('score')
+                    }
+                    else if (direction === 0) {
+                        await connection('questions').where('id', '=', questionId).decrement('score')
+                    }
+
+                    return res.status(201).send({message: "Voto computado"})
+                })
+            }
+        })
+    } catch (error) {
+        return res.status(500).send({error: "server error"})
+    }
+
+}
