@@ -5,7 +5,7 @@ const utils = require('../utils/jwt-verify')
 
 router.get('/comments/:id', controller.getByQuestionId)
 router.post('/comments/', utils.verifyJWT, controller.post);
-// router.put('/:id', controller.put);
-// router.delete('/:id', controller.delete);
+router.post('/comments/vote', utils.verifyJWT, controller.vote)
+router.delete('/:id', controller.delete);
 
 module.exports = router;

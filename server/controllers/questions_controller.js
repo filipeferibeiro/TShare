@@ -121,11 +121,14 @@ exports.vote = async (req, res) => {
             else {
                 // Update em voto existente, atualiza o score existente
                 await connection('question_votes').where({question_id: questionId, user_id: userId}).update({vote: value}).then(async () => {
-                    if (direction === 1) {
+                    if (value === 1) {
                         await connection('questions').where('id', '=', questionId).increment('score')
                     }
-                    else if (direction === 0) {
+                    else if (value === 0) {
                         await connection('questions').where('id', '=', questionId).decrement('score')
+                    }
+                    else {
+                        return res.status(400).send({message: "Bad Request"})
                     }
 
                     return res.status(201).send({message: "Voto computado"})
