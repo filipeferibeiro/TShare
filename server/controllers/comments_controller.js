@@ -79,3 +79,41 @@ exports.delete = async (req, res) => {
     }
 
 }
+
+exports.vote = async (req, res) => {
+    const userId = req.params.userId
+    const commentId = req.params.commentId
+    const value = req.params.value
+    
+    try {
+         // Checar se já votou
+        await connection('comment_votes').where({question_id: commentId, user_id: userId}).select(1).then(async (voteCheck) => {
+            if (voteCheck.length === 0) {
+                // Caso o voto não exista, cria o link em 'question_votes' e atualiza o score da questão
+                await connection('comment_votes').insert({question_id: commentId, user_id: userId, vote: value}).then(async () => {
+                    await connection('comments').where('id', '=', commentId).increment('score')
+                    return res.status(201).send({message: "Voto computado"})
+                })
+            }
+    
+            else {
+                // Update em voto existente, atualiza o score existente
+                await connection('comment_votes').where({question_id: commentId, user_id: userId}).update({vote: value}).then(async () => {
+                    if (value === 1) {
+                        await connection('comments').where('id', '=', commentId).increment('score')
+                    }
+                    else if (value === 0) {
+                        await connection('comments').where('id', '=', commentId).decrement('score')
+                    }
+                    else {
+                        return res.status(400).send({message: "Bad Request"})
+                    }
+
+                    return res.status(201).send({message: "Voto computado"})
+                })
+            }
+        })
+    } catch (error) {
+        return res.status(500).send({error: "server error"})
+    }
+}
