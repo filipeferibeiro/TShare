@@ -146,3 +146,22 @@ exports.updateBank = async (req, res) => {
         return res.status(500).send({error: "server error"})
     }
 }
+
+exports.removeBank = async (req, res) => {
+
+    const bankId = req.query.questionBankId
+
+    try {
+        await connection("question_banks")
+            .del("*")
+            .where("id", "=", bankId)
+            .then(() => {
+                    return res.status(204).json({"message": "Banco removido"})
+                }
+            )
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({error: "server error"})
+    }
+
+}
