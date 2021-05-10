@@ -33,6 +33,12 @@ const QuestionBank = () => {
         })
     }, [id]);
 
+    function handleGetQuestionsBank() {
+        api.get(`/getBankQuestions?questionBankId=${banks[bankSelected]?.id}`).then(response => {
+            setQuestions(response.data);
+        });
+    } 
+
     useEffect(() => {
         handleGetBanks();
     }, [handleGetBanks]);
@@ -41,9 +47,7 @@ const QuestionBank = () => {
         if (banks) {
             setBankSelectedTitle(banks[bankSelected]?.title)
             if (bankSelected >= 0) {
-                api.get(`/getBankQuestions?questionBankId=${banks[bankSelected]?.id}`).then(response => {
-                    setQuestions(response.data);
-                });
+                handleGetQuestionsBank();
             }
 
         } else {
@@ -101,10 +105,41 @@ const QuestionBank = () => {
         
         setPopupNewBankStatus(false);
     }
+    
+    function handleEditBank(e: FormEvent) {
+        e.preventDefault();
+
+        const data = {
+            title: editBankName
+        }
+
+        api.post(`updateBank?questionBankId=${banks[bankSelected].id}`, data).then(() => {
+            alert('Nome do banco alterado!');
+            handleGetBanks();
+        }).catch(() => {
+            alert("Erro ao editar nome do banco, tente novamente.")
+        });
+        
+        setPopupEditBankStatus(false);
+    }
+    
+    function handleDeleteBank(e: FormEvent) {
+        e.preventDefault();
+
+        api.delete(`removeBank?questionBankId=${banks[bankSelected].id}`).then(() => {
+            alert('Banco removido!');
+            setBankSelected(-1);
+            handleGetBanks();
+        }).catch(() => {
+            alert("Erro ao remover banco, tente novamente.")
+        });
+        
+        setPopupDeleteBankStatus(false);
+    }
 
     return (
         <>
-        <div className="glass-l1 containerQuestionBank">
+        <div className="containerQuestionBank">
             <div className="banks">
                 <div className="contentTop">
                     <p className="banksTitle">Bancos</p>
@@ -118,7 +153,7 @@ const QuestionBank = () => {
                     }
                 </div>
             </div>
-            <div className="content">
+            <div className="contentQB">
                 {bankSelected >= 0 ?
                     <>
                     <div className="contentTop">
@@ -130,7 +165,7 @@ const QuestionBank = () => {
                     </div>
                     <div className="contentCards">
                         {questions.map((question, index) => (
-                            <QuestionBankCard key={index} question={question} />
+                            <QuestionBankCard key={index} question={question} idBank={banks[bankSelected].id} updateFunc={handleGetQuestionsBank} />
                         ))}
                     </div>
                     </>
@@ -156,7 +191,7 @@ const QuestionBank = () => {
             setPopupDialogStatus={setPopupEditBankStatus}
             title="Editar nome do banco"
         >
-            <form className="formPopup" onSubmit={handleNewBank}>
+            <form className="formPopup" onSubmit={handleEditBank}>
                 <Input placeholder="Nome do banco" value={editBankName} onChange={setEditBankName} required />
                 <Button type="submit" className="editBt">Editar</Button>
             </form>
@@ -167,7 +202,7 @@ const QuestionBank = () => {
                 setPopupDialogStatus={setPopupDeleteBankStatus}
                 title="Deseja remover este banco?"
             >
-                <form className="formPopup" onSubmit={handleNewBank}>
+                <form className="formPopup" onSubmit={handleDeleteBank}>
                     <p className="bankName">{banks[bankSelected]?.title}</p>
                     <Button type="submit" className="DeleteBt">Deletar</Button>
                 </form>

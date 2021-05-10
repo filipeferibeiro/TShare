@@ -21,14 +21,17 @@ export interface Question {
     tags: string[];
     long_answer: string,
     question_type: number,
+    comments?: Comment[]
 };
 
 export interface Comment {
     id: number;
     text: string;
-    authorId: number;
-    name: string;
-    creationDate: string;
+    author_id: number;
+    question_id: number;
+    name?: string;
+    creation_date: string;
+    score: number;
 };
 
 export interface QuestionCardProps {
@@ -37,6 +40,11 @@ export interface QuestionCardProps {
     comments?: number;
     detail?: boolean;
     question: Question;
+}
+
+export interface QuestionBankCardProps extends QuestionCardProps {
+    idBank: number;
+    updateFunc?(): any;
 }
 
 export interface Banks {
@@ -48,4 +56,14 @@ export interface PopupDialogProps {
     popupDialogStatus: boolean;
     setPopupDialogStatus(status: boolean): any;
     title: string;
+}
+
+export interface PopupSearchProps {
+    popupDialogStatus: boolean;
+    setPopupDialogStatus(status: boolean): any;
+}
+
+export interface SocialCardProps {
+    name: string;
+    status?: boolean
 }

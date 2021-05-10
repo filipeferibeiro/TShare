@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 import api from '../../Services/api';
 import { User } from '../../Interfaces/interfaces';
 import { Context, Ctx } from '../../Context/AuthContext';
-import PopupDialog from '../../Components/PopupDialog';
+/* import PopupDialog from '../../Components/PopupDialog'; */
 
 const Profile = () => {
     const [user, setUser] = useState<User>();
@@ -61,7 +61,7 @@ const Profile = () => {
         <>
         <div className="containerProfile">
             <div className="left">
-                <div className="glass-l1 block menuProfile">
+                <div className="glass-d1 block menuProfile">
                     <div className="profile">
                         <div className="perfilPicture">
                             <FiUser color="#FFF" size={26} />
@@ -78,7 +78,7 @@ const Profile = () => {
                     <p className="item"><FiFolder color="#FFF" size={24} />34 Questões Compartilhadas</p>
                     <p className="item"><FiBook color="#FFF" size={24} />Professor de Matemática</p>
                 </div>
-                <div className="glass-l1 block ad">
+                <div className="glass-d1 block ad">
                     ANUNCIO
                 </div>
             </div>
@@ -99,13 +99,13 @@ const Profile = () => {
                 </div>
             </div>
         </div>
-        <PopupDialog
+        {/* <PopupDialog
             popupDialogStatus={popupEditProfileStatus}
             setPopupDialogStatus={setPopupEditProfileStatus}
             title="Editar perfil"
         >
             <p>Nada ainda</p>
-        </PopupDialog>
+        </PopupDialog> */}
         </>
     );
 }

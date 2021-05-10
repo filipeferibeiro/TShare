@@ -1,6 +1,5 @@
 .containerQuestion {
-    width: 100vw;
-    padding-top: 101px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
@@ -16,7 +15,7 @@
 
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: 100%;
 }
 
 .containerQuestion form .optionBar {
@@ -55,12 +54,9 @@
 
 @media (min-width: 1100px) {
     .containerQuestion form {
-        max-width: 1100px;
 
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.18);
+       
         box-sizing: border-box;
-        backdrop-filter: blur(8px);
         /* Note: backdrop-filter has minimal browser support */
 
         border-radius: 20px;

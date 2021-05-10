@@ -1,15 +1,27 @@
 import React from 'react';
 import { FiChevronRight, FiMessageSquare, FiMinus, FiStar } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { QuestionCardProps } from '../../Interfaces/interfaces';
+import { QuestionBankCardProps } from '../../Interfaces/interfaces';
+import api from '../../Services/api';
 
 import './styles.css';
 
-const QuestionBankCard: React.FC<QuestionCardProps> = ({ question }) => {
+const QuestionBankCard: React.FC<QuestionBankCardProps> = ({ question, idBank, updateFunc }) => {
+    function handleRemoveQuestionFromBank() {
+        if (updateFunc) {
+            api.post(`removeQuestionFromBank?questionId=${question.id}&questionBankId=${idBank}`).then(() => {
+                updateFunc();
+                alert('Questão removida do banco!');
+            }).catch(() => {
+                alert("Erro ao remover questão do banco, tente novamente.")
+            });
+        }
+    }
+
     return (
-        <div className="glass-l1 containerBankCard">
+        <div className="glass-d1 containerBankCard">
             <div className="titleContainer">
-                <button className="remove"><FiMinus color="#FFF" size={18} /></button>
+                <button className="remove" onClick={handleRemoveQuestionFromBank}><FiMinus color="#FFF" size={18} /></button>
                 <p className="title">{question.title}</p>
             </div>
             <div className="cardActions">

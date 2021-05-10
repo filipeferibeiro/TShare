@@ -79,7 +79,7 @@ const Login = () => {
 
         handleLogin(emailLogin, passwordLogin);
 
-        if (authenticated) {
+       if (authenticated) {
             history.push('/Home');
         }
     }

@@ -161,7 +161,7 @@ const CreateQuestion = () => {
     return (
         <>
             <div className="containerQuestion">
-                <form className="glass-l1" onSubmit={handleCreateQuestion}>
+                <form onSubmit={handleCreateQuestion}>
                     <div className="optionBar">
                         <OptionBar
                             option={option}
