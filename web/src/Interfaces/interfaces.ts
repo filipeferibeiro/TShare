@@ -21,14 +21,17 @@ export interface Question {
     tags: string[];
     long_answer: string,
     question_type: number,
+    comments?: Comment[]
 };
 
 export interface Comment {
     id: number;
     text: string;
-    authorId: number;
-    name: string;
-    creationDate: string;
+    author_id: number;
+    question_id: number;
+    name?: string;
+    creation_date: string;
+    score: number;
 };
 
 export interface QuestionCardProps {

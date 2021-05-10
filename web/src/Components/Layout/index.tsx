@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FiBell, FiFolder, FiHome, FiLogOut, FiPlus, FiSearch, FiSettings, FiUser, FiUsers } from 'react-icons/fi';
+import { FiBell, FiFolder, FiHome, FiLogOut, FiPlus, FiSearch, FiSettings, FiUsers } from 'react-icons/fi';
 
 import logo from '../../assets/logo2.svg';
 import IconBt from '../IconBt';

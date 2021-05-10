@@ -21,13 +21,6 @@ const Search:React.FC<PopupSearchProps> = ({ popupDialogStatus, setPopupDialogSt
         question_type: 1,
     };
 
-    function setClassHidden() {
-        if (!popupDialogStatus) {
-            return "hidden";
-        }
-        return "";
-    }
-
     function handleClosePopupDialog() {
         setPopupDialogStatus(false);
     }

@@ -24,7 +24,7 @@ const QuestionCommentCard: React.FC<QuestionCommentCardProps> = ({ comment }) =>
             <p className="questionComment">{comment.text}</p>
             <div className="cardActions">
                 <div className="cardActionsLeft">
-                    <p className="action"><FiStar color="#FFF" size={22} />10 Estrelas</p>
+                    <p className="action"><FiStar color="#FFF" size={22} />{comment.score} Estrelas</p>
                 </div>
             </div>
         </div>

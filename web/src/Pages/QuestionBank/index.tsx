@@ -122,6 +122,20 @@ const QuestionBank = () => {
         
         setPopupEditBankStatus(false);
     }
+    
+    function handleDeleteBank(e: FormEvent) {
+        e.preventDefault();
+
+        api.delete(`removeBank?questionBankId=${banks[bankSelected].id}`).then(() => {
+            alert('Banco removido!');
+            setBankSelected(-1);
+            handleGetBanks();
+        }).catch(() => {
+            alert("Erro ao remover banco, tente novamente.")
+        });
+        
+        setPopupDeleteBankStatus(false);
+    }
 
     return (
         <>
@@ -188,7 +202,7 @@ const QuestionBank = () => {
                 setPopupDialogStatus={setPopupDeleteBankStatus}
                 title="Deseja remover este banco?"
             >
-                <form className="formPopup" onSubmit={handleNewBank}>
+                <form className="formPopup" onSubmit={handleDeleteBank}>
                     <p className="bankName">{banks[bankSelected]?.title}</p>
                     <Button type="submit" className="DeleteBt">Deletar</Button>
                 </form>

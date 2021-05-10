@@ -157,7 +157,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
             <div className="cardActions">
                 <div className="cardActionsLeft">
                     <p className="action"><FiStar color="#FFF" size={22} />{stars} Estrelas</p>
-                    <p className="action"><FiMessageSquare color="#FFF" size={22} />{comments} Comentários</p>
+                    <p className="action"><FiMessageSquare color="#FFF" size={22} />{question.comments?.length} Comentários</p>
                 </div>
                 {!detail &&
                     <Link
