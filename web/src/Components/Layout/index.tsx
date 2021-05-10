@@ -42,14 +42,14 @@ const Layout:React.FC = ({ children }) => {
                     </header>
                     <nav className="navBar">
                         <img src={logo} alt=""/>
-                        <Link id="new-question-bt" to="/CreateQuestion"><FiPlus color="#FFF" size={19} />Nova Questão</Link>
+                        <Link id="new-question-bt" to="/CreateQuestion"><FiPlus color="#FFF" size={19} /><p>Nova Questão</p></Link>
     
-                        <NavBt className="nav-item" to="/Home"><FiHome color="#FFF" size={19} />Início</NavBt>
-                        <NavBt className="nav-item" to="/MyConnections"><FiUsers color="#FFF" size={19} />Minhas conexões</NavBt>
-                        <NavBt className="nav-item" to="/QuestionBank"><FiFolder color="#FFF" size={19} />Banco de questões</NavBt>
-                        <NavBt className="nav-item" to="/Settings"><FiSettings color="#FFF" size={19} />Configurações</NavBt>
+                        <NavBt className="nav-item" to="/Home"><FiHome color="#FFF" size={19} /><p>Início</p></NavBt>
+                        <NavBt className="nav-item" to="/MyConnections"><FiUsers color="#FFF" size={19} /><p>Minhas conexões</p></NavBt>
+                        <NavBt className="nav-item" to="/QuestionBank"><FiFolder color="#FFF" size={19} /><p>Banco de questões</p></NavBt>
+                        <NavBt className="nav-item" to="/Settings"><FiSettings color="#FFF" size={19} /><p>Configurações</p></NavBt>
 
-                        <Button className="nav-bt" id="logout-bt" onClick={handleLogOut}><FiLogOut color="#FFF" size={19} />Sair</Button>
+                        <Button className="nav-bt" id="logout-bt" onClick={handleLogOut}><FiLogOut color="#FFF" size={19} /><p>Sair</p></Button>
                         {/* <NavBt id="logout-bt" to="/Logout"><FiLogOut color="#FFF" size={19} />Sair</NavBt> */}
                     </nav>
                     <nav className="navSocial">
