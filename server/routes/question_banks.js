@@ -8,4 +8,7 @@ router.post('/questionBanks', utils.verifyJWT, controller.post)
 router.get('/questionBanksCheck', controller.checkBanksOfQuestion)
 router.post('/addQuestionToBank', utils.verifyJWT, controller.addQuestionToBank)
 router.get('/getBankQuestions', utils.verifyJWT, controller.getBankQuestions)
+router.post('/updateBank', utils.verifyJWT, controller.updateBank)
+router.delete('/removeQuestionFromBank', utils.verifyJWT, controller.removeQuestionFromBank)
+router.delete('/removeBank', utils.verifyJWT, controller.removeBank)
 module.exports = router;
