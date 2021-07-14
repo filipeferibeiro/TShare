@@ -3,12 +3,23 @@ const router = express.Router()
 const controller = require('../controllers/question_banks_controller')
 const utils = require('../utils/jwt-verify')
 
-router.get('/questionBanks', controller.getBanks)
-router.post('/questionBanks', utils.verifyJWT, controller.post)
-router.get('/questionBanksCheck', controller.checkBanksOfQuestion)
-router.post('/addQuestionToBank', utils.verifyJWT, controller.addQuestionToBank)
-router.get('/getBankQuestions', utils.verifyJWT, controller.getBankQuestions)
-router.post('/updateBank', utils.verifyJWT, controller.updateBank)
-router.delete('/removeQuestionFromBank', utils.verifyJWT, controller.removeQuestionFromBank)
-router.delete('/removeBank', utils.verifyJWT, controller.removeBank)
-module.exports = router;
+//Recupera todos os bancos
+router.get('/banks', controller.getBanks)
+//Cria um banco de questões
+router.post('/banks', utils.verifyJWT, controller.post)
+//Atualiza um banco
+router.put('/banks', utils.verifyJWT, controller.updateBank)
+//Remove um banco
+router.delete('/banks', utils.verifyJWT, controller.removeBank)
+
+//Recupera os bancos que contém a questão
+router.get('/questions/:questionId/banks', controller.checkBanksOfQuestion)
+//Recupera as questões de um banco específico
+router.get('/banks/:id', utils.verifyJWT, controller.getBankQuestions)
+
+//Adiciona uma questão a um banco
+router.put('/banks/:bankId/questions/:questionId', utils.verifyJWT, controller.addQuestionToBank)
+//Remove uma questão de um banco
+router.delete('/banks/:bankId/question/:questionId', utils.verifyJWT, controller.removeQuestionFromBank)
+
+module.exports = router;    ww=====                 
