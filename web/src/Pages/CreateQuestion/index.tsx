@@ -9,6 +9,7 @@ import './styles.css';
 import api from '../../Services/api';
 import OptionBar from '../../Components/OptionBar';
 import { Context, Ctx } from '../../Context/AuthContext';
+import PageStyle from '../../Components/PageStyle';
 
 interface Alternative {
     text: string;
@@ -160,94 +161,97 @@ const CreateQuestion = () => {
 
     return (
         <>
-            <div className="containerQuestion">
-                <form onSubmit={handleCreateQuestion}>
-                    <div className="optionBar">
-                        <OptionBar
-                            option={option}
-                            setOption={setOption}
-                            options={[
-                                "Objetiva",
-                                "Objetiva Justificada",
-                                "Discursiva"
-                            ]}
-                        />
-                    </div>
-                    <Field
-                        id="inputQuestionTitle"
-                        label="Questão"
-                        type="text"
-                        func={setQuestionTitle}
-                    />
-                    
-                    <Field
-                        label="Imagem"
-                        type="image"
-                        func={() => {}}
-                        hidden
-                    />
+            <PageStyle title="Nova questão">
 
-                    <Field
-                        id="textAreaQuestionDetail"
-                        label="Detalhamento"
-                        type="textarea"
-                        func={setQuestionDetail}
-                    />
-
-                    {handleIsAlternative() && 
+                <div className="containerQuestion">
+                    <form onSubmit={handleCreateQuestion}>
+                        <div className="optionBar">
+                            <OptionBar
+                                option={option}
+                                setOption={setOption}
+                                options={[
+                                    "Objetiva",
+                                    "Objetiva Justificada",
+                                    "Discursiva"
+                                ]}
+                            />
+                        </div>
                         <Field
-                            id="inputAlternatives"
-                            label="Alternativas"
-                            labelAlt="Selecione a correta"
-                            limit={maxAlternatives}
-                            type="alternatives"
-                            func={handleAlternatives}
+                            id="inputQuestionTitle"
+                            label="Questão"
+                            type="text"
+                            func={setQuestionTitle}
+                        />
+                        
+                        <Field
+                            label="Imagem"
+                            type="image"
+                            func={() => {}}
+                            hidden
+                        />
+
+                        <Field
+                            id="textAreaQuestionDetail"
+                            label="Detalhamento"
+                            type="textarea"
+                            func={setQuestionDetail}
+                        />
+
+                        {handleIsAlternative() && 
+                            <Field
+                                id="inputAlternatives"
+                                label="Alternativas"
+                                labelAlt="Selecione a correta"
+                                limit={maxAlternatives}
+                                type="alternatives"
+                                func={handleAlternatives}
+                            >
+                                {alternatives.map((alternative:Alternative, i) => (
+                                    <CheckItens 
+                                        id="checkAlternative"
+                                        key={i} 
+                                        name="alternatives" 
+                                        label={alternative.text} 
+                                        deleteFunction={handleDeleteAlternatives} 
+                                        selectFunction={handleSelectAlternatives} 
+                                        i={i} 
+                                    />
+                                ))}
+                            </Field>
+                        }
+
+                        {handleIsJustificative() &&
+                            <Field
+                                id="textAreaJustificative"
+                                label="Resposta"
+                                type="textarea"
+                                func={setQuestionJustificative}
+                            />
+                        }
+
+                        <Field 
+                            label="Disciplina"
+                            type="subject"
+                            func={() => {}}
+                            hidden
+                        />
+
+                        <Field
+                            id="inputTags"
+                            label="Tags"
+                            type="tags"
+                            limit={maxTags}
+                            func={handleTags}
                         >
-                            {alternatives.map((alternative:Alternative, i) => (
-                                <CheckItens 
-                                    id="checkAlternative"
-                                    key={i} 
-                                    name="alternatives" 
-                                    label={alternative.text} 
-                                    deleteFunction={handleDeleteAlternatives} 
-                                    selectFunction={handleSelectAlternatives} 
-                                    i={i} 
-                                />
+                            {tags.map((tag:string, i) => (
+                                <TagItem id="tagItem" key={i} label={tag} i={i} deleteFunction={handleDeleteTags} />
                             ))}
                         </Field>
-                    }
 
-                    {handleIsJustificative() &&
-                        <Field
-                            id="textAreaJustificative"
-                            label="Resposta"
-                            type="textarea"
-                            func={setQuestionJustificative}
-                        />
-                    }
-
-                    <Field 
-                        label="Disciplina"
-                        type="subject"
-                        func={() => {}}
-                        hidden
-                    />
-
-                    <Field
-                        id="inputTags"
-                        label="Tags"
-                        type="tags"
-                        limit={maxTags}
-                        func={handleTags}
-                    >
-                        {tags.map((tag:string, i) => (
-                            <TagItem id="tagItem" key={i} label={tag} i={i} deleteFunction={handleDeleteTags} />
-                        ))}
-                    </Field>
-
-                    <button id="saveQuestionBt" type="submit" className="saveBt">Salvar questão</button>
-                </form>
-            </div>
+                        <button id="saveQuestionBt" type="submit" className="saveBt">Salvar questão</button>
+                    </form>
+                </div>
+            </PageStyle>
         </>
     );
 }

@@ -164,8 +164,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ question, stars, comments, 
                         id={`seeMore-${id}`}
                         className="action" 
                         to={{
-                            pathname: "/QuestionDetail",
-                            state: question.id
+                            pathname: `/QuestionDetail/${question.id}`,
+                            //state: question.id
                         }}
                     >Ver Mais<FiChevronRight color="#FFF" size={22} /></Link>
                 }

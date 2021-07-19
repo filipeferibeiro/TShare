@@ -3,12 +3,14 @@ import { Route, BrowserRouter, Switch, RouteProps, Redirect } from 'react-router
 import Home from './Pages/Home';
 import Layout from './Components/Layout';
 import Pg2 from './Pages/Pg2';
+import Search from './Pages/Search';
 import Login from './Pages/Login';
 import { AuthProvider, Context } from './Context/AuthContext';
 import Profile from './Pages/Profile';
 import CreateQuestion from './Pages/CreateQuestion';
 import QuestionBank from './Pages/QuestionBank';
 import QuestionDetail from './Pages/QuestionDetail';
+import { ApplicationContext } from './Context/ApplicationContext';
 
 const PrivateRoute: React.FC<RouteProps> = ({ ...rest }) => {
     const { authenticated, loading } = useContext(Context);
@@ -26,6 +28,7 @@ const Routes = () => {
     return (
         <BrowserRouter>
         <AuthProvider>
+        <ApplicationContext>
             <Layout>
                     <Switch>
                         <Route component={Login} path="/" exact />
@@ -33,10 +36,11 @@ const Routes = () => {
                         <PrivateRoute component={Profile} path="/Profile" />
                         <PrivateRoute component={CreateQuestion} path="/CreateQuestion" />
                         <PrivateRoute component={QuestionBank} path="/QuestionBank" />
-                        <PrivateRoute component={QuestionDetail} path="/QuestionDetail" />
-                        <PrivateRoute component={Pg2} path="/MyConnections" />
+                        <PrivateRoute component={QuestionDetail} path="/QuestionDetail/:idQuestion" />
+                        <PrivateRoute component={Search} path="/Search" />
                     </Switch>
             </Layout>
+        </ApplicationContext>
         </AuthProvider>
         </BrowserRouter>
     );

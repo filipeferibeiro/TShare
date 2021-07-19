@@ -2,9 +2,9 @@ import React, { ButtonHTMLAttributes } from 'react';
 
 import './styles.css';
 
-const IconBt:React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, ...rest }) => {
+const IconBt:React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, className, ...rest }) => {
     return (
-        <button className="iconBt" {...rest} >
+        <button className={`iconBt ${className}`} {...rest} >
             {children}
         </button>
     );

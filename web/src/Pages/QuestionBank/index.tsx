@@ -4,6 +4,7 @@ import { FiEdit, FiFolder, FiPlus, FiTrash } from 'react-icons/fi';
 import Button from '../../Components/Button';
 import Input from '../../Components/Input';
 import QuestionBankCard from '../../Components/QuestionBankCard';
+import PageStyle from '../../Components/PageStyle';
 import { Banks, Question } from '../../Interfaces/interfaces';
 import PopupDialog from '../../Components/PopupDialog';
 
@@ -139,43 +140,45 @@ const QuestionBank = () => {
 
     return (
         <>
-        <div className="containerQuestionBank">
-            <div className="banks">
-                <div className="contentTop">
-                    <p className="banksTitle">Bancos</p>
-                    <button className="contentBt" onClick={handleOpenNewBankPopup}><FiPlus color="#FFF" size={25} /></button>
-                </div>
-                <div className="banksList">
-                    {banks &&
-                        banks.map((bank, index) => (
-                            <Button key={index} className={`bankItem ${handleGetIsSelected(index)}`} onClick={() => {handleSetSelected(index)}}><FiFolder color="#FFF" size={20} />{bank.title}</Button>
-                        ))
-                    }
-                </div>
-            </div>
-            <div className="contentQB">
-                {bankSelected >= 0 ?
-                    <>
+        <PageStyle title="Banco de questões">
+            <div className="containerQuestionBank">
+                <div className="banks">
                     <div className="contentTop">
-                        <p className="contentTitle">{bankSelectedTitle}</p>
-                        <div className="left">
-                            <Button className="contentBt trash" onClick={handleOpenDeleteBankPopup}><FiTrash color="#FFF" size={25} /></Button>
-                            <Button className="contentBt" onClick={handleOpenEditBankPopup}><FiEdit color="#FFF" size={25} /></Button>
-                        </div>
+                        <p className="banksTitle">Bancos</p>
+                        <button className="contentBt" onClick={handleOpenNewBankPopup}><FiPlus color="#FFF" size={25} /></button>
                     </div>
-                    <div className="contentCards">
-                        {questions.map((question, index) => (
-                            <QuestionBankCard key={index} question={question} idBank={banks[bankSelected].id} updateFunc={handleGetQuestionsBank} />
-                        ))}
+                    <div className="banksList">
+                        {banks &&
+                            banks.map((bank, index) => (
+                                <Button key={index} className={`bankItem ${handleGetIsSelected(index)}`} onClick={() => {handleSetSelected(index)}}><FiFolder color="#FFF" size={20} />{bank.title}</Button>
+                            ))
+                        }
                     </div>
-                    </>
-                    :
-                    <p className="noBankSelected">
-                        Selecione um banco para visualizar
-                    </p>
-                }
+                </div>
+                    <div className="contentQB">
+                        {bankSelected >= 0 ?
+                            <>
+                            <div className="contentTop">
+                                <p className="contentTitle">{bankSelectedTitle}</p>
+                                <div className="left">
+                                    <Button className="contentBt trash" onClick={handleOpenDeleteBankPopup}><FiTrash color="#FFF" size={25} /></Button>
+                                    <Button className="contentBt" onClick={handleOpenEditBankPopup}><FiEdit color="#FFF" size={25} /></Button>
+                                </div>
+                            </div>
+                            <div className="contentCards">
+                                {questions.map((question, index) => (
+                                    <QuestionBankCard key={index} question={question} idBank={banks[bankSelected].id} updateFunc={handleGetQuestionsBank} />
+                                ))}
+                            </div>
+                            </>
+                            :
+                            <p className="noBankSelected">
+                                Selecione um banco para visualizar
+                            </p>
+                        }
+                    </div>
             </div>
-        </div>
+        </PageStyle>
         <PopupDialog
             popupDialogStatus={popupNewBankStatus}
             setPopupDialogStatus={setPopupNewBankStatus}

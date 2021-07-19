@@ -54,12 +54,9 @@
 
 @media (min-width: 1100px) {
     .containerQuestion form {
-
-       
         box-sizing: border-box;
         /* Note: backdrop-filter has minimal browser support */
 
         border-radius: 20px;
-        padding: 45px;
     }
 }

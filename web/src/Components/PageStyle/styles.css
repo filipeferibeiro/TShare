@@ -1,0 +1,11 @@
+.page-style {
+    padding: 32px;
+
+}
+
+.page-style .page-title {
+    color: #FFF;
+    font-weight: 500;
+    font-size: 34px;
+    margin-bottom: 32px;
+}

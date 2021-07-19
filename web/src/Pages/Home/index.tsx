@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PageStyle from '../../Components/PageStyle';
 import QuestionCard from '../../Components/QuestionCard';
 import { Question } from '../../Interfaces/interfaces';
 import api from '../../Services/api';
@@ -18,17 +19,19 @@ const Home = () => {
 
 
     return (
-        <div className="home-container">
-            {questions.map((question:Question, index) => (
-                    <QuestionCard
-                        key={index}
-                        id={index}
-                        question={question}
-                        stars={10}
-                        comments={77}
-                    />
-                ))}
-        </div>
+        <PageStyle title="Feed de questões">
+            <div className="home-container">
+                {questions.map((question:Question, index) => (
+                        <QuestionCard
+                            key={index}
+                            id={index}
+                            question={question}
+                            stars={10}
+                            comments={77}
+                        />
+                    ))}
+            </div>
+        </PageStyle>
     );
 }
 

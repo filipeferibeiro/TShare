@@ -5,8 +5,6 @@
     display: grid;
     grid-template-columns: 300px 1fr;
     grid-gap: 44px;
-
-    padding: 44px;
 }
 
 .containerQuestionBank .banks .banksTitle {

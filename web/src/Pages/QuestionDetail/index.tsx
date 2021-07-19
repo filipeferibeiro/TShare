@@ -1,6 +1,6 @@
 import React, { FormEvent, useCallback, useContext, useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Button from '../../Components/Button';
 import PopupDialog from '../../Components/PopupDialog';
 import QuestionCard from '../../Components/QuestionCard';
@@ -11,14 +11,17 @@ import api from '../../Services/api';
 
 import './styles.css';
 
+interface DetailParams {
+    idQuestion?: string
+}
+
 const QuestionDetail: React.FC = () => {
     const [question, setQuestion] = useState<Question>();
     const [comments, setComments] = useState([]);
     const [commentBoxStatus, setCommentBoxStatus] = useState(false);
     const [comment, setComment] = useState("");
 
-    const history = useHistory();
-    const idQuestion = history.location.state as number;
+    const { idQuestion } = useParams<DetailParams>();
     const { id } = useContext<Ctx>(Context);
     
     const handleGetQuestion = useCallback(() => {
