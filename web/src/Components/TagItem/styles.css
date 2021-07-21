@@ -11,10 +11,6 @@
     cursor: pointer;
 }
 
-.tagItem + .tagItem {
-    margin-left: 6px;
-}
-
 .tagItem .tagName {
     color: #FFF;
     font-size: 14px;

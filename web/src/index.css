@@ -1,3 +1,21 @@
+:root {
+  --white-color: #FFFFFE;
+  --white-color-secondary: hsl(60, 100%, 90%);
+  --font-size-small-1: 13px;
+  --font-size: 16px;
+  --border-default: 1px solid rgba(255, 255, 255, 0.18);
+  --border-radius: 20px;
+
+  --bg-glass-d1: linear-gradient(98.94deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 100%);
+  --bg-glass-d2: rgba(0, 0, 0, 0.35);
+  --bg-glass-d3: rgba(0, 0, 0, 0.45);
+  --bg-glass-l1: linear-gradient(98.94deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+  --bg-glass-l2: rgba(255, 255, 255, 0.35);
+  --bg-glass-l3: rgba(255, 255, 255, 0.45);
+
+  --transition-bg: background-color .3s;
+}
+
 * {
   margin: 0;
   padding: 0;

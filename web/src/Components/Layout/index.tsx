@@ -98,23 +98,6 @@ const Layout:React.FC = ({ children }) => {
 
                         <Button className="nav-bt" id="logout-bt" onClick={handleLogOut}><FiLogOut color="#FFF" size={20} /><p>Sair</p></Button>
                     </nav>
-                   {/*  <nav className="navSocial">
-                        <SocialCard name="Marlon" status />
-                        <SocialCard name="Betão" />
-                        <SocialCard name="Henrique" status />
-                        <SocialCard name="Hugo" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                        <SocialCard name="Guilherme" />
-                    </nav> */}
                     <main className="glass-l1 main-content">
                         {children}
                     </main>

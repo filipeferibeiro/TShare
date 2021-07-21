@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PageStyle from '../../Components/PageStyle';
 import QuestionCard from '../../Components/QuestionCard';
+import QuestionCardFeed from '../../Components/QuestionCardFeed';
 import { Question } from '../../Interfaces/interfaces';
 import api from '../../Services/api';
 
@@ -21,6 +22,8 @@ const Home = () => {
     return (
         <PageStyle title="Feed de questões">
             <div className="home-container">
+                <QuestionCardFeed />
+                <QuestionCardFeed />
                 {questions.map((question:Question, index) => (
                         <QuestionCard
                             key={index}

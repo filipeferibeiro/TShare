@@ -83,15 +83,14 @@ const Profile = () => {
                 </div>
             </div>
             <div className="right">
-                <OptionBar
-                    option={option}
-                    setOption={setOption}
-                    options={[
-                        "Mais estrelas",
-                        "Mais comentadas",
-                        "Comentários votados"
-                    ]}
-                />
+                <div className="profile-questions">
+                    <h1 className="profile-questions-text">Questões publicadas</h1>
+                    <select className="glass-l2 order-selector" name="" id="">
+                        <option value="0">Criação</option>
+                        <option value="1">Comentários</option>
+                        <option value="2">Estrelas</option>
+                    </select>
+                </div>
                 <div className="listContent">
                     <QuestionCard id={1} stars={10} comments={4} question={mock} />
                     <QuestionCard id={2} stars={10} comments={4} question={mock} />

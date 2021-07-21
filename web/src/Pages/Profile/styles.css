@@ -6,6 +6,24 @@
     margin-top: 25px;
 }
 
+.containerProfile .right .profile-questions {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.containerProfile .right .profile-questions-text {
+    color: #FFF;
+    font-size: 32px;
+    font-weight: 500;   
+}
+
+.containerProfile .right .profile-questions .order-selector {
+    padding: 8px 24px;
+}
+
 .block {
     padding: 24px;
 }
@@ -114,7 +132,7 @@
 @media (min-width: 1100px) {
     .containerProfile {
         display: grid;
-        grid-template-columns: 1fr 2fr;
+        grid-template-columns: 1fr 3fr;
         grid-gap: 20px;
     }
 
