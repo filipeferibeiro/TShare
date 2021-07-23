@@ -1,5 +1,6 @@
 .container .content {
     width: 100vw;
+    max-width: 1600px;
     height: 100vh;
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -22,9 +23,11 @@ header {
     margin: 24px;
 
     grid-area: header;
+
+    z-index: 4;
 }
 
-header div {
+header .header-left {
     display: flex;
     flex-direction: row;
     gap: 24px;
@@ -44,16 +47,20 @@ header .userProfile:hover {
 }
 
 .main-content {
-    align-items: center;
+    display: flex;
+    flex-direction: column;
 
-    overflow-y: scroll;
-
-    border-right: none;
+    border-radius: 20px 20px 0 0;
     border-bottom: none;
-
-    border-radius: 20px 0 0 0;
-
+    
     grid-area: main;
+    overflow-y: scroll;
+}
+
+.main-content .main-bg {
+    overflow-y: scroll;
+    margin: 8px 2px 0 0;
+    flex: 1;
 }
 
 nav {
@@ -145,26 +152,38 @@ nav {
     margin-right: 10px;
 }
 
-.notifications {
-    position: fixed;
+header .notifications {
+    position: absolute;
     display: flex;
-    top: 100px;
-    right: 24px;
-
+    top: 80px;
+    right: -1px;
+    
     width: 340px;
     max-height: 470px;
-
     
-    z-index: 3;
+    z-index: 4;
 }
 
-.notifications .notifications-content {
+header .notifications .notifications-content {
+    display: inline-block;
+    flex: 1;
+    flex-direction: column;
     margin: 8px;
     padding: 0 8px;
     overflow-y: auto;
 }
 
-.notifications .notifications-content .notification-label {
+header .notifications .notifications-content .top-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header .notifications .notifications-content .top-area .clean-all {
+    border-radius: 500px;
+}
+
+
+header .notifications .notifications-content .notification-label {
     margin: 16px;
 
     color: #FFF;
@@ -172,7 +191,7 @@ nav {
     font-weight: 500;
 }
 
-.notifications:before {
+header .notifications:before {
     content: "";
     position: absolute;
     top: -15px;
@@ -202,6 +221,7 @@ header .search-area input {
     height: 100%;
     background: transparent;
     border: none;
+    margin-left: 8px;
 
     font-size: 18px;
     font-weight: 300;
@@ -215,6 +235,20 @@ header .search-area input::placeholder{
     font-weight: 300;
 }
 
+.notification-area {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    background: var(--bg-glass-d2);
+    padding: 24px 64px;
+    border-radius: 20px;
+
+    color: #FFF;
+    font-size: 1.3rem;
+
+    z-index: 3;
+}
+
 @media (max-width: 1100px) {
     .container .content {
         grid-template-columns: 48px 1fr;
@@ -222,7 +256,7 @@ header .search-area input::placeholder{
                              "navBar main"
         ;
     }
-    
+
     .navBar {
         max-width: 48px;
     }

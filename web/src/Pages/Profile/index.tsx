@@ -1,38 +1,41 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FiBook, FiBriefcase, FiEdit, FiFolder, FiMail, FiUser } from 'react-icons/fi';
 import Button from '../../Components/Button';
-import QuestionCard from '../../Components/QuestionCard';
-import OptionBar from '../../Components/OptionBar';
 
 import './styles.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import api from '../../Services/api';
 import { User } from '../../Interfaces/interfaces';
 import { Context, Ctx } from '../../Context/AuthContext';
-/* import PopupDialog from '../../Components/PopupDialog'; */
+import QuestionCardFeed from '../../Components/QuestionCardFeed';
+import PopupDialog from '../../Components/PopupDialog';
+import PageStyle from '../../Components/PageStyle';
+
+interface ProfileParams {
+    idProfile: string
+}
 
 const Profile = () => {
     const [user, setUser] = useState<User>();
-    const [option, setOption] = useState([true, false, false]);
+    const { idProfile } = useParams<ProfileParams>();
 
     const [popupEditProfileStatus, setPopupEditProfileStatus] = useState(false);
 
     const history = useHistory();
     const { id } = useContext<Ctx>(Context);
-    const idParam = history.location.state as number;
 
     const handleGetUser = useCallback(() => {
-        api.get(`users/?id=${idParam}`).then(response => {
+        api.get(`users/?id=${idProfile}`).then(response => {
             setUser(response.data[0]);
         })
-    }, [idParam]);
+    }, [idProfile]);
 
     useEffect(() => {
         handleGetUser();
-    }, [idParam, handleGetUser]);
+    }, [idProfile, handleGetUser]);
 
     function handleIsLoggedUser() {
-        return id === idParam;
+        return id === parseInt(idProfile);
     }
 
     function handleOpenEditProfilePopup() {
@@ -59,52 +62,54 @@ const Profile = () => {
 
     return (
         <>
-        <div className="containerProfile">
-            <div className="left">
-                <div className="glass-d1 block menuProfile">
-                    <div className="profile">
-                        <div className="perfilPicture">
-                            <FiUser color="#FFF" size={26} />
+        <PageStyle title="Perfil">
+            <div className="containerProfile">
+                <div className="left">
+                    <div className="glass-d2 block menuProfile">
+                        <div className="profile">
+                            <div className="perfilPicture">
+                                <FiUser color="#FFF" size={26} />
+                            </div>
+                            <div className="userInfo">
+                                <p className="userName">{user?.name}</p>
+                            </div>
                         </div>
-                        <div className="userInfo">
-                            <p className="userName">{user?.name}</p>
-                        </div>
+                        {handleIsLoggedUser() && 
+                            <Button className="editProfileButton" onClick={handleOpenEditProfilePopup}><FiEdit color="#FFF" size={22} />Editar perfil</Button>
+                        }
+                        <p className="item"><FiMail color="#FFF" size={24} />{user?.email}</p>
+                        <p className="item"><FiBriefcase color="#FFF" size={24} />Instituto de Algum Lugar</p>
+                        <p className="item"><FiFolder color="#FFF" size={24} />34 Questões Compartilhadas</p>
+                        <p className="item"><FiBook color="#FFF" size={24} />Professor de Matemática</p>
                     </div>
-                    {handleIsLoggedUser() && 
-                        <Button className="editProfileButton" onClick={handleOpenEditProfilePopup}><FiEdit color="#FFF" size={22} />Editar perfil</Button>
-                    }
-                    <p className="item"><FiMail color="#FFF" size={24} />{user?.email}</p>
-                    <p className="item"><FiBriefcase color="#FFF" size={24} />Instituto de Algum Lugar</p>
-                    <p className="item"><FiFolder color="#FFF" size={24} />34 Questões Compartilhadas</p>
-                    <p className="item"><FiBook color="#FFF" size={24} />Professor de Matemática</p>
+                    {/* <div className="glass-d1 block ad">
+                        ANUNCIO
+                    </div> */}
                 </div>
-                <div className="glass-d1 block ad">
-                    ANUNCIO
-                </div>
-            </div>
-            <div className="right">
-                <div className="profile-questions">
-                    <h1 className="profile-questions-text">Questões publicadas</h1>
-                    <select className="glass-l2 order-selector" name="" id="">
-                        <option value="0">Criação</option>
-                        <option value="1">Comentários</option>
-                        <option value="2">Estrelas</option>
-                    </select>
-                </div>
-                <div className="listContent">
-                    <QuestionCard id={1} stars={10} comments={4} question={mock} />
-                    <QuestionCard id={2} stars={10} comments={4} question={mock} />
-                    <QuestionCard id={3} stars={10} comments={4} question={mock} />
+                <div className="right">
+                    <div className="profile-questions">
+                        <h1 className="profile-questions-text">Questões publicadas</h1>
+                        <select className="glass-l2 order-selector" name="" id="">
+                            <option value="0">Criação</option>
+                            <option value="1">Comentários</option>
+                            <option value="2">Estrelas</option>
+                        </select>
+                    </div>
+                    <div className="listContent">
+                        <QuestionCardFeed question={mock} />
+                        <QuestionCardFeed question={mock} />
+                        <QuestionCardFeed question={mock} />
+                    </div>
                 </div>
             </div>
-        </div>
-        {/* <PopupDialog
+        </PageStyle>
+        <PopupDialog
             popupDialogStatus={popupEditProfileStatus}
             setPopupDialogStatus={setPopupEditProfileStatus}
             title="Editar perfil"
         >
             <p>Nada ainda</p>
-        </PopupDialog> */}
+        </PopupDialog>
         </>
     );
 }

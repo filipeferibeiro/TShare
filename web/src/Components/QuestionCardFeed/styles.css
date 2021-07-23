@@ -107,46 +107,11 @@
     border: var(--border-default);
 }
 
-.question-card-feed-container .question-card-feed-comments-container {
+.question-card-feed-comments-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    
-    margin-top: 24px;
 }
-
-.question-card-feed-container .question-card-feed-comments-container .comment-field {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.question-card-feed-container .question-card-feed-comments-container .comment-field .comment-section {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    
-    max-width: 380px;
-    padding: 16px;
-}
-
-.question-card-feed-container .question-card-feed-comments-container .comment-field .comment-section p {
-    color: var(--white-color);
-}
-.question-card-feed-container .question-card-feed-comments-container .comment-field .comment-section .user-name {
-    cursor: pointer;
-}
-
-.question-card-feed-container .question-card-feed-comments-container .comment-field .comment-section .comment {
-    max-height: 140px;
-    font-size: 14px;
-    opacity: 70%;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
-}
-
 
 .question-card-feed-container .question-card-feed-header .question-card-feed-menu-bt {
     width: 40px;

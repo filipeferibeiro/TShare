@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FiBell, FiFileText, FiFolder, FiHome, FiLogOut, FiPlus, FiSearch, FiSettings, FiX } from 'react-icons/fi';
+import { FiBell, FiFileText, FiFolder, FiHome, FiLogOut, FiPlus, FiSearch, FiSettings, FiTrash2, FiX } from 'react-icons/fi';
 import { ClickAwayListener } from '@material-ui/core';
 
 import logo from '../../assets/logo2.svg';
@@ -17,14 +17,19 @@ import { AppContext, AppCtx } from '../../Context/ApplicationContext';
 
 const Layout:React.FC = ({ children }) => {
     const { authenticated, handleLogOut, id: userID } = useContext<Ctx>(Context);
-    const { searchText, setSearchText } = useContext<AppCtx>(AppContext);
+    const { searchText, setSearchText, searchActive, setSearchActive, showNotificationArea, setShowNotificationArea } = useContext<AppCtx>(AppContext);
 
-    const [searchActive, setSearchActive] = useState(false);
     const [notificationsPopup, setNotificationsPopup] = useState(false);
     const history = useHistory();
 
+    useEffect(() => {
+        setTimeout(() => {
+            setShowNotificationArea(false);
+        }, 1500);
+    }, [showNotificationArea])
+
     function handleGoPerfilPage() {
-        history.push("/Profile", userID);
+        history.push(`/Profile/${userID}`);
     }
 
     function handleCloseNotificationsDialog() {
@@ -39,7 +44,6 @@ const Layout:React.FC = ({ children }) => {
     function handleCloseSearch() {
         setSearchActive(false);
         setSearchText("")
-        history.push('/Home')
     }
 
     if (!authenticated) {
@@ -49,27 +53,29 @@ const Layout:React.FC = ({ children }) => {
     } else {
         return (
             <>
-            {/* <Search popupDialogStatus={searchPopup} setPopupDialogStatus={setSearchPopup} /> */}
-            {notificationsPopup &&
-                <ClickAwayListener
-                onClickAway={handleCloseNotificationsDialog}
-                >
-                    <div className="notifications glass-d3 glass">
-                        <div className="notifications-content">
-                            <p className="notification-label">Notificações</p>
-                            <NotificationItem />
-                            <NotificationItem />
-                            <NotificationItem />
-                            <NotificationItem />
-                        </div>
-                    </div>
-                </ClickAwayListener>
-            }
             <div className="container">
                 <div className="content">
                     <header>
+                        {notificationsPopup &&
+                            <ClickAwayListener
+                            onClickAway={handleCloseNotificationsDialog}
+                            >
+                                <div className="notifications glass-d3 glass">
+                                    <div className="notifications-content">
+                                        <div className="top-area">
+                                            <p className="notification-label">Notificações</p>
+                                            <IconBt className="clean-all" glass={false}><FiTrash2 color="#FFFFFE" size={20} /></IconBt>
+                                        </div>
+                                        <NotificationItem />
+                                        <NotificationItem />
+                                        <NotificationItem />
+                                        <NotificationItem />
+                                    </div>
+                                </div>
+                            </ClickAwayListener>
+                        }
                         <img src={logo} alt="TShare logo"/>
-                        <div>
+                        <div className="header-left">
                             <div className={`search ${searchActive ? "glass-l2 search-area" : ""}`}>
                                 {searchActive ?
                                     <>
@@ -78,11 +84,10 @@ const Layout:React.FC = ({ children }) => {
                                     <FiX onClick={handleCloseSearch} size={22} color="#FFF" />
                                     </>
                                     :
-                                    <IconBt onClick={handleSetSearch}><FiSearch size={22} color="#FFF" /></IconBt>
+                                    <IconBt glass onClick={handleSetSearch}><FiSearch size={22} color="#FFF" /></IconBt>
                                 }
                             </div>
-                            {/* <IconBt><FiSearch size={22} color="#FFF" /></IconBt> */}
-                            <IconBt onClick={() => setNotificationsPopup(true)}><FiBell size={22} color="#FFF" /></IconBt>
+                            <IconBt glass onClick={() => setNotificationsPopup(true)}><FiBell size={22} color="#FFF" /></IconBt>
                             <UserProfileImg onClick={handleGoPerfilPage} className="userProfile" />
                         </div>
                     </header>
@@ -99,10 +104,17 @@ const Layout:React.FC = ({ children }) => {
                         <Button className="nav-bt" id="logout-bt" onClick={handleLogOut}><FiLogOut color="#FFF" size={20} /><p>Sair</p></Button>
                     </nav>
                     <main className="glass-l1 main-content">
-                        {children}
+                        <div className="main-bg">
+                            {children}
+                        </div>
                     </main>
                 </div>
             </div>
+            {showNotificationArea &&
+                <div className="glass notification-area">
+                    Item copiado!
+                </div>
+            }
             </>
         );
     }

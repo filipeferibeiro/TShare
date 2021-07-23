@@ -33,7 +33,7 @@ const Routes = () => {
                     <Switch>
                         <Route component={Login} path="/" exact />
                         <PrivateRoute component={Home} path="/Home" />
-                        <PrivateRoute component={Profile} path="/Profile" />
+                        <PrivateRoute component={Profile} path="/Profile/:idProfile" />
                         <PrivateRoute component={CreateQuestion} path="/CreateQuestion" />
                         <PrivateRoute component={QuestionBank} path="/QuestionBank" />
                         <PrivateRoute component={QuestionDetail} path="/QuestionDetail/:idQuestion" />

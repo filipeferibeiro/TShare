@@ -19,7 +19,7 @@ const QuestionBankCard: React.FC<QuestionBankCardProps> = ({ question, idBank, u
     }
 
     return (
-        <div className="glass-d1 containerBankCard">
+        <div className="glass-d2 containerBankCard">
             <div className="titleContainer">
                 <button className="remove" onClick={handleRemoveQuestionFromBank}><FiMinus color="#FFF" size={18} /></button>
                 <p className="title">{question.title}</p>

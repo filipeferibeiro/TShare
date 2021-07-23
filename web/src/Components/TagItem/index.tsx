@@ -7,14 +7,18 @@ interface TagProps extends InputHTMLAttributes<HTMLInputElement> {
     isEdit?: boolean;
     label: string;
     deleteFunction?(i:number): any;
+    searchFunction?(i:string): any;
     i: number;
     id?: string;
 }
 
-const TagItem: React.FC<TagProps>= ({ label, deleteFunction, i, id }) => {
-    function handleDelete() {
+const TagItem: React.FC<TagProps>= ({ label, deleteFunction, searchFunction, i, id }) => {
+    function handleFunction() {
         if(deleteFunction) {
             deleteFunction(i);
+        }
+        if(searchFunction) {
+            searchFunction(label);
         }
     }
 
@@ -27,7 +31,7 @@ const TagItem: React.FC<TagProps>= ({ label, deleteFunction, i, id }) => {
     }
 
     return (
-        <div id={id} className={isDeleteClasses()} onClick={handleDelete}>
+        <div id={id} className={isDeleteClasses()} onClick={handleFunction}>
             <div className="top" />
             <FiTag color="#FFFFFF" size={14} />
             <p className="tagName">{label}</p>

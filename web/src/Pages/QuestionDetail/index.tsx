@@ -2,6 +2,7 @@ import React, { FormEvent, useCallback, useContext, useEffect, useState } from '
 import { FiPlus } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 import Button from '../../Components/Button';
+import CommentItem from '../../Components/CommentItem';
 import PopupDialog from '../../Components/PopupDialog';
 import QuestionCard from '../../Components/QuestionCard';
 import QuestionCommentCard from '../../Components/QuestionCommentCard';
@@ -87,9 +88,12 @@ const QuestionDetail: React.FC = () => {
                                 <p className="addCommentBt" onClick={handleOpenCommentBox}><FiPlus color="#FFF" size={19} />Novo comentário</p>
                             </div>
                             {comments.map((_comment:Comment, index) => 
-                                <QuestionCommentCard
-                                    key={index}
-                                    comment={_comment}
+                                <CommentItem 
+                                    key={_comment.id}
+                                    userName={_comment.name || ""}
+                                    comment={_comment.text}
+                                    commentScore={_comment.score}
+                                    detail
                                 />
                             )}
                         </div>

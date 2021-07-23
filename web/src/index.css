@@ -13,7 +13,7 @@
   --bg-glass-l2: rgba(255, 255, 255, 0.35);
   --bg-glass-l3: rgba(255, 255, 255, 0.45);
 
-  --transition-bg: background-color .3s;
+  --transition-bg: background-color .2s;
 }
 
 * {
@@ -97,7 +97,7 @@ button:focus, input:focus {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
   border-radius: 100px;
 }
 
@@ -109,12 +109,12 @@ button:focus, input:focus {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: rgb(190, 190, 190);
   border-radius: 100px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgb(165, 165, 165);
   border-radius: 100px;
 }

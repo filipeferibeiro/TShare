@@ -2,9 +2,13 @@ import React, { ButtonHTMLAttributes } from 'react';
 
 import './styles.css';
 
-const IconBt:React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({ children, className, ...rest }) => {
+interface IconBtProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    glass?: boolean
+}
+
+const IconBt:React.FC<IconBtProps> = ({ children, className, glass, ...rest }) => {
     return (
-        <button className={`iconBt ${className}`} {...rest} >
+        <button className={`iconBt ${glass ? "glass" : ""} ${className} `} {...rest} >
             {children}
         </button>
     );
