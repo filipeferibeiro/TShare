@@ -6,9 +6,9 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     onChange(value: any): any;
 }
 
-const Input: React.FC<InputProps> = ({ onChange, ...rest }) => {
+const Input: React.FC<InputProps> = ({ onChange, className, ...rest }) => {
     return (
-        <input className="glass-l2 input" onChange={e => onChange(e.target.value)} { ...rest } />
+        <input className={`glass-l2 input ${className}`} onChange={e => onChange(e.target.value)} { ...rest } />
     );
 }
 

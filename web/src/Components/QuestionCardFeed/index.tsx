@@ -14,9 +14,10 @@ import './styles.css';
 export interface QuestionCardFeedProps {
     question: Question;
     showComments?: boolean;
+    detail?: boolean;
 }
 
-const QuestionCardFeed:React.FC<QuestionCardFeedProps> =  ({ question, showComments }) => {
+const QuestionCardFeed:React.FC<QuestionCardFeedProps> =  ({ question, showComments, detail }) => {
     const [displayMenu, setDisplayMenu] = useState(false);
     const [popupAddToBankStatus, setPopupAddToBankStatus] = useState(false);
 
@@ -95,12 +96,14 @@ const QuestionCardFeed:React.FC<QuestionCardFeedProps> =  ({ question, showComme
                     <p className="action"><FiStar color="#FFF" size={22} />10 Estrelas</p>
                     <p className="action"><FiMessageSquare color="#FFF" size={22} />{question.comments?.length} Comentários</p>
                 </div>
-                <Link
-                    className="action-detail" 
-                    to={{
-                        pathname: `/QuestionDetail/${question.id}`,
-                    }}
-                >Ver Mais<FiChevronRight color="#FFF" size={22} /></Link>
+                {!detail &&
+                    <Link
+                        className="action-detail" 
+                        to={{
+                            pathname: `/QuestionDetail/${question.id}`,
+                        }}
+                    >Ver Mais<FiChevronRight color="#FFF" size={22} /></Link>
+                }
             </div>
         </div>
         {(question.comments && showComments) && 

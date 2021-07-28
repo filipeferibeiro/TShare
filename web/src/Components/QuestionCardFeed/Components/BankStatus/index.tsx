@@ -6,6 +6,8 @@ import api from '../../../../Services/api';
 import Button from '../../../Button';
 import PopupDialog from '../../../PopupDialog';
 
+import './styles.css';
+
 interface OptionBt {
     idBank: number
 }

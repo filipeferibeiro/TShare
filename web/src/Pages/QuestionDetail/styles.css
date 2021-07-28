@@ -7,6 +7,10 @@
     margin: 30px 10px 30px 30px;
 }
 
+.questionDetailContainer .default-answer-card {
+    margin: 8px 0 24px 0;
+}
+
 .questionDetailContainer .questionBlock {
     width: 100%;
 }
@@ -16,6 +20,37 @@
     flex-direction: column;
     gap: 16px;
     width: 100%;
+}
+
+.questionDetailContainer .commentsBlockCommentBlock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    flex-direction: row;
+}
+
+.questionDetailContainer .commentsBlockCommentBlock .commentField {
+    background: var(--bg-glass-d2);
+    border-radius: 500px;
+    padding: 16px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #FFFFFE;
+}
+
+.questionDetailContainer .commentsBlockCommentBlock .commentField::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.questionDetailContainer .commentsBlockCommentBlock .send-bt {
+    min-width: 56px;
+    min-height: 56px;
+    padding: 0;
+    border-radius: 500px;
+    
+}
+.questionDetailContainer .commentsBlockCommentBlock .send-bt:hover {
+    background: var(--bg-glass-d2);
 }
 
 .questionDetailContainer .commentsBlock .commentsBlockHeader{

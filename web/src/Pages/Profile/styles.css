@@ -1,3 +1,9 @@
+.containerProfile {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
 .containerProfile .right .listContent {
     display: flex;
     flex-direction: column;
@@ -19,22 +25,114 @@
 }
 
 .containerProfile .right .profile-questions .order-selector {
+    color: #FFFFFE;
+    font-size: 16px;
+    font-weight: 300;
     padding: 8px 24px;
+    border-radius: 500px;
 }
 
 .block {
     padding: 24px;
 }
 
-.containerProfile .ad {
-    margin-top: 20px;
-    
+.containerProfile .menuProfile2 {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.containerProfile .menuProfile2 .ad {
     display: flex;
     justify-content: center;
     align-items: center;
     color: #FFF;
     font-size: 40px;
 }
+
+.containerProfile .menuProfile2 .profile {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    
+}
+.containerProfile .menuProfile2 .profile .profile-img {
+    min-width: 100px;
+    min-height: 100px;
+}
+
+.containerProfile .menuProfile2 .profile .userName {
+    font-size: 24px;
+    font-weight: 300;
+    color: #FFF;
+}
+
+.containerProfile .menuProfile2 .profile-informations {
+    flex-direction: column;
+    display: flex;
+    gap: 16px;
+}
+
+.containerProfile .menuProfile2 .profile .editProfileButton {
+    background: transparent;
+    padding: 16px 32px;
+    border-radius: 100px;
+    border: 1px solid #FFF;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 16px;
+    color: #FFF;
+
+    transition: background-color 0.2s;
+}
+
+.containerProfile .menuProfile2 .profile .editProfileButton:hover {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: #FFD66699;
+}
+
+.containerProfile .menuProfile2 .profile .editProfileButton svg {
+    margin-right: 16px;
+}
+
+
+.containerProfile .menuProfile2 .profile-informations .item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    color: #FFF;
+    cursor: default;
+}
+
+.containerProfile .menuProfile2 .profile-informations .item:hover {
+    background: var(--bg-glass-l2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    backdrop-filter: blur(8px);
+    /* Note: backdrop-filter has minimal browser support */
+
+    border-radius: 8px;
+}
+
+.containerProfile .menuProfile2 .profile-informations .item svg {
+    margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
 
 .containerProfile .menuProfile .editProfileButton {
     background: transparent;
@@ -128,14 +226,41 @@
 }
 
 @media (min-width: 1100px) {
-    .containerProfile {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-gap: 20px;
-    }
-
     .containerProfile .right {
         margin-top: 0;
+    }
+
+    .containerProfile .menuProfile2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .containerProfile .menuProfile2 .ad {
+        width: 30%;
+    
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #FFF;
+        font-size: 40px;
+    }
+    
+    .containerProfile .menuProfile2 .profile {
+        display: flex;
+        flex-direction: column;
+        width: 20%;
+        gap: 16px;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .containerProfile .menuProfile2 .profile-informations {
+        flex-direction: column;
+        display: flex;
+        width: 50%;
+        gap: 16px;
     }
    
 }

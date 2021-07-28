@@ -10,6 +10,7 @@ import { Context, Ctx } from '../../Context/AuthContext';
 import QuestionCardFeed from '../../Components/QuestionCardFeed';
 import PopupDialog from '../../Components/PopupDialog';
 import PageStyle from '../../Components/PageStyle';
+import UserProfileImg from '../../Components/UserProfileImg';
 
 interface ProfileParams {
     idProfile: string
@@ -65,7 +66,25 @@ const Profile = () => {
         <PageStyle title="Perfil">
             <div className="containerProfile">
                 <div className="left">
-                    <div className="glass-d2 block menuProfile">
+                    <div className="glass-d2 block menuProfile2">
+                        <div className="profile">
+                            <UserProfileImg className="profile-img" />
+                            <p className="userName">{user?.name}</p>
+                            {handleIsLoggedUser() && 
+                                <Button className="editProfileButton" onClick={handleOpenEditProfilePopup}><FiEdit color="#FFF" size={20} />Editar perfil</Button>
+                            }
+                        </div>
+                        <div className="profile-informations">
+                            <p className="item"><FiMail color="#FFF" size={24} />{user?.email}</p>
+                            <p className="item"><FiBriefcase color="#FFF" size={24} />Instituto de Algum Lugar</p>
+                            <p className="item"><FiFolder color="#FFF" size={24} />34 Questões Compartilhadas</p>
+                            <p className="item"><FiBook color="#FFF" size={24} />Professor de Matemática</p>
+                        </div>
+                        <div className="glass-l2 ad">
+                            AD
+                        </div>
+                    </div>
+                    {/* <div className="glass-d2 block menuProfile">
                         <div className="profile">
                             <div className="perfilPicture">
                                 <FiUser color="#FFF" size={26} />
@@ -81,7 +100,7 @@ const Profile = () => {
                         <p className="item"><FiBriefcase color="#FFF" size={24} />Instituto de Algum Lugar</p>
                         <p className="item"><FiFolder color="#FFF" size={24} />34 Questões Compartilhadas</p>
                         <p className="item"><FiBook color="#FFF" size={24} />Professor de Matemática</p>
-                    </div>
+                    </div> */}
                     {/* <div className="glass-d1 block ad">
                         ANUNCIO
                     </div> */}
@@ -89,7 +108,7 @@ const Profile = () => {
                 <div className="right">
                     <div className="profile-questions">
                         <h1 className="profile-questions-text">Questões publicadas</h1>
-                        <select className="glass-l2 order-selector" name="" id="">
+                        <select className="glass-d2 order-selector" name="" id="">
                             <option value="0">Criação</option>
                             <option value="1">Comentários</option>
                             <option value="2">Estrelas</option>

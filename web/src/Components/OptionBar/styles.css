@@ -15,7 +15,7 @@
     align-items: center;
     padding: 21px 50px;
     border-radius: 47px;
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.4);
     font-weight: 300;
     border: 1px solid rgba(255, 255, 255, 0);
     text-align: center;
@@ -23,12 +23,11 @@
 }
 
 .optionBarContainer .selected {
-    background: #FFF;
+    background: #FFFFFE;
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-sizing: border-box;
-    box-shadow: 2px 2px 11px rgba(255, 255, 255, 0.25);
     color: #000;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 @media (max-width: 800px) {
