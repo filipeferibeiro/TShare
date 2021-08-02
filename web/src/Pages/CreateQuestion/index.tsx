@@ -1,5 +1,5 @@
-import React, { FormEvent, useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import CheckItens from '../../Components/CheckItens';
 import TagItem from '../../Components/TagItem';
 import Field from './Components/Field';
@@ -10,14 +10,21 @@ import api from '../../Services/api';
 import OptionBar from '../../Components/OptionBar';
 import { Context, Ctx } from '../../Context/AuthContext';
 import PageStyle from '../../Components/PageStyle';
+import {Question} from '../../Interfaces/interfaces';
+import QuestionDetail from '../QuestionDetail';
 
 interface Alternative {
     text: string;
-    correct: boolean;
+    correct: number;
+}
+
+interface QuestionParams {
+    idQuestionParam: string
 }
 
 const CreateQuestion = () => {
     const history = useHistory();
+    const { idQuestionParam } = useParams<QuestionParams>();
 
     const [option, setOption] = useState([true, false, false]);
     const [alternatives, setAlternatives] = useState<Alternative[]>([]);
@@ -31,10 +38,38 @@ const CreateQuestion = () => {
     const maxTags = 4;;
     const maxAlternatives = 6;
 
+    function handlePageTitle() {
+        let title;
+        if (idQuestionParam) {
+            title = "Editar questão";
+        } else {
+            title = "Nova questão";
+        }
+
+        return title;
+    }
+
+    function handleGetQuestion() {
+        api.get(`questions/${idQuestionParam}`).then(response => {
+            const data:Question = response.data;
+            setQuestionTitle(data.title);
+            setQuestionDetail(data.description);
+            setQuestionJustificative(data.long_answer);
+            setAlternatives(data.alternatives);
+            setTags(data.tags);
+            let option = [false, false, false];
+            option[data.question_type] = true;
+            setOption(option);
+            if (id !== data.author) {
+                history.push("/Home")
+            }
+        });
+    }
+
     function handleAlternatives(text:string) {
         if (text !== "") {
             if (alternatives.length < maxAlternatives) {
-                setAlternatives([...alternatives, { text, correct: false }]);
+                setAlternatives([...alternatives, { text, correct: 0 }]);
             } else {
                 alert(`Você só pode adicionar até ${maxAlternatives} alternativas.`);
             }
@@ -46,10 +81,10 @@ const CreateQuestion = () => {
     function handleSelectAlternatives(i:number) {
         setAlternatives(alternatives.map((alternative, index) => {
             if (index === i) {
-                return { text: alternative.text, correct: true };
+                return { text: alternative.text, correct: 1 };
             }
             else {
-                return { text: alternative.text, correct: false };
+                return { text: alternative.text, correct: 0 };
             }
         }));
     }
@@ -135,13 +170,24 @@ const CreateQuestion = () => {
         } else {
             const data = makeData();
 
-            api.post('questions', data).then(() => {
-                alert("Questão cadastrada com sucesso!");
+            if (idQuestionParam) {
+                api.put(`questions/${idQuestionParam}`, data).then(() => {
+                    alert("Questão atualizada com sucesso!");
+    
+                    history.push('/Home');
+                }).catch((e) => {
+                    alert(`Erro ao atualizar questão, tente novamente. ${e}`)
+                });
+            } else {
+                api.post('questions', data).then(() => {
+                    alert("Questão cadastrada com sucesso!");
+    
+                    history.push('/Home');
+                }).catch(() => {
+                    alert("Erro ao cadastrar questão, tente novamente.")
+                });
+            }
 
-                history.push('/Home');
-            }).catch(() => {
-                alert("Erro ao cadastrar questão, tente novamente.")
-            });
         }
     }
 
@@ -159,10 +205,15 @@ const CreateQuestion = () => {
         return false;
     }
 
+    useEffect(() => {
+        if (idQuestionParam) {
+            handleGetQuestion();
+        }
+    }, []);
+
     return (
         <>
-            <PageStyle title="Nova questão">
-
+            <PageStyle title={handlePageTitle()}>
                 <div className="containerQuestion">
                     <form onSubmit={handleCreateQuestion}>
                         <div className="optionBar">
@@ -180,6 +231,7 @@ const CreateQuestion = () => {
                             id="inputQuestionTitle"
                             label="Questão"
                             type="text"
+                            value={questionTitle}
                             func={setQuestionTitle}
                         />
                         
@@ -187,13 +239,13 @@ const CreateQuestion = () => {
                             label="Imagem"
                             type="image"
                             func={() => {}}
-                            hidden
                         />
 
                         <Field
                             id="textAreaQuestionDetail"
                             label="Detalhamento"
                             type="textarea"
+                            value={questionDetail}
                             func={setQuestionDetail}
                         />
 
@@ -214,7 +266,8 @@ const CreateQuestion = () => {
                                         label={alternative.text} 
                                         deleteFunction={handleDeleteAlternatives} 
                                         selectFunction={handleSelectAlternatives} 
-                                        i={i} 
+                                        i={i}
+                                        selected={alternative.correct === 1}
                                     />
                                 ))}
                             </Field>

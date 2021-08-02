@@ -35,7 +35,7 @@ const CheckItens: React.FC<InputProps> = ({ name, label, deleteFunction, selectF
             {!detail &&
                 <>
                     <p id={`${id}DeleteBt`} className="deleteBt" onClick={handleDelete}><FiX color="#E72E2E" size={16} /></p>
-                    <input id={id} className="alternative" type="radio" name={name} onChange={handleSelect} />
+                    <input id={id} className="alternative" type="radio" name={name} checked={selected} onChange={handleSelect} />
                 </>
             }
             <label>{label}</label>

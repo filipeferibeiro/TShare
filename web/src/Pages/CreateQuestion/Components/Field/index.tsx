@@ -15,7 +15,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     id?: string;
 }
 
-const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, func, hidden, id }) => {
+const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, func, hidden, id, value }) => {
     const [inputValue, setInputValue] = useState<string>("");
 
     function handleInputValue(value:string) {
@@ -35,10 +35,10 @@ const Field: React.FC<InputProps> = ({ type, label, labelAlt, limit, children, f
                 }
                 </div>
                 {type.toLocaleLowerCase() === "text" &&
-                    <Input id={id} type="text" value={inputValue} onChange={handleInputValue} required />
+                    <Input id={id} type="text" value={value} onChange={handleInputValue} required />
                 }
                 {type.toLocaleLowerCase() === "textarea" && 
-                    <textarea className="glass-l2" id={id} value={inputValue} onChange={(e) => handleInputValue(e.target.value)} required />
+                    <textarea className="glass-l2" id={id} value={value} onChange={(e) => handleInputValue(e.target.value)} required />
                 }
                 {type.toLocaleLowerCase() === "image" &&
                     <div className="imageField">

@@ -7,6 +7,8 @@ interface AppCtx {
     setSearchActive(status: boolean): any,
     showNotificationArea: boolean,
     setShowNotificationArea(status: boolean): any,
+    reload: boolean,
+    setReload(status: boolean): any,
 }
 
 const defaultValues = { 
@@ -15,7 +17,9 @@ const defaultValues = {
     searchActive: false,
     setSearchActive() {},
     showNotificationArea: false,
-    setShowNotificationArea() {}
+    setShowNotificationArea() {},
+    reload: false,
+    setReload() {}
 }
 
 const AppContext = createContext<AppCtx>(defaultValues);
@@ -24,9 +28,10 @@ const ApplicationContext: React.FC = ({ children }) => {
     const [searchText, setSearchText] = useState("");
     const [searchActive, setSearchActive] = useState(false);
     const [showNotificationArea, setShowNotificationArea] = useState(false);
+    const [reload, setReload] = useState(true);
 
     return (
-        <AppContext.Provider value={{ searchText, setSearchText, searchActive, setSearchActive, showNotificationArea, setShowNotificationArea }}>
+        <AppContext.Provider value={{ searchText, setSearchText, searchActive, setSearchActive, showNotificationArea, setShowNotificationArea, reload, setReload }}>
             {children}
         </AppContext.Provider>
     );
