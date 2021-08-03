@@ -39,7 +39,7 @@ const QuestionDetail: React.FC = () => {
     }, [idQuestion]);
     
     const handleGetComments = useCallback(() => {
-        api.get(`comments/${idQuestion}`).then(response => {
+        api.get(`questions/${idQuestion}/comments`).then(response => {
             setComments(response.data);
         })
     }, [idQuestion]);
@@ -56,11 +56,11 @@ const QuestionDetail: React.FC = () => {
 
         const data = {
             text: comment,
-            question_id: idQuestion,
+            /* question_id: idQuestion, */
             author_id: id
         }
 
-        api.post('comments', data).then(() => {
+        api.post(`question/${question?.id}/comments?question_id=${question?.id}`, data).then(() => {
             handleGetComments();
             alert("Comentário feito com sucesso!");
             setComment("");

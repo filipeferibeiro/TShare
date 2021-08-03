@@ -73,6 +73,16 @@ const QuestionCardFeed:React.FC<QuestionCardFeedProps> =  ({ question, showComme
             alert("Erro ao deletar questão.")
         });
     }
+    
+    function handleUpScore() {
+        api.post(`questions/${question.id}/vote?userId=${userId}&direction=1`)
+        .then(() => {
+            alert("Voto computado");
+        }).catch(() => {
+            alert("Erro ao computar voto")
+        });
+
+    }
 
     return (
         <>
@@ -143,7 +153,7 @@ const QuestionCardFeed:React.FC<QuestionCardFeedProps> =  ({ question, showComme
                 
                 <div className="question-card-feed-actions-container">
                     <div className="question-card-feed-actions-container-left">
-                        <p className="action"><FiStar color="#FFF" size={22} />10 Estrelas</p>
+                        <p className="action" onClick={handleUpScore}><FiStar color="#FFF" size={22} />{question.score} Estrelas</p>
                         <p className="action"><FiMessageSquare color="#FFF" size={22} />{question.comments?.length} Comentários</p>
                     </div>
                     {!detail &&

@@ -16,6 +16,7 @@ const Search = () => {
         title: "Teste",
         description: "Testando",
         author: 1,
+        score: 2,
         authorName: "Filipe",
         alternatives: [],
         tags: ["Tag 1", "Tag 2"],

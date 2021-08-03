@@ -9,7 +9,7 @@ import './styles.css';
 const QuestionBankCard: React.FC<QuestionBankCardProps> = ({ question, idBank, updateFunc }) => {
     function handleRemoveQuestionFromBank() {
         if (updateFunc) {
-            api.delete(`removeQuestionFromBank?questionId=${question.id}&questionBankId=${idBank}`).then(() => {
+            api.delete(`banks/${idBank}/question/${question.id}`).then(() => {
                 updateFunc();
                 alert('Questão removida do banco!');
             }).catch(() => {

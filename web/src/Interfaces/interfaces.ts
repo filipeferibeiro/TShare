@@ -19,6 +19,7 @@ export interface Question {
         correct: number
     }[];
     tags: string[];
+    score: number;
     long_answer: string,
     question_type: number,
     comments?: Comment[]

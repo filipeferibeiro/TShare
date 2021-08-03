@@ -26,7 +26,7 @@ const BankStatus:React.FC<BankStatusProps> = ({ questionIdParam, questionTitlePa
     const { id: userID } = useContext<Ctx>(Context);
     
     const handleGetBanks = useCallback(() => {
-        api.get(`questionBanks?author=${userID}`).then(response => {
+        api.get(`banks?author=${userID}`).then(response => {
             setBanks(response.data);
         });
 
@@ -34,7 +34,7 @@ const BankStatus:React.FC<BankStatusProps> = ({ questionIdParam, questionTitlePa
     }, [userID]);
     
     function handleAddQuestionToBank(questionId: number, questionBankId:number) {
-        api.post(`addQuestionToBank?questionId=${questionId}&questionBankId=${questionBankId}`).then(() => {
+        api.put(`banks/${questionBankId}/questions/${questionId}`).then(() => {
             handleCheckQuestionBanks(questionIdParam);
             alert('Questão Adicionada com Sucesso ao banco!');
         }).catch(() => {
@@ -43,10 +43,19 @@ const BankStatus:React.FC<BankStatusProps> = ({ questionIdParam, questionTitlePa
     }
     
     function handleCheckQuestionBanks(id: number) {
-        api.get(`questionBanksCheck?id=${id}&author=${userID}`).then((response) => {
+        api.get(`questions/${id}/banks?author=${userID}`).then((response) => {
             setBanksAdded(response.data);
         }).catch(() => {
             alert('Erro!');
+        });
+    }
+    
+    function handleRemoveQuestionFromBank(questionId: number, questionBankId:number) {
+        api.delete(`banks/${questionBankId}/question/${questionId}`).then(() => {
+            handleCheckQuestionBanks(questionIdParam);
+            alert('Questão removida do banco!');
+        }).catch(() => {
+            alert("Erro ao remover questão do banco, tente novamente.")
         });
     }
 
@@ -56,7 +65,7 @@ const BankStatus:React.FC<BankStatusProps> = ({ questionIdParam, questionTitlePa
         });
 
         if (filtered.length > 0) {
-            return (<Button className="removeBank"><FiMinus color="#FFF" size={22} />Remover</Button>);
+            return (<Button onClick={() => handleRemoveQuestionFromBank(questionIdParam, idBank)} className="removeBank"><FiMinus color="#FFF" size={22} />Remover</Button>);
         }
         return (<Button onClick={() => handleAddQuestionToBank(questionIdParam, idBank)}><FiPlus color="#FFF" size={22} />Adicionar</Button>)
     }

@@ -26,7 +26,8 @@ const Profile = () => {
     const { id } = useContext<Ctx>(Context);
 
     const handleGetUser = useCallback(() => {
-        api.get(`users/?id=${idProfile}`).then(response => {
+        api.get(`users/${idProfile}`).then(response => {
+            
             setUser(response.data[0]);
         })
     }, [idProfile]);
@@ -49,6 +50,7 @@ const Profile = () => {
         description: "Description TESTE",
         author: 1,
         authorName: "Filipe",
+        score: 2,
         alternatives: [{
             text: "blá",
             correct: 1

@@ -29,13 +29,13 @@ const QuestionBank = () => {
     const { id } = useContext<Ctx>(Context);
 
     const handleGetBanks = useCallback(() => {
-        api.get(`questionBanks?author=${id}`).then(response => {
+        api.get(`banks?author=${id}`).then(response => {
             setBanks(response.data);
         })
     }, [id]);
 
     function handleGetQuestionsBank() {
-        api.get(`/getBankQuestions?questionBankId=${banks[bankSelected]?.id}`).then(response => {
+        api.get(`/banks/${banks[bankSelected]?.id}`).then(response => {
             setQuestions(response.data);
         });
     } 
@@ -97,7 +97,7 @@ const QuestionBank = () => {
             author: id
         }
 
-        api.post('questionBanks', data).then(() => {
+        api.post('banks', data).then(() => {
             alert('Banco Criado!');
             handleGetBanks();
         }).catch(() => {
@@ -114,7 +114,7 @@ const QuestionBank = () => {
             title: editBankName
         }
 
-        api.post(`updateBank?questionBankId=${banks[bankSelected].id}`, data).then(() => {
+        api.put(`banks?questionBankId=${banks[bankSelected].id}`, data).then(() => {
             alert('Nome do banco alterado!');
             handleGetBanks();
         }).catch(() => {
@@ -127,7 +127,7 @@ const QuestionBank = () => {
     function handleDeleteBank(e: FormEvent) {
         e.preventDefault();
 
-        api.delete(`removeBank?questionBankId=${banks[bankSelected].id}`).then(() => {
+        api.delete(`banks?questionBankId=${banks[bankSelected].id}`).then(() => {
             alert('Banco removido!');
             setBankSelected(-1);
             handleGetBanks();
