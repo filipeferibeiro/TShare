@@ -17,8 +17,8 @@ const QuestionAnswerCard:React.FC<QuestionAnswerCardProps> = ({ alternative, jus
                 <div>
                     <p className={`text-white text-sm mb-4`}>Alternativas</p>
                     <div className={`flex flex-col gap-2`}>
-                        {question.alternatives.map(alternativeM => (
-                            <Checkbox detail text={alternativeM.text} correct={alternativeM.correct === 1} />
+                        {question.alternatives.map((alternativeM, index) => (
+                            <Checkbox key={index} detail text={alternativeM.text} correct={alternativeM.correct === 1} />
                         ))}
                     </div>
                 </div>

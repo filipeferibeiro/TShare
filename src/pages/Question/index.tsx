@@ -194,7 +194,7 @@ const Question = () => {
                     {alternatives.length > 0 && 
                         <div className="flex flex-col gap-2 my-3">
                             {alternatives.map((alternative, index) => (
-                                <div className={`flex items-center gap-3}`}>
+                                <div className={`flex items-center gap-3}`} key={index}>
                                     <button className={`p-2 ${transition} ${redContainerHover} rounded-full mr-2`} onClick={() => removeAlternative(index)}>
                                         <FiX color={iconColor} />
                                     </button>
@@ -221,11 +221,11 @@ const Question = () => {
                 {tags.length > 0 &&
                     <div className="flex gap-3 my-3 flex-wrap">
                         {tags.map((tag, index) => (
-                            <div className={`flex items-center gap-1}`}>
+                            <div className={`flex items-center gap-1}`} key={index}>
                                 <button className={`p-2 ${transition} ${redContainerHover} rounded-full mr-2`} onClick={() => removeTag(index)}>
                                     <FiX color={iconColor} />
                                 </button>
-                                <Tag key={index} title={tag} createQuestion />
+                                <Tag title={tag} createQuestion />
                             </div>
                         ))}
                     </div>

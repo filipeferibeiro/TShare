@@ -10,8 +10,8 @@ export async function postImage(questionId:number, data:File) {
     return image;
 }
 
-export async function getImage(questionId:number) {
+export async function getImage(questionId:string) {
     const image = api.get(`images/question/${questionId}`).then(res => {
-        console.log(res.data);
+        console.log(res);
     })
 }

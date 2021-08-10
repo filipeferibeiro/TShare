@@ -12,6 +12,7 @@ import Section from '../../components/Section';
 import { Context, Ctx } from '../../context/AuthContext';
 import { toDate } from '../../functions';
 import { CommentProps, QuestionProps } from '../../interfaces/interfaces';
+import { getImage } from '../../services/images';
 import { getQuestion, getQuestionComments, postQuestionComments } from '../../services/questions';
 import { blackContainer, rounded } from '../../styles/styles';
 
@@ -53,8 +54,8 @@ const QuestionDetail:React.FC = () => {
         })
     }
 
-    async function getImage() {
-        
+    async function getImageAsync() {
+        getImage(idQuestion || "-1").then()
     }
 
     function handleUserProfile(id:number) {
@@ -64,6 +65,7 @@ const QuestionDetail:React.FC = () => {
     useEffect(() => {
         getQuestionAsync();
         getQuestionCommentsAsync();
+        getImageAsync();
     }, [])
     
     const isAlternative = question?.question_type === 0 || question?.question_type === 1;
