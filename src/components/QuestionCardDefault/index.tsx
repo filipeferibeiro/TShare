@@ -16,6 +16,7 @@ import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNot
 import DeleteQuestionPopup from './components/DeleteQuestionPopup';
 import { copyToClipboard, linkBase } from '../../functions';
 import { getImage } from '../../services/images';
+import { postVoteUp } from '../../services/questions';
 
 interface QuestionCardDefaultProps {
     isDetail?: boolean;
@@ -73,6 +74,17 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
         }
     }
 
+    function handlePostVote() {
+        postVoteUp(question.id, userId).then(res => {
+            if (res) {
+                showNotification("Voto adicionado!", 0)
+            }
+            else {
+                showNotification("Erro ao registrar voto", 1)
+            }
+        })
+    }
+
     function handleCopyLinkToClipboard() {
         copyToClipboard(`${linkBase()}/questionDetail/${question.id}`);
         showNotification("Link copiado para área de transferência!", 0);
@@ -126,10 +138,10 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
 
                 <div className="flex justify-between items-center">
                     <div className="flex gap-4">
-                        <div className={`${starCommentCard}`}>
+                        <button className={`${starCommentCard}`} onClick={handlePostVote}>
                             <FiStar color={iconColor} />
                             <p className={`${starCommentCardP}`}>{question.score}</p>
-                        </div>
+                        </button>
                         <div className={`${starCommentCard}`}>
                             <FiMessageCircle color={iconColor} />
                             <p className={`${starCommentCardP}`}>{countComments}</p>

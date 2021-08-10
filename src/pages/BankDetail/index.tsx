@@ -62,7 +62,7 @@ const BankDetail = () => {
                     <IconButton red Icon={FiTrash2} onClick={() => handleDeleteBank(banks?.id || -1, banks?.title || "")} />
                 </div>
             </PageName>
-            <div>
+            <div className={`flex flex-col gap-5`}>
                 {questions.map(question => (
                     <QuestionCardDefault isBank key={question.id} question={question} bankId={banks?.id} func={getAllQuestions} />
                 ))}

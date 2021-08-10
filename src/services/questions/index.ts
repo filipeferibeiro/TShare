@@ -61,3 +61,34 @@ export async function postQuestionComments(questionId: string, data:CommentCreat
 
     return comment;
 }
+
+export async function postVoteUp(questionId:number, userId:number) {
+    const vote = api.post(`questions/${questionId}/vote?direction=0&userId=${userId}`).then(() => {
+        return true;
+    }).catch(() => {
+        return false;
+    });
+
+    return vote;
+}
+
+export async function postVoteDown(questionId:number, userId:number) {
+    const vote = api.post(`questions/${questionId}/vote?userId=${userId}`).then(() => {
+        return true;
+    }).catch(() => {
+        return false;
+    });
+
+    return vote;
+}
+
+export async function getVote(questionId:number, userId:number) {
+    const vote = api.get(`questions/${questionId}/vote?userId=${userId}`).then((res) => {
+        return res.data;
+    }).catch(() => {
+        return undefined;
+    });
+
+    return vote;
+}
+

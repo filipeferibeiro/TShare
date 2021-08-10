@@ -29,6 +29,7 @@ const QuestionDetail:React.FC = () => {
     const [question, setQuestion] = useState<QuestionProps>();
     const [comments, setComments] = useState<CommentProps[]>([]);
     const [comment, setComment] = useState<string>("");
+    const [imageSrc, setImageSrc] = useState<string>("");
 
     async function getQuestionAsync() {
         setQuestion(await getQuestion(idQuestion || "-1"));
@@ -50,16 +51,21 @@ const QuestionDetail:React.FC = () => {
             if (res) {
                 setComment("");
                 getQuestionCommentsAsync();
+                getQuestionAsync();
             }
         })
     }
 
     async function getImageAsync() {
-        getImage(idQuestion || "-1").then()
+        getImage(idQuestion || "-1", setImageSrc);
     }
 
     function handleUserProfile(id:number) {
         history.push(`/profile/${id}`)
+    }
+
+    function handleDeleteQuestion() {
+        history.push('/home')
     }
 
     useEffect(() => {
@@ -76,7 +82,8 @@ const QuestionDetail:React.FC = () => {
             <PageName name="Detalhes da questão" />
             {question &&
                 <div className={`flex flex-col gap-4`}>
-                    <QuestionCardDefault isDetail question={question} />
+                    <QuestionCardDefault isDetail question={question} func={handleDeleteQuestion} />
+                    <img className={`${rounded}`} src={imageSrc} alt="Question Image" />
                     <QuestionAnswerCard alternative={isAlternative} justificative={isJustificative} question={question} />
                     <Section title="Comentários">
                         <div>
