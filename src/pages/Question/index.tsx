@@ -18,6 +18,7 @@ import { button, redContainerHover, RemoveButton, transition } from '../../style
 import Section from '../../components/Section';
 import { postImage } from '../../services/images';
 import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNotificationContext';
+import api from '../../services/api';
 
 const Question = () => {
     const { id: userID } = useContext<Ctx>(Context);
@@ -137,12 +138,14 @@ const Question = () => {
         return data;
     }
 
-    function createQuestion() {        
+    function createQuestion(e:FormEvent) {    
+        e.preventDefault();    
         postQuestion(makeData()).then(res => {
             if (res >= 0) {
-                const image = new FormData();
                 if (selectedFile) {
-                    postImage(res, selectedFile).then(resImage => {
+                    let image = new FormData();
+                    image.append("file", selectedFile);
+                    postImage(res, image).then(resImage => {
                         if (resImage) {
                             showNotification("Questão criada com sucesso!", 2);
                             history.push('/home');
