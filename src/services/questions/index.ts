@@ -1,4 +1,4 @@
-import { CommentCreateProps, QuestionCreateProps } from "../../interfaces/interfaces";
+import { CommentCreateProps, QuestionCreateProps, QuestionResProps } from "../../interfaces/interfaces";
 import api from "../api";
 
 export async function getAllQuestions() {
@@ -22,10 +22,11 @@ export async function getQuestion(id: string) {
 }
 
 export async function postQuestion(data: QuestionCreateProps) {
-    const question = api.post(`questions`, data).then(() => {
-        return true;
+    const question = api.post(`questions`, data).then((res) => {
+        const data:QuestionResProps = res.data
+        return data.questionId;
     }).catch(() => {
-        return false;
+        return -1;
     });
 
     return question;

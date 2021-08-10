@@ -16,9 +16,12 @@ import { Alternative, OptionProps, QuestionCreateProps } from '../../interfaces/
 import { postQuestion } from '../../services/questions';
 import { button, redContainerHover, RemoveButton, transition } from '../../styles/styles';
 import Section from '../../components/Section';
+import { postImage } from '../../services/images';
+import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNotificationContext';
 
 const Question = () => {
     const { id: userID } = useContext<Ctx>(Context);
+    const { showNotification } = useContext<AppNotificationCtx>(AppNotificationContext);
     const history = useHistory();
 
     const Options = [
@@ -136,8 +139,23 @@ const Question = () => {
 
     function createQuestion() {        
         postQuestion(makeData()).then(res => {
-            if (res) {
-                history.push('/home');
+            if (res >= 0) {
+                const image = new FormData();
+                if (selectedFile) {
+                    postImage(res, selectedFile).then(resImage => {
+                        if (resImage) {
+                            showNotification("Questão criada com sucesso!", 2);
+                            history.push('/home');
+                        } else {
+                            showNotification("Erro ao criar questão! Image", 1);
+                        }
+                    })
+                } else {
+                    showNotification("Questão criada com sucesso!", 2);
+                    history.push('/home');
+                }
+            } else {
+                showNotification("Erro ao criar questão!", 1);
             }
         });
     }

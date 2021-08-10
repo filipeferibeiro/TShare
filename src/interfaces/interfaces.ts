@@ -30,6 +30,11 @@ export interface QuestionCreateProps {
     question_type: number;
 }
 
+export interface QuestionResProps {
+    message: string;
+    questionId: number;
+}
+
 export interface CommentCreateProps {
     text: string;
     author_id: number;

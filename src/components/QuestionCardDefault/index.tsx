@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FiChevronRight, FiEdit, FiFolder, FiLink, FiMessageCircle, FiMoreHorizontal, FiStar, FiTrash2 } from 'react-icons/fi';
 import { iconColor } from '../../constants/constants';
 import { blackContainer, blackContainerHover, buttonIconName, rounded, starCommentCard, starCommentCardP, transition, whiteContainer } from '../../styles/styles';
@@ -15,6 +15,7 @@ import { deleteFromBank } from '../../services/banks';
 import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNotificationContext';
 import DeleteQuestionPopup from './components/DeleteQuestionPopup';
 import { copyToClipboard, linkBase } from '../../functions';
+import { getImage } from '../../services/images';
 
 interface QuestionCardDefaultProps {
     isDetail?: boolean;
@@ -118,8 +119,8 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
                 </div>
 
                 <div className={`flex gap-3 flex-wrap`}>
-                    {question.tags && question.tags.map(tag => (
-                        <button onClick={() => handleTagSearch(tag)}><Tag title={tag} /></button>
+                    {question.tags && question.tags.map((tag, index) => (
+                        <Tag key={index} title={tag} onClick={() => handleTagSearch(tag)} />
                     ))}
                 </div>
 

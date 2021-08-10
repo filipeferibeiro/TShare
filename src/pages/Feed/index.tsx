@@ -19,7 +19,7 @@ const Feed = () => {
         <div className="flex flex-col gap-5 overflow-y-auto pb-14">
             <PageName name="Feed de questões" />
             {questions.map(question => (
-                <QuestionCardDefault question={question} func={getQuestions} />
+                <QuestionCardDefault key={question.id} question={question} func={getQuestions} />
             ))}
         </div>
     );

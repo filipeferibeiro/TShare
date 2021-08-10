@@ -53,6 +53,10 @@ const QuestionDetail:React.FC = () => {
         })
     }
 
+    async function getImage() {
+        
+    }
+
     function handleUserProfile(id:number) {
         history.push(`/profile/${id}`)
     }
@@ -82,7 +86,7 @@ const QuestionDetail:React.FC = () => {
                                 ?
                                 <div className={`flex flex-col mt-5 gap-4`}>
                                     {comments.map(comment => (
-                                        <div className={`flex gap-3 items-center`}>
+                                        <div key={comment.id} className={`flex gap-3 items-center`}>
                                             <button onClick={() => handleUserProfile(comment.author_id)}>
                                                 <ProfilePicture white />
                                             </button>
