@@ -43,6 +43,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
     
     const handleLogOut = useCallback(() => {
+        setSearchField("");
+        setSearchActive(false);
         setAuthenticated(false);
         localStorage.removeItem('token');
         api.defaults.headers['x-access-token'] = undefined;

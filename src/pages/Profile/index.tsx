@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FiBook, FiBriefcase, FiEdit, FiMail, FiShare2 } from 'react-icons/fi';
+import { FiBook, FiBriefcase, FiEdit, FiEdit2, FiMail, FiShare2 } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
+import IconButton from '../../components/IconButton';
 import OptionBar from '../../components/OptionBar';
 import PageName from '../../components/PageName';
 import ProfilePicture from '../../components/ProfilePicture';
@@ -12,7 +13,7 @@ import { PopupContext, PopupCtx } from '../../context/PopupContext';
 import { copyToClipboard } from '../../functions';
 import { OptionProps, UserProps } from '../../interfaces/interfaces';
 import { getUser } from '../../services/users';
-import { button, transition } from '../../styles/styles';
+import { button, rounded, transition } from '../../styles/styles';
 import EditProfilePopup from './components/EditProfilePopup';
 import ProfileItem from './components/ProfileItem';
 
@@ -67,7 +68,6 @@ const Profile = () => {
             createPopup("Editar Perfil", () => <EditProfilePopup user={user} updateFunction={getUserAsync} />)
         }
     }
-
     
     /**
      * Sempre que o userId muda, ele faz a chamada a API para pegar os dados do novo usuário
@@ -79,31 +79,17 @@ const Profile = () => {
     
     return (
         <div className="flex flex-col gap-5 overflow-y-auto">
-            <PageName name="Perfil" />
+            <PageName name="Perfil">
+                {isUserLoggedProfile && 
+                    <IconButton white Icon={FiEdit} onClick={handlePopupEditPerfil} />
+                }
+            </PageName>
             <div className={`flex gap-3`}>
                 <div className={`flex flex-1 flex-col justify-center items-center gap-5`}>
                     <ProfilePicture profile />
                     <p className={`text-white text-lg font-medium`}>{user?.name}</p>
-                    {isUserLoggedProfile &&
-                        <button 
-                            className={`
-                                hover:bg-tshareYellow
-                                ${button}
-                                border
-                                border-solid
-                                hover:border-transparent
-                                border-white
-                                ${transition}
-                                text-white
-                                flex
-                                gap-3
-                                items-center
-                                justify-center
-                                w-full
-                        `} onClick={handlePopupEditPerfil}><FiEdit color={iconColor} size={iconSize} />Editar perfil</button>
-                    }
                 </div>
-                <div className={`flex flex-1 flex-col justify-between gap-3`}>
+                <div className={`flex flex-1 flex-col gap-3`}>
                     <ProfileItem copy copyFunc={handleCopyEmailToClipboard} text={user?.email || ""} Icon={FiMail} />
                     <ProfileItem text="Instituto Federal de Algum Lugar" Icon={FiBriefcase} />
                     <ProfileItem text="34 Questões compartilhadas" Icon={FiShare2} />

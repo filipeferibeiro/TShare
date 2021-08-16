@@ -83,7 +83,9 @@ const QuestionDetail:React.FC = () => {
             {question &&
                 <div className={`flex flex-col gap-4`}>
                     <QuestionCardDefault isDetail question={question} func={handleDeleteQuestion} />
-                    <img className={`${rounded}`} src={imageSrc} alt="Question Image" />
+                    {imageSrc &&
+                        <img className={`${rounded}`} src={imageSrc} alt="Question Image" />
+                    }
                     <QuestionAnswerCard alternative={isAlternative} justificative={isJustificative} question={question} />
                     <Section title="Comentários">
                         <div>
