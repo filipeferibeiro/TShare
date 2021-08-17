@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiUser } from 'react-icons/fi';
 import { iconColor, iconSize } from '../../constants/constants';
+import { getImageProfile } from '../../services/images';
 import { transition, blackContainer, whiteContainer } from '../../styles/styles';
 
 interface ProfilePictureProps {
     profile?: boolean;
     white?: boolean;
+    userId?: number;
 }
 
-const ProfilePicture:React.FC<ProfilePictureProps> = ({ profile, white }) => {
+const ProfilePicture:React.FC<ProfilePictureProps> = ({ profile, white, userId }) => {
+    const [userImg, setUserImg] = useState<string>("");
+
+    async function getImageAsync() {
+        getImageProfile(`${userId}` || "-1", setUserImg);
+    }
+
+    useEffect(() => {
+        if (userId) {
+            getImageAsync();
+        }
+    }, [userId]);
+
     return (
         <div
             className={`
                 ${white ? whiteContainer : blackContainer}
-                p-4
+                ${userImg ? "" : "p-4"}
                 flex
                 justify-center
                 items-center
@@ -22,10 +36,15 @@ const ProfilePicture:React.FC<ProfilePictureProps> = ({ profile, white }) => {
                 border-transparent
                 hover:border-white
                 ${transition}
-                ${profile ? "w-44 h-44" : ""}
+                ${profile ? "w-44 h-44" : "w-14 h-14"}
             `}
         >
-            <FiUser size={profile ? 44 : iconSize} color={iconColor} />
+            {userImg
+                ?
+                <img className={`w-full h-full object-cover rounded-full`} src={userImg} />
+                :
+                <FiUser size={profile ? 44 : iconSize} color={iconColor} />
+            }
         </div>
     );
 }

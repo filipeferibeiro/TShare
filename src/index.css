@@ -30,6 +30,11 @@
   height: calc(100% - 60px);
 }
 
+.drop-profile {
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 6px;

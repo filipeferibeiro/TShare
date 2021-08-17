@@ -86,7 +86,7 @@ const Profile = () => {
             </PageName>
             <div className={`flex gap-3`}>
                 <div className={`flex flex-1 flex-col justify-center items-center gap-5`}>
-                    <ProfilePicture profile />
+                    <ProfilePicture profile userId={parseInt(userId || "-1")} />
                     <p className={`text-white text-lg font-medium`}>{user?.name}</p>
                 </div>
                 <div className={`flex flex-1 flex-col gap-3`}>

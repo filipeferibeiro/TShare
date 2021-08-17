@@ -114,7 +114,7 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
                 }
                 <header className={`flex justify-between`} >
                     <div className={`flex gap-2 py-1 pl-1 pr-6 rounded-full ${blackContainer} cursor-pointer`} onClick={handleUserProfile}>
-                        <ProfilePicture />
+                        <ProfilePicture userId={question.author} />
                         <div
                             className="flex flex-col justify-center"
                         >

@@ -41,7 +41,7 @@ const Layout:React.FC = ({ children }) => {
                     <div className="flex justify-end gap-2">
                         <SearchButton Icon={FiSearch} value={searchField} setValue={setSearchField} />
                         <IconButton Icon={FiBell} />
-                        <button onClick={handleUserProfile}><ProfilePicture /></button>
+                        <button onClick={handleUserProfile}><ProfilePicture userId={userID} /></button>
                     </div>
                 </header>
                 <div className="flex flex-1 overflow-hidden gap-6">

@@ -1,11 +1,13 @@
 import React, { FormEvent } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
+import DropzoneProfile from '../../../../components/DropzoneProfile';
 import Input from '../../../../components/Input';
 import Section from '../../../../components/Section';
 import { AppNotificationContext, AppNotificationCtx } from '../../../../context/AppNotificationContext';
 import { PopupContext, PopupCtx } from '../../../../context/PopupContext';
 import { UserProps } from '../../../../interfaces/interfaces';
+import { postImageProfile } from '../../../../services/images';
 import { button } from '../../../../styles/styles';
 
 interface EditProfilePopupProps {
@@ -19,15 +21,35 @@ const EditProfilePopup:React.FC<EditProfilePopupProps> = ({ user, updateFunction
 
     const [userName, setUserName] = useState(user.name);
     const [userEmail, setUserEmail] = useState(user.email);
+    const [selectedFile, setSelectedFile] = useState<File>();
 
 
     function handleEditBank(e: FormEvent) {
         e.preventDefault();
+
+        if(selectedFile) {
+            let image = new FormData();
+            image.append("file", selectedFile);
+            postImageProfile(user.id, image).then(resImage => {
+                if (resImage) {
+                    showNotification("Imagem alterada com sucesso!", 2);
+                    setPopupActive(false);
+                } else {
+                    showNotification("Erro ao alterar imagem!", 1);
+                }
+            })
+        }
+
     }
 
     return (
         <div className={`flex`}>
             <form onSubmit={handleEditBank} className={`flex flex-col flex-1 gap-3 w-full`}>
+                <Section title="Imagem de Perfil">
+                    <div className={`flex justify-center `}>
+                        <DropzoneProfile onFileUploaded={setSelectedFile} />
+                    </div>
+                </Section>
                 <Section title="Nome do usuário">
                     <Input id="name" type="text" className={`flex-1`} placeholder="Informe o novo nome do usuário" value={userName} onChange={setUserEmail} />
                 </Section>
