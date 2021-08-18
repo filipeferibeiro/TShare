@@ -81,7 +81,7 @@ const Profile = () => {
         <div className="flex flex-col gap-5 overflow-y-auto">
             <PageName name="Perfil">
                 {isUserLoggedProfile && 
-                    <IconButton white Icon={FiEdit} onClick={handlePopupEditPerfil} />
+                    <IconButton yellow Icon={FiEdit} onClick={handlePopupEditPerfil} />
                 }
             </PageName>
             <div className={`flex gap-3`}>

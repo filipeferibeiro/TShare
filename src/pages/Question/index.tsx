@@ -1,6 +1,6 @@
 import React, { FormEvent, useContext } from 'react';
 import { useState } from 'react';
-import { FiPlus, FiX } from 'react-icons/fi';
+import { FiFile, FiPlus, FiX } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import Checkbox from '../../components/Checkbox';
 import Dropzone from '../../components/Dropzone';
@@ -51,10 +51,21 @@ const Question = () => {
     const [alternativeInput, setAlternativeInput] = useState<string>("");
     const [tagInput, setTagInput] = useState<string>("");
 
+    function clearAll() {
+        setOptions(Options);
+        setAlternatives([]);
+        setTags([]);
+        setSelectedFile(undefined);
 
-    function addAlternative(e:FormEvent) {
-        e.preventDefault();
+        setTitle("");
+        setDescription("");
+        setLongAnswer("");
+        setAlternativeInput("");
+        setTagInput("");
+    }
 
+
+    function addAlternative() {
         setAlternatives([ ...alternatives, { text: alternativeInput, correct: 0 } ]);
         setAlternativeInput("");
     }
@@ -83,9 +94,7 @@ const Question = () => {
         setAlternatives(newAlternatives);
     }
     
-    function addTag(e:FormEvent) {
-        e.preventDefault();
-        
+    function addTag() {
         setTags([ ...tags, tagInput ]);
         setTagInput("");
     }
@@ -166,7 +175,7 @@ const Question = () => {
     const removeButton = (size: number, onClick:any) => {
         if (size > 0) {
             return (
-                <button onClick={() => onClick([])} className={`${RemoveButton}`}>Remover todas</button>
+                <button onClick={() => onClick([])} className={`${RemoveButton}`} type="button">Remover todas</button>
             );
         }
 
@@ -174,72 +183,95 @@ const Question = () => {
             <>
             </>
         );
-    } 
+    }
+    
+    const removePictureButton = () => {
+        if (selectedFile) {
+            return (
+                <button onClick={() => setSelectedFile(undefined)} className={`${RemoveButton}`} type="button">Remover imagem</button>
+            );
+        }
+
+        return (
+            <>
+            </>
+        );
+    }
 
     return (
         <div className="flex flex-col gap-5 overflow-y-auto">
-            <PageName name="Nova questão" />
-            <OptionBar options={options} setOptions={setOptions} />
-            <Section title="Titulo da questão">
-                <Input value={title} onChange={setTitle} />
-            </Section>
-            <Section title="Imagem">
-                <Dropzone onFileUploaded={setSelectedFile} />
-            </Section>
-            <Section title="Detalhamento">
-                <Textarea value={description} onChange={setDescription} />
-            </Section>
-            {(options[0].state || options[1].state) &&
-                <Section 
-                    title="Alternativas"
-                    Component={() => removeButton(alternatives.length, setAlternatives)}
+            <PageName name="Nova questão">
+                <IconButton Icon={FiFile} white onClick={clearAll} />
+            </PageName>
+            <form
+                className={`flex flex-col gap-5 overflow-y-auto`}
+                onSubmit={createQuestion}
+                onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
+            >
+                <OptionBar options={options} setOptions={setOptions} />
+                <Section title="Titulo da questão">
+                    <Input value={title} onChange={setTitle} required />
+                </Section>
+                <Section title="Imagem" Component={() => removePictureButton()}>
+                    <Dropzone onFileUploaded={setSelectedFile} selectedFile={selectedFile} />
+                </Section>
+                <Section title="Detalhamento">
+                    <Textarea value={description} onChange={setDescription} required />
+                </Section>
+                {(options[0].state || options[1].state) &&
+                    <Section 
+                        title="Alternativas (selecione a correta)"
+                        Component={() => removeButton(alternatives.length, setAlternatives)}
+                    >
+                        {alternatives.length > 0 && 
+                            <div className="flex flex-col gap-2 my-3">
+                                {alternatives.map((alternative, index) => (
+                                    <div className={`flex items-center gap-3}`} key={index}>
+                                        <button className={`p-2 ${transition} ${redContainerHover} rounded-full mr-2`} onClick={() => removeAlternative(index)} type="button">
+                                            <FiX color={iconColor} />
+                                        </button>
+                                        <Checkbox onClick={() => setAlternativeCorrect(index)} key={index} text={alternative.text} correct={alternative.correct === 1} />
+                                    </div>
+                                ))}
+                            </div>
+                        }
+                        <div className={`flex flex-1 gap-3 w-full`}>
+                            <Input value={alternativeInput} onChange={setAlternativeInput} onKeyPress={e => e.key === 'Enter' && addAlternative()} />
+                            <IconButton white Icon={FiPlus} onClick={addAlternative} type="button" />
+                        </div>
+                    </Section>
+                }
+                {(options[1].state || options[2].state) &&
+                    <Section title="Justificativa">
+                        <Textarea value={longAnswer} onChange={setLongAnswer} required />
+                    </Section>
+                }
+                <Section
+                    title="Tags"
+                    Component={() => removeButton(tags.length, setTags)}
                 >
-                    {alternatives.length > 0 && 
-                        <div className="flex flex-col gap-2 my-3">
-                            {alternatives.map((alternative, index) => (
-                                <div className={`flex items-center gap-3}`} key={index}>
-                                    <button className={`p-2 ${transition} ${redContainerHover} rounded-full mr-2`} onClick={() => removeAlternative(index)}>
+                    {tags.length > 0 &&
+                        <div className="flex gap-3 my-3 flex-wrap">
+                            {tags.map((tag, index) => (
+                                <div className={`flex items-center gap-1}`} key={index}>
+                                    <button className={`p-2 ${transition} ${redContainerHover} rounded-full mr-2`} onClick={() => removeTag(index)}>
                                         <FiX color={iconColor} />
                                     </button>
-                                    <Checkbox onClick={() => setAlternativeCorrect(index)} key={index} text={alternative.text} correct={alternative.correct === 1} />
+                                    <Tag title={tag} createQuestion />
                                 </div>
                             ))}
                         </div>
                     }
-                    <form className={`flex flex-1 gap-3 w-full`} onSubmit={addAlternative}>
-                        <Input value={alternativeInput} onChange={setAlternativeInput} required />
-                        <IconButton white Icon={FiPlus} type="submit" />
+                    <div className={`flex flex-1 gap-3 w-full`}>
+                        <Input value={tagInput} onChange={setTagInput} onKeyPress={e => e.key === 'Enter' && addTag()} />
+                        <IconButton white Icon={FiPlus} onClick={addTag} type="button" />
+                    </div>
+                    <form className={`flex flex-1 gap-3 w-full`} onSubmit={addTag}>
                     </form>
                 </Section>
-            }
-            {(options[1].state || options[2].state) &&
-                <Section title="Justificativa">
-                    <Textarea value={longAnswer} onChange={setLongAnswer} />
-                </Section>
-            }
-            <Section
-                title="Tags"
-                Component={() => removeButton(tags.length, setTags)}
-            >
-                {tags.length > 0 &&
-                    <div className="flex gap-3 my-3 flex-wrap">
-                        {tags.map((tag, index) => (
-                            <div className={`flex items-center gap-1}`} key={index}>
-                                <button className={`p-2 ${transition} ${redContainerHover} rounded-full mr-2`} onClick={() => removeTag(index)}>
-                                    <FiX color={iconColor} />
-                                </button>
-                                <Tag title={tag} createQuestion />
-                            </div>
-                        ))}
-                    </div>
-                }
-                <form className={`flex flex-1 gap-3 w-full`} onSubmit={addTag}>
-                    <Input value={tagInput} onChange={setTagInput} required />
-                    <IconButton white Icon={FiPlus} type="submit" />
-                </form>
-            </Section>
 
-            <button onClick={createQuestion} className={`bg-tshare ${button} mb-3`}>Salvar questão</button>
+                <button type="submit" className={`bg-tshare ${button} mb-3`}>Salvar questão</button>
+            </form>
         </div>
     );
 }

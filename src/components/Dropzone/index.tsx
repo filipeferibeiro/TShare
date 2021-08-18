@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUpload } from 'react-icons/fi';
 import { iconColor, iconSize } from '../../constants/constants';
@@ -6,9 +6,10 @@ import { rounded, whiteContainer } from '../../styles/styles';
 
 interface DropzoneProps {
     onFileUploaded: (file: File) => void;
+    selectedFile?: File;
 }
 
-const Dropzone:React.FC<DropzoneProps> = ({ onFileUploaded }) => {
+const Dropzone:React.FC<DropzoneProps> = ({ onFileUploaded, selectedFile }) => {
     const [selectedFileUrl, setSelectedFileUrl] = useState('');
 
     const onDrop = useCallback(acceptedFiles => {
@@ -24,6 +25,12 @@ const Dropzone:React.FC<DropzoneProps> = ({ onFileUploaded }) => {
         onDrop,
         accept: 'image/*'
     });
+
+    useEffect(() => {
+        if (!selectedFile) {
+            setSelectedFileUrl('');
+        }
+    }, [selectedFile])
 
     return (
         <div className={`h-72 flex justify-center items-center outline-none ${rounded} ${whiteContainer}`} { ...getRootProps() }>
