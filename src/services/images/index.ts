@@ -1,7 +1,6 @@
 import api from "../api";
 
 export async function postImage(questionId:number, data:FormData) {
-    console.log(data.get("file"));
     const image = api.post(`images/question/${questionId}/upload`, data, { headers: { "Content-Type": "multipart/form-data" } }).then(() => {
         return true;
     }).catch(() => {
@@ -12,15 +11,32 @@ export async function postImage(questionId:number, data:FormData) {
 }
 
 export async function getImage(questionId:string, setSrc:any) {
-    api.get(`images/question/${questionId}`).then(() => {
-        setSrc(`${api.defaults.baseURL}/images/question/${questionId}`);
-    }).catch(() => {
+    fetch(`${api.defaults.baseURL}/images/question/${questionId}`)
+        .then(res => res.blob())
+        .then(blob => {
+            setSrc(URL.createObjectURL(blob));
+        })
+        .catch(() => {
+            setSrc(undefined);
+        })
+
+    /* api.get(`images/question/${questionId}`).then((res) => {
+        setSrc(`${api.defaults.baseURL}/images/question/${questionId}`);  */
+        /* console.log(res.headers)
+        var bytes = new Uint8Array(res.data);
+        var binary = bytes.reduce((data, b) => data += String.fromCharCode(b), '');
+        setSrc(`data:${res.headers['content-type']};base64,${btoa(binary)}`); */
+        
+        /* console.log(res.data)
+        setSrc(`data:image/png;base64,${res.data }`); */
+        /* Buffer.of(res.data)
+        */
+    /* }).catch(() => {
         setSrc(undefined);
-    });
+    }); */
 }
 
 export async function postImageProfile(userId:number, data:FormData) {
-    console.log(data.get("file"));
     const image = api.post(`images/profile/${userId}/upload`, data, { headers: { "Content-Type": "multipart/form-data" } }).then(() => {
         return true;
     }).catch(() => {

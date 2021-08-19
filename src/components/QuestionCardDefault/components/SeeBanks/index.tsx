@@ -1,12 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { FiCheck, FiFolder, FiX } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
 import { iconColor } from '../../../../constants/constants';
 import { AppNotificationContext, AppNotificationCtx } from '../../../../context/AppNotificationContext';
 import { Context, Ctx } from '../../../../context/AuthContext';
+import { PopupContext, PopupCtx } from '../../../../context/PopupContext';
 import { BankProps } from '../../../../interfaces/interfaces';
 import { deleteFromBank, getAllBanks, getCheckQuestionFromBanks, putAddToBank } from '../../../../services/banks';
-import { blackContainer, rounded, transition } from '../../../../styles/styles';
+import { blackContainer, blackContainerHover, rounded, transition } from '../../../../styles/styles';
 import IconButton from '../../../IconButton';
 
 interface SeeBanksProps {
@@ -16,6 +18,9 @@ interface SeeBanksProps {
 const SeeBanks:React.FC<SeeBanksProps> = ({ questionId }) => {
     const { id: userId } = useContext<Ctx>(Context);
     const { showNotification } = useContext<AppNotificationCtx>(AppNotificationContext);
+    const { setPopupActive } = useContext<PopupCtx>(PopupContext);
+
+    const history = useHistory();
 
     const [banks, setBanks] = useState<BankProps[]>([]);
     const [questionBanks, setQuestionBanks] = useState<BankProps[]>([]);
@@ -66,6 +71,10 @@ const SeeBanks:React.FC<SeeBanksProps> = ({ questionId }) => {
         return false;
     }
 
+    function handleCreateNewBank() {
+        history.push('/banks?new=1')
+    }
+
     useEffect(() => {
         handleGetBanks();
         handleGetQuestionBanks();
@@ -73,6 +82,31 @@ const SeeBanks:React.FC<SeeBanksProps> = ({ questionId }) => {
 
     return (
         <div className={`flex flex-col gap-3`}>
+                {banks.length === 0 &&
+                    <div className={`flex flex-col justify-center items-center p-4 gap-3`}>
+                        <p className={`text-white`}>Você ainda não possui nenhum banco de questões, deseja criar um?</p>
+                        <button
+                            className={`
+                                bg-transparent
+                                px-8
+                                py-4
+                                ${rounded}
+                                border
+                                border-solid
+                                hover:border-transparent
+                                ${blackContainerHover}
+                                border-white
+                                ${transition}
+                                text-white
+                                flex
+                                gap-3
+                                items-center
+                            `}
+                            type="button"
+                            onClick={handleCreateNewBank}
+                        >Sim</button>
+                    </div>
+                }
                 {banks.map((bank) => (
                     <div key={bank.id} className={`flex justify-between py-2 px-4 ${blackContainer} ${rounded} hover:bg-opacity-20 ${transition}`}>
                         <div className={`flex gap-4 items-center flex-1`}>

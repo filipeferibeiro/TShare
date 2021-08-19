@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { FiEdit, FiFolder, FiPlus, FiTrash2 } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import IconButton from '../../components/IconButton';
 import PageName from '../../components/PageName';
 import { iconColor } from '../../constants/constants';
@@ -16,10 +16,18 @@ import DeleteBankPopup from './components/DeleteBankPopup';
 import EditBankPopup from './components/EditBankPopup';
 import NewBankPopup from './components/NewBankPopup';
 
-const ListBanks = () => {
+const ListBanks:React.FC = () => {
     const { id: userId } = useContext<Ctx>(Context);
     const { createPopup } = useContext<PopupCtx>(PopupContext);
     const history = useHistory();
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.search.includes('new=1')) {
+            handleNewBank();
+        }
+    }, [])
+
 
     const [banks, setBanks] = useState<BankProps[]>([]);
 

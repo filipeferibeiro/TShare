@@ -99,7 +99,7 @@ const QuestionDetail:React.FC = () => {
                                     {comments.map(comment => (
                                         <div key={comment.id} className={`flex gap-3 items-center`}>
                                             <button onClick={() => handleUserProfile(comment.author_id)}>
-                                                <ProfilePicture white />
+                                                <ProfilePicture white userId={comment.author_id} />
                                             </button>
                                             <div className={`${blackContainer} ${rounded} p-3 text-white`}>
                                                 <button onClick={() => handleUserProfile(comment.author_id)} className={`text-base font-semibold`}>{comment.name} - {toDate(comment.creation_date)}</button>
