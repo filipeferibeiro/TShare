@@ -21,12 +21,11 @@ export async function getQuestion(id: string) {
     return question;
 }
 
-export async function postQuestion(data: QuestionCreateProps) {
-    const question = api.post(`questions`, data).then((res) => {
-        const data:QuestionResProps = res.data
-        return data.questionId;
+export async function postQuestion(data: FormData) {
+    const question = api.post(`questions`, data, { headers: { "Content-Type": "multipart/form-data" } }).then((res) => {
+        return true;
     }).catch(() => {
-        return -1;
+        return false;
     });
 
     return question;

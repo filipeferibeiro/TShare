@@ -148,16 +148,50 @@ const Question = () => {
     }
 
     function createQuestion(e:FormEvent) {    
-        e.preventDefault();    
-        postQuestion(makeData()).then(res => {
+        e.preventDefault();
+        const data = makeData();
+
+        let formData = new FormData();
+
+        formData.append('question', JSON.stringify(data));
+
+        /* formData.append('title', title);
+        formData.append('description', description);
+        formData.append('author', `${userID}`); */
+
+        /* tags.forEach((tag) => formData.append('tags', tag));
+
+        if (options[0].state || options[1].state) {
+            alternatives.forEach((alternative) => {
+                formData.append('alternatives', JSON.stringify(alternative));
+            })
+        } */
+
+      /*   if (options[1].state || options[2].state) {
+            formData.append('long_answer', longAnswer)
+        } */
+
+        if (selectedFile) {
+            formData.append('file', selectedFile);
+        }
+
+        postQuestion(formData).then(res => {
+            if (res) {
+                showNotification("Questão criada com sucesso!", 2);
+                history.push('/home');
+            } else {
+                showNotification("Erro ao criar questão!", 1);
+            }
+        })
+
+
+       /*  postQuestion(makeData()).then(res => {
             if (res >= 0) {
                 if (selectedFile) {
                     let image = new FormData();
                     image.append("file", selectedFile);
                     postImage(res, image).then(resImage => {
                         if (resImage) {
-                            showNotification("Questão criada com sucesso!", 2);
-                            history.push('/home');
                         } else {
                             showNotification("Erro ao criar questão! Image", 1);
                         }
@@ -167,9 +201,8 @@ const Question = () => {
                     history.push('/home');
                 }
             } else {
-                showNotification("Erro ao criar questão!", 1);
             }
-        });
+        }); */
     }
 
     const removeButton = (size: number, onClick:any) => {
