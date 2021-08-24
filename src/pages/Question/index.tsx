@@ -66,8 +66,10 @@ const Question = () => {
 
 
     function addAlternative() {
-        setAlternatives([ ...alternatives, { text: alternativeInput, correct: 0 } ]);
-        setAlternativeInput("");
+        if (alternativeInput.trim().length > 0) {
+            setAlternatives([ ...alternatives, { text: alternativeInput, correct: 0 } ]);
+            setAlternativeInput("");
+        }
     }
 
     function setAlternativeCorrect(i: number) {
@@ -95,8 +97,10 @@ const Question = () => {
     }
     
     function addTag() {
-        setTags([ ...tags, tagInput ]);
-        setTagInput("");
+        if (tagInput.trim().length > 0) {
+            setTags([ ...tags, tagInput ]);
+            setTagInput("");
+        }
     }
     
     function removeTag(i: number) {
