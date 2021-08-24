@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { DetailedHTMLProps, InputHTMLAttributes, useContext, useRef } from 'react';
+import { useEffect } from 'react';
 import { FiX } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { iconColor, iconSize } from '../../constants/constants';
@@ -15,13 +16,14 @@ interface SearchButtonProps {
 
 const SearchButton:React.FC<SearchButtonProps> = ({ Icon, onClick, value, setValue }) => {
     const { searchActive, setSearchActive } = useContext<Ctx>(Context);
+    const searchInput = useRef<HTMLInputElement>(null);
     const history = useHistory();
 
     function handleOpenSearch() {
         setSearchActive(true);
         history.push('/search')
     }
-
+    
     function handleCloseSearch() {
         setSearchActive(false);
         setValue("")
@@ -30,6 +32,12 @@ const SearchButton:React.FC<SearchButtonProps> = ({ Icon, onClick, value, setVal
         setValue("");
         handleOpenSearch();
     }
+    
+    useEffect(()=> {
+        if (searchInput.current) {
+            searchInput.current.focus();
+        }
+    },[searchActive])
 
     return (
         <div
@@ -51,7 +59,7 @@ const SearchButton:React.FC<SearchButtonProps> = ({ Icon, onClick, value, setVal
             <Icon size={iconSize} color={iconColor} />
             {searchActive &&
                 <>
-                <input value={value} onChange={(e) => setValue(e.target.value)} onFocus={handleOpenSearch} placeholder="Digite sua pesquisa..." className="flex-1 bg-transparent text-white border-none font-light p-0 focus:ring-0" type="text" />
+                <input ref={searchInput} value={value} onChange={(e) => setValue(e.target.value)} onFocus={handleOpenSearch} placeholder="Digite sua pesquisa..." className="flex-1 bg-transparent text-white border-none font-light p-0 focus:ring-0" type="text" />
                 <button className="hover:opacity-75" onClick={handleCloseSearch}><FiX size={iconSize} color={iconColor} /></button>
                 </>
             }

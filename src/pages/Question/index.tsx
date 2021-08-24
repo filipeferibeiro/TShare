@@ -113,6 +113,25 @@ const Question = () => {
         return booleans.indexOf(true);
     }
 
+    function handleErrorsWhileCreate() {
+        if (alternatives.length < 2) {
+            showNotification("Tenha ao menos duas alternativas!", 1);
+            return false;
+        }
+        
+        if (alternatives.filter(alternative => alternative.correct === 1).length === 0) {
+            showNotification("Escolha a alternativa correta!", 1);
+            return false;    
+        }
+        
+        if (tags.length < 1) {
+            showNotification("Tenha ao menos uma tag!", 1);
+            return false;
+        }
+
+        return true;
+    }
+
     function makeData() {
         let data: QuestionCreateProps = {
             title: title,
@@ -149,60 +168,28 @@ const Question = () => {
 
     function createQuestion(e:FormEvent) {    
         e.preventDefault();
-        const data = makeData();
 
-        let formData = new FormData();
-
-        formData.append('question', JSON.stringify(data));
-
-        /* formData.append('title', title);
-        formData.append('description', description);
-        formData.append('author', `${userID}`); */
-
-        /* tags.forEach((tag) => formData.append('tags', tag));
-
-        if (options[0].state || options[1].state) {
-            alternatives.forEach((alternative) => {
-                formData.append('alternatives', JSON.stringify(alternative));
-            })
-        } */
-
-      /*   if (options[1].state || options[2].state) {
-            formData.append('long_answer', longAnswer)
-        } */
-
-        if (selectedFile) {
-            formData.append('file', selectedFile);
-        }
-
-        postQuestion(formData).then(res => {
-            if (res) {
-                showNotification("Questão criada com sucesso!", 2);
-                history.push('/home');
-            } else {
-                showNotification("Erro ao criar questão!", 1);
+        if (handleErrorsWhileCreate()) {
+            const data = makeData();
+    
+            let formData = new FormData();
+    
+            formData.append('question', JSON.stringify(data));
+    
+            if (selectedFile) {
+                formData.append('file', selectedFile);
             }
-        })
-
-
-       /*  postQuestion(makeData()).then(res => {
-            if (res >= 0) {
-                if (selectedFile) {
-                    let image = new FormData();
-                    image.append("file", selectedFile);
-                    postImage(res, image).then(resImage => {
-                        if (resImage) {
-                        } else {
-                            showNotification("Erro ao criar questão! Image", 1);
-                        }
-                    })
-                } else {
+    
+            postQuestion(formData).then(res => {
+                if (res) {
                     showNotification("Questão criada com sucesso!", 2);
                     history.push('/home');
+                } else {
+                    showNotification("Erro ao criar questão!", 1);
                 }
-            } else {
-            }
-        }); */
+            });
+        }
+
     }
 
     const removeButton = (size: number, onClick:any) => {
