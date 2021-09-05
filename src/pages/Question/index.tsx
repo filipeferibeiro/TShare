@@ -240,7 +240,7 @@ const Question = () => {
                     <Dropzone onFileUploaded={setSelectedFile} selectedFile={selectedFile} />
                 </Section>
                 <Section title="Detalhamento">
-                    <Textarea value={description} onChange={setDescription} required />
+                    <Textarea value={description} onChange={setDescription} required onKeyPress={e => e.key === 'Enter' && setDescription(description + '\n')}/>
                 </Section>
                 {(options[0].state || options[1].state) &&
                     <Section 
