@@ -5,15 +5,18 @@ import IconButton from '../../components/IconButton';
 import OptionBar from '../../components/OptionBar';
 import PageName from '../../components/PageName';
 import ProfilePicture from '../../components/ProfilePicture';
+import QuestionCardDefault from '../../components/QuestionCardDefault';
 import Section from '../../components/Section';
 import { iconColor, iconSize } from '../../constants/constants';
 import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNotificationContext';
 import { Context, Ctx } from '../../context/AuthContext';
 import { PopupContext, PopupCtx } from '../../context/PopupContext';
 import { copyToClipboard } from '../../functions';
-import { OptionProps, UserProps } from '../../interfaces/interfaces';
+import { OptionProps, QuestionProps, UserProps } from '../../interfaces/interfaces';
+import { getAllQuestions } from '../../services/questions';
 import { getUser } from '../../services/users';
 import { button, rounded, transition } from '../../styles/styles';
+import Question from '../Question';
 import EditProfilePopup from './components/EditProfilePopup';
 import ProfileItem from './components/ProfileItem';
 
@@ -46,6 +49,32 @@ const Profile = () => {
 
     const [options, setOptions] = useState<OptionProps[]>(Options);
     const [user, setUser] = useState<UserProps>();
+    const [questions, setQuestions] = useState<QuestionProps[]>([]);
+
+    const [questionOption, setQuestionOption] = useState<QuestionProps[]>(questions);
+
+    useEffect(() => {
+        switch (selectedOption()) {
+            case 1: {
+                setQuestionOption(JSON.parse(JSON.stringify(questions)).sort((a: { score: number; }, b: { score: number; }) => {
+                    return compare(a.score, b.score)
+                }));
+                break;
+            }
+            case 2: {
+                setQuestionOption(JSON.parse(JSON.stringify(questions)).sort((a: { comments: string | any[]; }, b: { comments: string | any[]; }) => {
+                    if (a.comments && b.comments) {
+                        return compare(a.comments.length, b.comments.length)
+                    }
+                    else {
+                        return 0
+                    }
+                }));
+                break;
+            }
+            default: setQuestionOption(questions); break;
+        }
+    }, [options, selectedOption()])
 
     /**
      * Recupera dados do usuario da base pelo ID
@@ -68,12 +97,38 @@ const Profile = () => {
             createPopup("Editar Perfil", () => <EditProfilePopup user={user} updateFunction={getUserAsync} />)
         }
     }
+
+    function compare(a:number, b:number) {
+        if (b < a) {
+            return -1;
+        }
+        if(b > a) {
+            return 1;
+        }
+        return 0;
+    }
+    
+    async function getQuestions() {
+        const questions: QuestionProps[] = await getAllQuestions().then((res: QuestionProps[]) => {
+            return res.filter(question => question.author === parseInt(userId || "-1"));
+        });
+        setQuestions(questions);
+        setQuestionOption(questions);
+    }
+
+    function selectedOption() {
+        const booleans = options.map(option => {
+            return option.state;
+        });
+
+        return booleans.indexOf(true);
+    }
     
     /**
      * Sempre que o userId muda, ele faz a chamada a API para pegar os dados do novo usuário
      */
     useEffect(() => {
-        
+        getQuestions();
         getUserAsync();
     }, [userId])
     
@@ -97,8 +152,14 @@ const Profile = () => {
                 </div>
             </div>
             <Section title="Ordernar questões por:">
-                <OptionBar options={options} setOptions={setOptions} />
+                <div className="flex flex-col gap-5 overflow-y-auto pb-14">
+                    <OptionBar options={options} setOptions={setOptions} />
+                    {questionOption.map(question => (
+                        <QuestionCardDefault key={question.id} question={question} func={getQuestions} />
+                    ))}
+                </div>
             </Section>
+
         </div>
     );
 }

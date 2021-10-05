@@ -75,20 +75,6 @@ const EditQuestion = () => {
         getImage(idQuestion || "-1", setImageLoaded);
     }, [])
 
-    function clearAll() {
-        setOptions(Options);
-        setAlternatives([]);
-        setTags([]);
-        setSelectedFile(undefined);
-
-        setTitle("");
-        setDescription("");
-        setLongAnswer("");
-        setAlternativeInput("");
-        setTagInput("");
-    }
-
-
     function addAlternative() {
         if (alternativeInput.trim().length > 0) {
             setAlternatives([ ...alternatives, { text: alternativeInput, correct: 0 } ]);
