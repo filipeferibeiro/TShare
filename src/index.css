@@ -35,6 +35,10 @@
   height: calc(100% - 20px);
 }
 
+.min-drop {
+  min-height: 18rem;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 6px;

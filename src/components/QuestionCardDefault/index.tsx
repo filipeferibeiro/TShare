@@ -27,6 +27,8 @@ interface QuestionCardDefaultProps {
 }
 
 const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDetail, isBank, func, bankId }) => {
+    const MAX_TITLE = 95;
+    const MAX_DESCR = 700;
     const { id: userId, setSearchField, setSearchActive } = useContext<Ctx>(Context);
     const { showNotification } = useContext<AppNotificationCtx>(AppNotificationContext);
     const { createPopup } = useContext<PopupCtx>(PopupContext);
@@ -43,6 +45,10 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
 
     function handleUserProfile() {
         history.push(`/profile/${question.author}`);
+    }
+    
+    function handleEditQuestion() {
+        history.push(`/question/${question.id}`);
     }
 
     function handleTagSearch(text: string) {
@@ -90,6 +96,13 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
         showNotification("Link copiado para área de transferência!", 0);
     }
 
+    function handleMaxWords(text:string, maxWords: number): string {
+        if ((text.length <= maxWords) || isDetail) {
+            return text;
+        }
+        return `${text.substring(0, maxWords)}...`;
+    }
+
     return (
         <div className="relative">
             <div className={`${whiteContainer} p-6 ${rounded} flex flex-col gap-3`}>
@@ -105,7 +118,7 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
                             <button className={`${buttonIconName}`} onClick={handleCopyLinkToClipboard}><FiLink color={iconColor} />Copiar link</button>
                             {(isUserLoggedQuestion && !isBank) && 
                                 <>
-                                <button className={`${buttonIconName}`}><FiEdit color={iconColor} />Editar</button>
+                                <button className={`${buttonIconName}`} onClick={handleEditQuestion}><FiEdit color={iconColor} />Editar</button>
                                 <button className={`${buttonIconName}`} onClick={handleDeleteQuestion}><FiTrash2 color={iconColor} />Deletar</button>
                                 </>
                             }
@@ -125,9 +138,9 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
                     <IconButton onClick={() => setDropMenu(true)} Icon={FiMoreHorizontal} />
                 </header>
                     
-                <div>
-                    <h1 className="text-white text-3xl mb-2">{question.title}</h1>
-                    <p className="text-gray-200 text-1xl">{question.description}</p>
+                <div className="break-words">
+                    <h1 className="text-white text-3xl mb-2 whitespace-pre-wrap">{handleMaxWords(question.title, MAX_TITLE)}</h1>
+                    <p className="text-gray-200 text-1xl">{handleMaxWords(question.description, MAX_DESCR)}</p>
                 </div>
 
                 <div className={`flex gap-3 flex-wrap`}>

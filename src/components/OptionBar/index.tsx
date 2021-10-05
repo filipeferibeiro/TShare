@@ -17,7 +17,6 @@ const OptionBar: React.FC<OptionBarProps> = ({ options, setOptions }) => {
             }
         })
         setOptions(newOptions);
-
     }
 
     return (

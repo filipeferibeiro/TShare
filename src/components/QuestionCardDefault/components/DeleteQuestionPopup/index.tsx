@@ -30,7 +30,7 @@ const DeleteQuestionPopup:React.FC<DeleteQuestionPopupProps> = ({ updateFunction
 
     return (
         <div className={`flex flex-col`}>
-            <p className={`text-white text-center font-medium text-2xl`}>Deseja realmente remover a questão: {questionTitle}</p>
+            <p className={`break-words text-white text-center font-medium text-2xl`}>Deseja realmente remover a questão: {questionTitle}</p>
             <div className={`flex justify-end mt-4 gap-2`}>
                 <button className={`${button} ${blackContainerHover}`} onClick={() => setPopupActive(false)}>Não</button>
                 <button className={`bg-tshareRed ${button} px-12`} onClick={handleDeleteBank}>Sim</button>

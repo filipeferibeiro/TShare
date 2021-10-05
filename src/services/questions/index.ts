@@ -31,6 +31,16 @@ export async function postQuestion(data: FormData) {
     return question;
 }
 
+export async function putQuestion(questionId: string, data: FormData) {
+    const question = api.put(`questions/${questionId}`, data, { headers: { "Content-Type": "multipart/form-data" } }).then((res) => {
+        return true;
+    }).catch(() => {
+        return false;
+    });
+
+    return question;
+}
+
 export async function deleteQuestion(questionId: number) {
     const question = api.delete(`questions/${questionId}`).then(() => {
         return true;

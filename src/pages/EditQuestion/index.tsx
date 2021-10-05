@@ -1,7 +1,7 @@
-import React, { FormEvent, useContext } from 'react';
+import React, { FormEvent, useContext, useEffect } from 'react';
 import { useState } from 'react';
-import { FiFile, FiPlus, FiX } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { FiPlus, FiX } from 'react-icons/fi';
+import { useHistory, useParams } from 'react-router-dom';
 import Checkbox from '../../components/Checkbox';
 import Dropzone from '../../components/Dropzone';
 import IconButton from '../../components/IconButton';
@@ -12,18 +12,24 @@ import Tag from '../../components/Tag';
 import Textarea from '../../components/Textarea';
 import { iconColor } from '../../constants/constants';
 import { Context, Ctx } from '../../context/AuthContext';
-import { Alternative, OptionProps, QuestionCreateProps } from '../../interfaces/interfaces';
-import { postQuestion } from '../../services/questions';
+import { Alternative, OptionProps, QuestionCreateProps, QuestionProps } from '../../interfaces/interfaces';
+import { getQuestion, putQuestion } from '../../services/questions';
 import { button, redContainerHover, RemoveButton, transition } from '../../styles/styles';
 import Section from '../../components/Section';
 import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNotificationContext';
+import { getImage } from '../../services/images';
 
-const Question = () => {
+interface EditQuestionParams {
+    idQuestion?: string
+}
+
+const EditQuestion = () => {
     const { id: userID } = useContext<Ctx>(Context);
     const { showNotification } = useContext<AppNotificationCtx>(AppNotificationContext);
+    const { idQuestion } = useParams<EditQuestionParams>();
     const history = useHistory();
 
-    const Options = [
+    const Options: OptionProps[] = [
         {
             text: 'Objetiva',
             state: true
@@ -42,12 +48,32 @@ const Question = () => {
     const [alternatives, setAlternatives] = useState<Alternative[]>([]);
     const [tags, setTags] = useState<string[]>([]);
     const [selectedFile, setSelectedFile] = useState<File>();
+    const [imageLoaded, setImageLoaded] = useState<string>();
     
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [longAnswer, setLongAnswer] = useState<string>("");
     const [alternativeInput, setAlternativeInput] = useState<string>("");
     const [tagInput, setTagInput] = useState<string>("");
+
+    useEffect(() => {
+        getQuestion(idQuestion || "-1").then((question: QuestionProps) => {
+            setOptions(options.map((option, index) => {
+                let newOption: OptionProps = {
+                    text: option.text,
+                    state: index === question.question_type ? true : false
+                };
+
+                return newOption;
+            }));
+            setAlternatives(question.alternatives);
+            setTags(question.tags);
+            setTitle(question.title);
+            setDescription(question.description);
+            setLongAnswer(question.long_answer);
+        });
+        getImage(idQuestion || "-1", setImageLoaded);
+    }, [])
 
     function clearAll() {
         setOptions(Options);
@@ -183,12 +209,12 @@ const Question = () => {
                 formData.append('file', selectedFile);
             }
     
-            postQuestion(formData).then(res => {
+            putQuestion(idQuestion || "-1", formData).then(res => {
                 if (res) {
-                    showNotification("Questão criada com sucesso!", 2);
+                    showNotification("Questão editada com sucesso!", 2);
                     history.push('/home');
                 } else {
-                    showNotification("Erro ao criar questão!", 1);
+                    showNotification("Erro ao editar questão!", 1);
                 }
             });
         }
@@ -207,11 +233,16 @@ const Question = () => {
             </>
         );
     }
+
+    function removePicture() {
+        setSelectedFile(undefined);
+        setImageLoaded(undefined);
+    }
     
     const removePictureButton = () => {
-        if (selectedFile) {
+        if (selectedFile || imageLoaded) {
             return (
-                <button onClick={() => setSelectedFile(undefined)} className={`${RemoveButton}`} type="button">Remover imagem</button>
+                <button onClick={removePicture} className={`${RemoveButton}`} type="button">Remover imagem</button>
             );
         }
 
@@ -223,9 +254,7 @@ const Question = () => {
 
     return (
         <div className="flex flex-col gap-5 overflow-y-auto">
-            <PageName name="Nova questão">
-                <IconButton Icon={FiFile} white onClick={clearAll} />
-            </PageName>
+            <PageName name="Editar questão" />
             <form
                 className={`flex flex-col gap-5 overflow-y-auto`}
                 onSubmit={createQuestion}
@@ -236,7 +265,7 @@ const Question = () => {
                     <Input value={title} onChange={setTitle} required />
                 </Section>
                 <Section title="Imagem" Component={() => removePictureButton()}>
-                    <Dropzone onFileUploaded={setSelectedFile} selectedFile={selectedFile} />
+                    <Dropzone onFileUploaded={setSelectedFile} selectedFile={selectedFile} imageLoaded={imageLoaded} />
                 </Section>
                 <Section title="Detalhamento">
                     <Textarea value={description} onChange={setDescription} required onKeyPress={e => e.key === 'Enter' && setDescription(description + '\n')}/>
@@ -299,4 +328,4 @@ const Question = () => {
     );
 }
 
-export default Question;
+export default EditQuestion;

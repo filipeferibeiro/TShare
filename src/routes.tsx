@@ -5,6 +5,7 @@ import { AppNotificationComponent } from './context/AppNotificationContext';
 import { AuthProvider, Context } from './context/AuthContext';
 import { PopupComponent } from './context/PopupContext';
 import BankDetail from './pages/BankDetail';
+import EditQuestion from './pages/EditQuestion';
 import Feed from './pages/Feed';
 import ListBanks from './pages/ListBanks';
 import Login from './pages/Login';
@@ -41,6 +42,7 @@ const Routes = () => {
                 <PrivateRoute component={Search} path="/search" />
                 <PrivateRoute component={ListBanks} path="/banks" exact/>
                 <PrivateRoute component={BankDetail} path="/banks/:bankId" />
+                <PrivateRoute component={EditQuestion} path="/question/:idQuestion" />
             </Switch>
         </Layout>
         </PopupComponent>

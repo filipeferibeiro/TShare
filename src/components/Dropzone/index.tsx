@@ -7,9 +7,10 @@ import { rounded, whiteContainer } from '../../styles/styles';
 interface DropzoneProps {
     onFileUploaded: (file: File) => void;
     selectedFile?: File;
+    imageLoaded?: string;
 }
 
-const Dropzone:React.FC<DropzoneProps> = ({ onFileUploaded, selectedFile }) => {
+const Dropzone:React.FC<DropzoneProps> = ({ onFileUploaded, selectedFile, imageLoaded }) => {
     const [selectedFileUrl, setSelectedFileUrl] = useState('');
 
     const onDrop = useCallback(acceptedFiles => {
@@ -33,13 +34,13 @@ const Dropzone:React.FC<DropzoneProps> = ({ onFileUploaded, selectedFile }) => {
     }, [selectedFile])
 
     return (
-        <div className={`h-72 flex justify-center items-center outline-none ${rounded} ${whiteContainer}`} { ...getRootProps() }>
+        <div className={`min-drop flex justify-center items-center outline-none ${rounded} ${whiteContainer}`} { ...getRootProps() }>
             <input { ...getInputProps() } accept="image/*" />
 
-            { selectedFileUrl 
-                ? <img className={`w-full h-full object-cover ${rounded}`} src={selectedFileUrl} alt="Imagem da questão" />
+            { (selectedFileUrl || imageLoaded) 
+                ? <img className={`w-full h-full object-cover ${rounded}`} src={imageLoaded ? imageLoaded : selectedFileUrl} alt="Imagem da questão" />
                 : (
-                    <p className={`border-dashed border-tshare border-2 drop-p ${rounded} flex flex-col justify-center items-center text-white gap-3`}>
+                    <p className={`m-8 w-full h-72 flex-1 border-dashed border-tshare border-2 ${rounded} flex flex-col justify-center items-center text-white gap-3`}>
                         <FiUpload size={iconSize} color={iconColor} />
                         Selecione ou arraste sua imagem aqui
                     </p>
