@@ -1,22 +1,18 @@
 import React, { FormEvent, useContext, useState } from 'react';
 import { useEffect } from 'react';
-import ClickAwayListener from 'react-click-away-listener';
-import { FiEdit, FiMoreHorizontal, FiPlus, FiTrash2 } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
 import { useHistory, useParams } from 'react-router-dom';
 import IconButton from '../../components/IconButton';
 import Input from '../../components/Input';
 import PageName from '../../components/PageName';
-import ProfilePicture from '../../components/ProfilePicture';
 import QuestionAnswerCard from '../../components/QuestionAnswerCard';
 import QuestionCardDefault from '../../components/QuestionCardDefault';
 import Section from '../../components/Section';
-import { iconColor } from '../../constants/constants';
 import { Context, Ctx } from '../../context/AuthContext';
-import { toDate } from '../../functions';
 import { CommentProps, QuestionProps } from '../../interfaces/interfaces';
 import { getImage } from '../../services/images';
 import { getQuestion, getQuestionComments, postQuestionComments } from '../../services/questions';
-import { blackContainer, buttonIconName, rounded } from '../../styles/styles';
+import { rounded } from '../../styles/styles';
 import CommentCard from './components/CommentCard';
 
 interface DetailParams {

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { FiChevronRight, FiEdit, FiFolder, FiLink, FiMessageCircle, FiMoreHorizontal, FiStar, FiTrash2 } from 'react-icons/fi';
 import { iconColor } from '../../constants/constants';
 import { blackContainer, blackContainerHover, buttonIconName, rounded, starCommentCard, starCommentCardP, transition, whiteContainer } from '../../styles/styles';
@@ -15,7 +15,6 @@ import { deleteFromBank } from '../../services/banks';
 import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNotificationContext';
 import DeleteQuestionPopup from './components/DeleteQuestionPopup';
 import { copyToClipboard, linkBase } from '../../functions';
-import { getImage } from '../../services/images';
 import { postVoteUp } from '../../services/questions';
 
 interface QuestionCardDefaultProps {

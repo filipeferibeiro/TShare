@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps, InputHTMLAttributes, useContext, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useEffect } from 'react';
 import { FiX } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';

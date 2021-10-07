@@ -15,11 +15,12 @@ const Search = () => {
     }
 
     useEffect(() => {
-        getQuestions();
+        getQuestions()
     }, []);
 
-    useEffect(() => {
-        const searchUp = searchField.toUpperCase();
+    function searchItens(field: string) {
+        console.log(questions.length);
+        const searchUp = field.toUpperCase();
         setFilteredQuestions(JSON.parse(JSON.stringify(questions)).filter((question: QuestionProps) => {
             if (question.tags.map(tag => tag.toUpperCase()).filter(tag => tag.includes(searchUp) ? true : false).length > 0) {
                 return true;
@@ -33,10 +34,16 @@ const Search = () => {
             if (question.authorName.toUpperCase().includes(searchUp)) {
                 return true;
             }
-
+    
             return false;
         }));
-    }, [searchField]);
+    }
+
+    useEffect(() => {
+        if (questions.length > 0) {
+            searchItens(searchField);
+        }
+    }, [searchField, questions]);
 
     return (
         <div className="flex flex-col gap-5 overflow-y-auto">

@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { iconColor } from '../../../../constants/constants';
 import { AppNotificationContext, AppNotificationCtx } from '../../../../context/AppNotificationContext';
 import { Context, Ctx } from '../../../../context/AuthContext';
-import { PopupContext, PopupCtx } from '../../../../context/PopupContext';
 import { BankProps } from '../../../../interfaces/interfaces';
 import { deleteFromBank, getAllBanks, getCheckQuestionFromBanks, putAddToBank } from '../../../../services/banks';
 import { blackContainer, blackContainerHover, rounded, transition } from '../../../../styles/styles';
@@ -18,7 +17,6 @@ interface SeeBanksProps {
 const SeeBanks:React.FC<SeeBanksProps> = ({ questionId }) => {
     const { id: userId } = useContext<Ctx>(Context);
     const { showNotification } = useContext<AppNotificationCtx>(AppNotificationContext);
-    const { setPopupActive } = useContext<PopupCtx>(PopupContext);
 
     const history = useHistory();
 

@@ -41,7 +41,7 @@ const ProfilePicture:React.FC<ProfilePictureProps> = ({ profile, white, userId }
         >
             {userImg
                 ?
-                <img className={`w-full h-full object-cover rounded-full`} src={userImg} />
+                <img className={`w-full h-full object-cover rounded-full`} src={userImg} alt="userImage" />
                 :
                 <FiUser size={profile ? 44 : iconSize} color={iconColor} />
             }

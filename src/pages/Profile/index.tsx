@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FiBook, FiBriefcase, FiEdit, FiEdit2, FiMail, FiShare2 } from 'react-icons/fi';
+import { FiBook, FiBriefcase, FiEdit, FiMail, FiShare2 } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 import IconButton from '../../components/IconButton';
 import OptionBar from '../../components/OptionBar';
@@ -7,7 +7,6 @@ import PageName from '../../components/PageName';
 import ProfilePicture from '../../components/ProfilePicture';
 import QuestionCardDefault from '../../components/QuestionCardDefault';
 import Section from '../../components/Section';
-import { iconColor, iconSize } from '../../constants/constants';
 import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNotificationContext';
 import { Context, Ctx } from '../../context/AuthContext';
 import { PopupContext, PopupCtx } from '../../context/PopupContext';
@@ -15,8 +14,6 @@ import { copyToClipboard } from '../../functions';
 import { OptionProps, QuestionProps, UserProps } from '../../interfaces/interfaces';
 import { getAllQuestions } from '../../services/questions';
 import { getUser } from '../../services/users';
-import { button, rounded, transition } from '../../styles/styles';
-import Question from '../Question';
 import EditProfilePopup from './components/EditProfilePopup';
 import ProfileItem from './components/ProfileItem';
 

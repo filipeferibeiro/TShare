@@ -1,4 +1,4 @@
-import { CommentCreateProps, QuestionCreateProps, QuestionResProps } from "../../interfaces/interfaces";
+import { CommentCreateProps } from "../../interfaces/interfaces";
 import api from "../api";
 
 export async function getAllQuestions() {

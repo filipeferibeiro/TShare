@@ -5,8 +5,7 @@ import Input from '../../../../components/Input';
 import Section from '../../../../components/Section';
 import { AppNotificationContext, AppNotificationCtx } from '../../../../context/AppNotificationContext';
 import { PopupContext, PopupCtx } from '../../../../context/PopupContext';
-import { BankEditProps, CommentCreateProps } from '../../../../interfaces/interfaces';
-import { putBank } from '../../../../services/banks';
+import { CommentCreateProps } from '../../../../interfaces/interfaces';
 import { putQuestionComments } from '../../../../services/questions';
 import { button } from '../../../../styles/styles';
 

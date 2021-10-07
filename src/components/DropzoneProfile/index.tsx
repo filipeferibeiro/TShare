@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUpload } from 'react-icons/fi';
 import { iconColor, iconSize } from '../../constants/constants';
-import { blackContainer, rounded, transition, whiteContainer } from '../../styles/styles';
+import { blackContainer, transition } from '../../styles/styles';
 
 interface DropzoneProfileProps {
     onFileUploaded: (file: File) => void;

@@ -51,7 +51,7 @@ const EditProfilePopup:React.FC<EditProfilePopupProps> = ({ user, updateFunction
                     </div>
                 </Section>
                 <Section title="Nome do usuário">
-                    <Input id="name" type="text" className={`flex-1`} placeholder="Informe o novo nome do usuário" value={userName} onChange={setUserEmail} />
+                    <Input id="name" type="text" className={`flex-1`} placeholder="Informe o novo nome do usuário" value={userName} onChange={setUserName} />
                 </Section>
                 <Section title="E-mail">
                     <Input id="email" type="email" className={`flex-1`} placeholder="Informe o novo e-mail" value={userEmail} onChange={setUserEmail} />
