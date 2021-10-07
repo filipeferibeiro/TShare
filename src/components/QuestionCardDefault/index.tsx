@@ -24,9 +24,10 @@ interface QuestionCardDefaultProps {
     isBank?: boolean;
     func?(): any;
     bankId?: number;
+    qntComments?: number;
 }
 
-const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDetail, isBank, func, bankId }) => {
+const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDetail, isBank, func, bankId, qntComments }) => {
     const MAX_TITLE = 95;
     const MAX_DESCR = 700;
     const { id: userId, setSearchField, setSearchActive } = useContext<Ctx>(Context);
@@ -157,7 +158,7 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
                         </button>
                         <div className={`${starCommentCard}`}>
                             <FiMessageCircle color={iconColor} />
-                            <p className={`${starCommentCardP}`}>{countComments}</p>
+                            <p className={`${starCommentCardP}`}>{qntComments ? qntComments : countComments}</p>
                         </div>
                     </div>
                     {!isDetail &&

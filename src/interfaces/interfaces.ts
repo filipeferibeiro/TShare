@@ -37,7 +37,7 @@ export interface QuestionResProps {
 
 export interface CommentCreateProps {
     text: string;
-    author_id: number;
+    author_id?: number;
 }
 
 export interface CommentProps {

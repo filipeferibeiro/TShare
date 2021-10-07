@@ -71,6 +71,26 @@ export async function postQuestionComments(questionId: string, data:CommentCreat
     return comment;
 }
 
+export async function putQuestionComments(question_id: number, commentId: number, data: CommentCreateProps) {
+    const comment = api.put(`questions/${question_id}/comments/${commentId}`, data).then(() => {
+        return true;
+    }).catch(() => {
+        return false;
+    });
+
+    return comment;
+}
+
+export async function deleteComment(question_id: number, commentId: number) {
+    const comment = api.delete(`questions/${question_id}/comments/${commentId}`).then(() => {
+        return true;
+    }).catch(() => {
+        return false;
+    });
+
+    return comment;
+}
+
 export async function postVoteUp(questionId:number, userId:number) {
     const vote = api.post(`questions/${questionId}/vote?direction=0&userId=${userId}`).then(() => {
         return true;
