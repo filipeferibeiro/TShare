@@ -120,6 +120,18 @@ const Profile = () => {
 
         return booleans.indexOf(true);
     }
+
+    function getUserQuestionInfo(questionsLength: number) {
+        let text = undefined;
+
+        switch (questionsLength) {
+            case 0: text = "Nenhuma questão compartilhada"; break;
+            case 1: text = `${questionsLength} Questão compartilhada`; break;
+            default: text = `${questionsLength} Questões compartilhadas`;
+        }
+
+        return text;
+    }
     
     /**
      * Sempre que o userId muda, ele faz a chamada a API para pegar os dados do novo usuário
@@ -144,7 +156,7 @@ const Profile = () => {
                 <div className={`flex flex-1 flex-col gap-3`}>
                     <ProfileItem copy copyFunc={handleCopyEmailToClipboard} text={user?.email || ""} Icon={FiMail} />
                     <ProfileItem text="Instituto Federal de Algum Lugar" Icon={FiBriefcase} />
-                    <ProfileItem text="34 Questões compartilhadas" Icon={FiShare2} />
+                    <ProfileItem text={`${getUserQuestionInfo(questions.length)}`} Icon={FiShare2} />
                     <ProfileItem text="Professor de Matemática" Icon={FiBook} />
                 </div>
             </div>

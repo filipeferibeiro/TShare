@@ -65,15 +65,10 @@ const Layout:React.FC = ({ children }) => {
                                     Icon={FiFolder}
                                     text="Banco de questões"
                                 />
-                                {/* <NavButton 
-                                    text="Nova avaliação"
-                                    Icon={FiFileText}
-                                    to="/2" 
-                                /> */}
                                 <NavButton 
                                     text="Configurações"
                                     Icon={FiSettings}
-                                    to="/3" 
+                                    to="/settings" 
                                 />
                             </div>
                             <NavButton 

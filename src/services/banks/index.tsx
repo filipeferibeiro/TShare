@@ -63,7 +63,6 @@ export async function getQuesntionsFromBank(bankId:string) {
 
 export async function getCheckQuestionFromBanks(questionId:number, authorId:number) {
     const questions = api.get(`questions/${questionId}/banks?author=${authorId}`).then(response => {
-        console.log(response.data)
         return response.data;
     }).catch(() => {
         return [];

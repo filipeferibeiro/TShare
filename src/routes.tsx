@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import Question from './pages/Question';
 import QuestionDetail from './pages/QuestionDetail';
 import Search from './pages/Search';
+import Settings from './pages/Settings';
 
 const PrivateRoute: React.FC<RouteProps> = ({ ...rest }) => {
     const { authenticated, loading } = useContext(Context);
@@ -43,6 +44,7 @@ const Routes = () => {
                 <PrivateRoute component={ListBanks} path="/banks" exact/>
                 <PrivateRoute component={BankDetail} path="/banks/:bankId" />
                 <PrivateRoute component={EditQuestion} path="/question/:idQuestion" />
+                <PrivateRoute component={Settings} path="/settings" />
             </Switch>
         </Layout>
         </PopupComponent>

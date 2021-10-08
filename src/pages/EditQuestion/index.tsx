@@ -111,6 +111,8 @@ const EditQuestion = () => {
         if (tagInput.trim().length > 0 && duplicated.length === 0) {
             setTags([ ...tags, tagInput ]);
             setTagInput("");
+        } else {
+            showNotification("Não é possível adicionar tags com o mesmo nome.", 1);
         }
     }
     

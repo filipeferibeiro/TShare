@@ -7,8 +7,9 @@ import IconButton from '../../components/IconButton';
 import PageName from '../../components/PageName';
 import QuestionCardDefault from '../../components/QuestionCardDefault';
 import { PopupContext, PopupCtx } from '../../context/PopupContext';
-import { BankProps, QuestionProps } from '../../interfaces/interfaces';
+import { BankProps, PdfCreationProps, QuestionProps } from '../../interfaces/interfaces';
 import { getBank, getQuesntionsFromBank } from '../../services/banks';
+import { postExam } from '../../services/exam';
 import DeleteBankPopup from '../ListBanks/components/DeleteBankPopup';
 import EditBankPopup from '../ListBanks/components/EditBankPopup';
 
@@ -48,6 +49,19 @@ const BankDetail = () => {
         createPopup("Remover banco de questões", () => <DeleteBankPopup bankId={bankId} bankTitle={bankTitle} updateFunction={deleteBank} />);
     }
 
+    function generatePdf() {
+        const data: PdfCreationProps = {
+            author: 'Nome',
+            questions: questions.map(question => question.id),
+            school_name: 'Escola',
+            class_name: 'Disciplina',
+            test_title: 'Primeira prova',
+            subject: 'Polígonos'
+        }
+        
+        postExam(data);
+    }
+
     useEffect(() => {
         handleGetBanks();
         getAllQuestions();
@@ -57,7 +71,7 @@ const BankDetail = () => {
         <div className="flex flex-col gap-5 overflow-y-auto h-full">
             <PageName name={banks?.title || ""} back to="/banks">
                 <div className={`flex gap-2`}>
-                    <IconButton white Icon={FiFileText} />
+                    <IconButton white Icon={FiFileText} onClick={generatePdf} />
                     <IconButton yellow Icon={FiEdit} onClick={() => handleEditBank(banks?.id || -1, banks?.title || "")}  />
                     <IconButton red Icon={FiTrash2} onClick={() => handleDeleteBank(banks?.id || -1, banks?.title || "")} />
                 </div>

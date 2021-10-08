@@ -87,3 +87,12 @@ export interface QuestionToBanksProps {
     question_bank_id: number;
     question_id: number;
 }
+
+export interface PdfCreationProps {
+    author: string;
+    questions: number[];
+    school_name: string;
+    class_name: string;
+    test_title: string;
+    subject: string;
+}
