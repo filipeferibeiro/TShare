@@ -107,9 +107,9 @@ const Settings = () => {
                     Component={() => clearButton()}
                 >
                     <form className="flex flex-col gap-3" onSubmit={changePassword}>
-                        <Input placeholder="Senha atual" value={oldPasswordInput} onChange={setOldPasswordInput} />
-                        <Input placeholder="Nova senha" value={newPasswordInput} onChange={setNewPasswordInput} />
-                        <Input placeholder="Repetir nova senha" value={newPasswordRepeatInput} onChange={setNewPasswordRepeatInput} />
+                        <Input type="password" placeholder="Senha atual" value={oldPasswordInput} onChange={setOldPasswordInput} />
+                        <Input type="password" placeholder="Nova senha" value={newPasswordInput} onChange={setNewPasswordInput} />
+                        <Input type="password" placeholder="Repetir nova senha" value={newPasswordRepeatInput} onChange={setNewPasswordRepeatInput} />
 
                         <button type="submit" className={`bg-tshare ${button}`}>Trocar senha</button>
                     </form>
