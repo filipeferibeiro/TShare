@@ -72,7 +72,7 @@ const BankDetail = () => {
     }, []);
 
     return (
-        <div className="flex flex-col gap-5 overflow-y-auto h-full">
+        <div className="flex flex-col gap-5 overflow-y-auto">
             <PageName name={banks?.title || ""} back to="/banks">
                 <div className={`flex gap-2`}>
                     <IconButton white Icon={FiFileText} onClick={handleGeneratePdf} tooltip="Gerar PDF" />
