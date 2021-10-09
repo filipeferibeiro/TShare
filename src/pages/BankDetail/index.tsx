@@ -12,6 +12,7 @@ import { getBank, getQuesntionsFromBank } from '../../services/banks';
 import { postExam } from '../../services/exam';
 import DeleteBankPopup from '../ListBanks/components/DeleteBankPopup';
 import EditBankPopup from '../ListBanks/components/EditBankPopup';
+import GeneratePdfPopup from './components/GeneratePdfPopup';
 
 interface BankDetailParams {
     bankId?: string
@@ -49,17 +50,20 @@ const BankDetail = () => {
         createPopup("Remover banco de questões", () => <DeleteBankPopup bankId={bankId} bankTitle={bankTitle} updateFunction={deleteBank} />);
     }
 
+    function handleGeneratePdf() {
+        createPopup("Gerar PDF", () => <GeneratePdfPopup bankId={bankId || "-1"} />)
+    }
+
     function generatePdf() {
         const data: PdfCreationProps = {
             author: 'Nome',
-            questions: questions.map(question => question.id),
             school_name: 'Escola',
             class_name: 'Disciplina',
             test_title: 'Primeira prova',
             subject: 'Polígonos'
         }
         
-        postExam(data);
+        postExam((bankId || "-1"), data);
     }
 
     useEffect(() => {
@@ -71,9 +75,9 @@ const BankDetail = () => {
         <div className="flex flex-col gap-5 overflow-y-auto h-full">
             <PageName name={banks?.title || ""} back to="/banks">
                 <div className={`flex gap-2`}>
-                    <IconButton white Icon={FiFileText} onClick={generatePdf} />
-                    <IconButton yellow Icon={FiEdit} onClick={() => handleEditBank(banks?.id || -1, banks?.title || "")}  />
-                    <IconButton red Icon={FiTrash2} onClick={() => handleDeleteBank(banks?.id || -1, banks?.title || "")} />
+                    <IconButton white Icon={FiFileText} onClick={handleGeneratePdf} tooltip="Gerar PDF" />
+                    <IconButton yellow Icon={FiEdit} onClick={() => handleEditBank(banks?.id || -1, banks?.title || "")} tooltip="Editar banco" />
+                    <IconButton red Icon={FiTrash2} onClick={() => handleDeleteBank(banks?.id || -1, banks?.title || "")} tooltip="Deletar banco" />
                 </div>
             </PageName>
             <div className={`flex flex-col gap-5`}>

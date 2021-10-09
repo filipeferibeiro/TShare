@@ -182,7 +182,7 @@ const Question = () => {
             formData.append('question', JSON.stringify(data));
     
             if (selectedFile) {
-                formData.append('file', selectedFile);
+                formData.append('image', selectedFile);
             }
     
             postQuestion(formData).then(res => {
@@ -226,7 +226,7 @@ const Question = () => {
     return (
         <div className="flex flex-col gap-5 overflow-y-auto">
             <PageName name="Nova questão">
-                <IconButton Icon={FiFile} white onClick={clearAll} />
+                <IconButton Icon={FiFile} white onClick={clearAll} tooltip="Limpar" />
             </PageName>
             <form
                 className={`flex flex-col gap-5 overflow-y-auto`}
@@ -262,7 +262,7 @@ const Question = () => {
                         }
                         <div className={`flex flex-1 gap-3 w-full`}>
                             <Input value={alternativeInput} onChange={setAlternativeInput} onKeyPress={e => e.key === 'Enter' && addAlternative()} />
-                            <IconButton white Icon={FiPlus} onClick={addAlternative} type="button" />
+                            <IconButton white Icon={FiPlus} onClick={addAlternative} type="button" tooltip="Adicionar alternativa" />
                         </div>
                     </Section>
                 }
@@ -289,7 +289,7 @@ const Question = () => {
                     }
                     <div className={`flex flex-1 gap-3 w-full`}>
                         <Input value={tagInput} onChange={setTagInput} onKeyPress={e => e.key === 'Enter' && addTag()} />
-                        <IconButton white Icon={FiPlus} onClick={addTag} type="button" />
+                        <IconButton white Icon={FiPlus} onClick={addTag} type="button" tooltip="Adicionar Tag" />
                     </div>
                     <form className={`flex flex-1 gap-3 w-full`} onSubmit={addTag}>
                     </form>

@@ -60,7 +60,7 @@ const ListBanks:React.FC = () => {
     return (
         <div className="flex flex-col gap-5 overflow-y-auto">
             <PageName name="Banco de Questões">
-                <IconButton white Icon={FiPlus} onClick={handleNewBank} />
+                <IconButton white Icon={FiPlus} onClick={handleNewBank} tooltip="Novo banco" />
             </PageName>
             <div className={`flex flex-col gap-3`}>
                 {banks.map((bank) => (
@@ -70,8 +70,8 @@ const ListBanks:React.FC = () => {
                             <p className={`text-white`}>{bank.title}</p>
                         </div>
                         <div className={`flex gap-2`}>
-                            <IconButton yellow Icon={FiEdit} onClick={() => handleEditBank(bank.id, bank.title)} />
-                            <IconButton red Icon={FiTrash2} onClick={() => handleDeleteBank(bank.id, bank.title)} />
+                            <IconButton yellow Icon={FiEdit} onClick={() => handleEditBank(bank.id, bank.title)} tooltip="Editar banco" />
+                            <IconButton red Icon={FiTrash2} onClick={() => handleDeleteBank(bank.id, bank.title)} tooltip="Deletar banco" />
                         </div>
                     </div>
                 ))}

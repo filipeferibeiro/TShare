@@ -52,6 +52,12 @@ const Profile = () => {
 
     useEffect(() => {
         switch (selectedOption()) {
+            case 0: {
+                setQuestionOption(JSON.parse(JSON.stringify(questions)).sort((a: { createdAt: string; }, b: { createdAt: string; }) => {
+                    return compareDate(a.createdAt, b.createdAt)
+                }));
+                break;
+            }
             case 1: {
                 setQuestionOption(JSON.parse(JSON.stringify(questions)).sort((a: { score: number; }, b: { score: number; }) => {
                     return compare(a.score, b.score)
@@ -71,7 +77,7 @@ const Profile = () => {
             }
             default: setQuestionOption(questions); break;
         }
-    }, [options, selectedOption()])
+    }, [questions, options, selectedOption()])
 
     /**
      * Recupera dados do usuario da base pelo ID
@@ -100,6 +106,19 @@ const Profile = () => {
             return -1;
         }
         if(b > a) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function compareDate(a:string, b:string) {
+        const dateA = new Date(a);
+        const dateB = new Date(b);
+
+        if (dateB < dateA) {
+            return -1;
+        }
+        if(dateB > dateA) {
             return 1;
         }
         return 0;
@@ -145,7 +164,7 @@ const Profile = () => {
         <div className="flex flex-col gap-5 overflow-y-auto">
             <PageName name="Perfil">
                 {isUserLoggedProfile && 
-                    <IconButton yellow Icon={FiEdit} onClick={handlePopupEditPerfil} />
+                    <IconButton yellow Icon={FiEdit} onClick={handlePopupEditPerfil} tooltip="Editar perfil" />
                 }
             </PageName>
             <div className={`flex gap-3`}>

@@ -20,7 +20,7 @@ const Popup = () => {
                     <div className={`xl:max-w-7xl w-screen h-auto ${whiteContainer} ${rounded} p-2 shadow-xl`}>
                         <header className={`flex justify-between items-center mb-2`}>
                             <p className={`pl-3 text-white font-bold text-lg`}>{popupTitle}</p>
-                            <IconButton Icon={FiX} onClick={handleClosePopup} />
+                            <IconButton Icon={FiX} onClick={handleClosePopup} tooltip="Fechar" />
                         </header>
                         <hr className={`${separatorPopup}`} />
                         <div className={`mt-4`}>

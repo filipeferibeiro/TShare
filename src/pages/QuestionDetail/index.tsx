@@ -86,7 +86,7 @@ const QuestionDetail:React.FC = () => {
                         <div>
                             <form className={`flex flex-1 gap-3 w-full`} onSubmit={handleAddComment}>
                                 <Input placeholder="Digite seu comentário" value={comment} onChange={setComment} />
-                                <IconButton white Icon={FiPlus} />
+                                <IconButton white Icon={FiPlus} tooltip="Adicionar comentário" />
                             </form>
                             {comments.length > 0
                                 ?

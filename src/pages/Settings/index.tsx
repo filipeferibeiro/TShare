@@ -98,7 +98,7 @@ const Settings = () => {
                     }
                     <div className={`flex flex-1 gap-3 w-full`}>
                         <Input placeholder="Nome da tag" value={tagInput} onChange={setTagInput} onKeyPress={e => e.key === 'Enter' && addTag()} />
-                        <IconButton white Icon={FiPlus} onClick={addTag} type="button" />
+                        <IconButton white Icon={FiPlus} onClick={addTag} type="button" tooltip="Adicionar Tag" />
                     </div>
                     <button className={`bg-tshare ${button} mt-3`}>Salvar tags</button>
                 </Section>

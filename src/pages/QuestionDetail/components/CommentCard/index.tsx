@@ -63,7 +63,7 @@ const CommentCard:React.FC<CommentCardProps> = ({ questionId, comment, updateFun
                 </div>
                 {isCommentLoggedUser
                     ?
-                    <IconButton white Icon={FiMoreHorizontal} onClick={() => setDropMenu(true)} />
+                    <IconButton white Icon={FiMoreHorizontal} onClick={() => setDropMenu(true)} tooltip="Opções" />
                     :
                     <div className="w-14 h-14" />
                 }

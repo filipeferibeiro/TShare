@@ -103,6 +103,20 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
         return `${text.substring(0, maxWords)}...`;
     }
 
+    function getQuestionDate() {
+        const date = new Date(question.createdAt);
+
+        const formattedNumber = (myNumber: number) => { return myNumber.toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+          })
+        }
+
+        let dataFormatada = (formattedNumber(date.getDate() )) + "/" + (formattedNumber(date.getMonth() + 1)) + "/" + date.getFullYear();
+
+        return dataFormatada;
+    }
+
     return (
         <div className="relative">
             <div className={`${whiteContainer} p-6 ${rounded} flex flex-col gap-3`}>
@@ -132,10 +146,10 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
                             className="flex flex-col justify-center"
                         >
                             <p className="text-white text-base">{question.authorName}</p>
-                            <p className="text-gray-300 text-sm">22/10/2021</p>
+                            <p className="text-gray-300 text-sm">{getQuestionDate()}</p>
                         </div>
                     </div>
-                    <IconButton onClick={() => setDropMenu(true)} Icon={FiMoreHorizontal} />
+                    <IconButton onClick={() => setDropMenu(true)} Icon={FiMoreHorizontal} tooltip="Opções" />
                 </header>
                     
                 <div className="break-words">

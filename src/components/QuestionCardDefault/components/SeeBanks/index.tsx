@@ -114,9 +114,9 @@ const SeeBanks:React.FC<SeeBanksProps> = ({ questionId }) => {
                         <div className={`flex gap-2`}>
                             {checkQuestionOnBank(bank.id)
                                 ?
-                                <IconButton red Icon={FiX} onClick={() => handleDeleteFromBank(bank.id)} />
+                                <IconButton red Icon={FiX} onClick={() => handleDeleteFromBank(bank.id)} tooltip="Remover do banco" />
                                 :
-                                <IconButton green Icon={FiCheck} onClick={() => handleAddToBank(bank.id)} />
+                                <IconButton green Icon={FiCheck} onClick={() => handleAddToBank(bank.id)} tooltip="Adicionar no banco" />
                             }
                         </div>
                     </div>

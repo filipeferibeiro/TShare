@@ -53,6 +53,7 @@ const SearchButton:React.FC<SearchButtonProps> = ({ Icon, onClick, value, setVal
                 ${searchActive ? blackContainer : blackContainerHover}
                 ${transition}
                 search-transition
+                cursor-pointer
             `}
             onClick={() => {!searchActive && handleOpenButton()}}
         >

@@ -1,30 +1,32 @@
-import download from 'downloadjs';
 import { PdfCreationProps } from "../../interfaces/interfaces";
 import api from "../api";
 
-export async function postExam2(data: PdfCreationProps) {
-    const pdf = api.post(`pdf/generate`, data).then(async (res) => (
-        {
-            headers: res.headers,
-            responseType: 'blob',
+function dec2hex (dec: { toString: (arg0: number) => string; }) {
+    return dec.toString(16).padStart(2, "0")
+}
+
+function generateId () {
+    var arr = new Uint8Array(10)
+    window.crypto.getRandomValues(arr)
+    return Array.from(arr, dec2hex).join('')
+}
+    
+export async function postExam(bankId:string, data: PdfCreationProps) {
+    const pdf = api.post(`pdf/generate/${bankId}`, data, {
+        responseType: 'arraybuffer',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/pdf'
         }
-        )).then((response: any) => {
-            const content = response.headers['content-type'];
-            download(response.data, 'teste.pdf', content)
-        }) 
-        
-        
-        .catch(() => {
-            return false;
-        });
-        
-        return pdf;
-    }
-    
-    
-export async function postExam(data: PdfCreationProps) {
-    const pdf = api.post(`pdf/generate`, data).then(res => console.log(res))/* .then(res => {
-        console.log(res);
-        download(res.data, 'teste2.pdf', res.headers['content-type'])
-    }) */
+    }).then(res => {
+        let blob = new Blob([res.data], { type:   'application/pdf' } );
+        let link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `documento_${generateId()}.pdf`;
+        link.click();
+
+        return true;
+    }).catch(() => false);
+
+    return pdf;
 }

@@ -17,7 +17,8 @@ export interface QuestionProps {
     score: number;
     long_answer: string,
     question_type: number;
-    comments?: CommentProps[]
+    comments?: CommentProps[];
+    createdAt: string;
 }
 
 export interface QuestionCreateProps {
@@ -90,7 +91,6 @@ export interface QuestionToBanksProps {
 
 export interface PdfCreationProps {
     author: string;
-    questions: number[];
     school_name: string;
     class_name: string;
     test_title: string;
