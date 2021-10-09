@@ -1,84 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  font-family: 'Roboto';
 }
-
-body, input, button {
-  font-family: Roboto, Arial, Helvetica, sans-serif;
-}
-
-button:focus, input:focus {
-  outline: none;
-}
-
-body {
-  background: linear-gradient(137.22deg, #2A85B8 5.23%, #20272C 111.71%, rgba(255, 255, 255, 0) 111.71%);
-  background-attachment: fixed;
-  overflow-x: hidden;
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  -webkit-font-smoothing: antialiased;
-}
-
-.glass-l1 {
-  background: linear-gradient(98.94deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-sizing: border-box;
-  backdrop-filter: blur(15px);
-  /* Note: backdrop-filter has minimal browser support */
-
-  border-radius: 20px;
-} 
-
-.glass-l2 {
-  background: rgba(255, 255, 255, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-sizing: border-box;
-  backdrop-filter: blur(15px);
-  /* Note: backdrop-filter has minimal browser support */
-
-  border-radius: 20px;
-} 
-
-.glass-l3 {
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-sizing: border-box;
-  backdrop-filter: blur(15px);
-  /* Note: backdrop-filter has minimal browser support */
-
-  border-radius: 20px;
-} 
 
 #root {
-  width: fit-content;
-  height: 100vh;
-
-  z-index: 1;
+  background: linear-gradient(137.22deg, #2A85B8 5.23%, #20272C 111.71%, rgba(255, 255, 255, 0) 111.71%);
 }
 
-.hidden {
-  visibility: hidden;
+.search-transition {
+  transition: width .3s linear;
+  width: 56px;
 }
+
+.search-size {
+  width: 320px;
+}
+
+.tshare-color {
+  color: #60AB85;
+}
+
+.drop-p {
+  width: calc(100% - 60px);
+  height: calc(100% - 60px);
+}
+
+.drop-profile {
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+}
+
+.min-drop {
+  min-height: 18rem;
+}
+
+/* .tooltip {
+  position: relative;
+  display: inline-block;
+} */
+
+/* Tooltip text */
+.tooltip {
+  top: 5px;
+  right: 108%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+/* .tooltip:hover .tooltiptext {
+  visibility: visible;
+} */
+
+
+
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
+  border-radius: 100px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: transparent;
+  border-radius: 100px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: rgb(190, 190, 190);
+  border-radius: 100px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgb(165, 165, 165);
+  border-radius: 100px;
 }
