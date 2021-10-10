@@ -111,7 +111,7 @@ const Login = () => {
             <div className="flex flex-col flex-1">
                 <div className="flex items-baseline">
                     <img className="w-auto h-40" src={logo} alt="TShareLogo"/>
-                    <p className="font-semibold text-7xl tshare-color">ShareTS</p>
+                    <p className="font-semibold text-7xl tshare-color">Share</p>
                 </div>
                 <p className="mt-4 text-3xl text-gray-200">O TShare ajuda você <b><i>professor</i></b> a criar e compartilhar questões em um ambiente colaborativo.</p>
             </div>
