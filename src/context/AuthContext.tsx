@@ -15,6 +15,8 @@ interface Ctx {
     setSearchField(text: string): any,
     searchActive: boolean,
     setSearchActive(state: boolean): any,
+    changePic: boolean,
+    setChangePic(state: boolean): any,
 }
 
 const defaultValues = { 
@@ -28,6 +30,8 @@ const defaultValues = {
     setSearchField() {},
     searchActive: false,
     setSearchActive() {},
+    changePic: false,
+    setChangePic() {},
 }
 
 const Context = createContext<Ctx>(defaultValues);
@@ -38,6 +42,7 @@ const AuthProvider: React.FC = ({ children }) => {
     const [id, setId] = useState(-1);
     const [searchField, setSearchField] = useState("");
     const [searchActive, setSearchActive] = useState(false);
+    const [changePic, setChangePic] = useState(false);
 
     const history = useHistory();
 
@@ -62,6 +67,8 @@ const AuthProvider: React.FC = ({ children }) => {
         setSearchField,
         searchActive,
         setSearchActive,
+        changePic,
+        setChangePic
     }
     /**
      * Verifica se tem algum token armazenado para seguir com o login automático

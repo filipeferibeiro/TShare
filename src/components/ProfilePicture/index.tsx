@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FiUser } from 'react-icons/fi';
 import { iconColor, iconSize } from '../../constants/constants';
+import { Context, Ctx } from '../../context/AuthContext';
 import { getImageProfile } from '../../services/images';
 import { transition, blackContainer, whiteContainer } from '../../styles/styles';
 
@@ -11,17 +12,19 @@ interface ProfilePictureProps {
 }
 
 const ProfilePicture:React.FC<ProfilePictureProps> = ({ profile, white, userId }) => {
+    const { changePic } = useContext<Ctx>(Context);
     const [userImg, setUserImg] = useState<string>("");
 
     async function getImageAsync() {
         getImageProfile(`${userId}` || "-1", setUserImg);
+        console.log(userImg);
     }
 
     useEffect(() => {
         if (userId) {
             getImageAsync();
         }
-    }, [userId]);
+    }, [userId, changePic]);
 
     return (
         <div

@@ -11,7 +11,7 @@ export async function postImage(questionId:number, data:FormData) {
 }
 
 export async function getImage(questionId:string, setSrc:any) {
-    api.get(`images/question/${questionId}`)
+    api.get(`questions/${questionId}/image`)
         .then(res => {
             const base64 = btoa(
                 new Uint8Array(res.data['data']['data'])
@@ -25,7 +25,7 @@ export async function getImage(questionId:string, setSrc:any) {
 }
 
 export async function postImageProfile(userId:number, data:FormData) {
-    const image = api.post(`images/profile/${userId}/upload`, data, { headers: { "Content-Type": "multipart/form-data" } }).then(() => {
+    const image = api.post(`users/${userId}/image`, data, { headers: { "Content-Type": "multipart/form-data" } }).then(() => {
         return true;
     }).catch(() => {
         return false;
@@ -35,7 +35,7 @@ export async function postImageProfile(userId:number, data:FormData) {
 }
 
 export async function getImageProfile(userId:string, setSrc:any) {
-    api.get(`images/profile/${userId}`)
+    api.get(`users/${userId}/image`)
         .then(res => {
             const base64 = btoa(
                 new Uint8Array(res.data['data']['data'])
@@ -43,15 +43,8 @@ export async function getImageProfile(userId:string, setSrc:any) {
             );
             setSrc(`data:${res.data['type']};base64,${base64}`);
         })
-        .catch(() => {
+        .catch((e) => {
+            console.log(e)
             setSrc(undefined);
         });
-    /* fetch(`${api.defaults.baseURL}/images/profile/${userId}`)
-        .then(res => res.blob())
-        .then(blob => {
-            setSrc(URL.createObjectURL(blob));
-        })
-        .catch(() => {
-            setSrc(undefined);
-        }); */
 }

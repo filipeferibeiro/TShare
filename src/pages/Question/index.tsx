@@ -119,12 +119,12 @@ const Question = () => {
     }
 
     function handleErrorsWhileCreate() {
-        if (alternatives.length < 2) {
+        if (alternatives.length < 2 && selectedOption() < 2) {
             showNotification("Tenha ao menos duas alternativas!", 1);
             return false;
         }
         
-        if (alternatives.filter(alternative => alternative.correct === 1).length === 0) {
+        if (alternatives.filter(alternative => alternative.correct === 1).length === 0 && selectedOption() < 2) {
             showNotification("Escolha a alternativa correta!", 1);
             return false;    
         }

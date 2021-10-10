@@ -40,7 +40,7 @@ const Layout:React.FC = ({ children }) => {
                     <img src={logo} alt="TShare Logo" />
                     <div className="flex justify-end gap-2">
                         <SearchButton Icon={FiSearch} value={searchField} setValue={setSearchField} />
-                        <IconButton Icon={FiBell} tooltip="Notificações" />
+                        {/* <IconButton Icon={FiBell} tooltip="Notificações" /> */}
                         <button onClick={handleUserProfile}><ProfilePicture userId={userID} /></button>
                     </div>
                 </header>
