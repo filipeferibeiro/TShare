@@ -75,7 +75,9 @@ const BankDetail = () => {
         <div className="flex flex-col gap-5 overflow-y-auto">
             <PageName name={banks?.title || ""} back to="/banks">
                 <div className={`flex gap-2`}>
-                    <IconButton white Icon={FiFileText} onClick={handleGeneratePdf} tooltip="Gerar PDF" />
+                    {questions.length > 0 &&
+                        <IconButton white Icon={FiFileText} onClick={handleGeneratePdf} tooltip="Gerar PDF" />
+                    }
                     <IconButton yellow Icon={FiEdit} onClick={() => handleEditBank(banks?.id || -1, banks?.title || "")} tooltip="Editar banco" />
                     <IconButton red Icon={FiTrash2} onClick={() => handleDeleteBank(banks?.id || -1, banks?.title || "")} tooltip="Deletar banco" />
                 </div>

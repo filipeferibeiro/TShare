@@ -5,6 +5,7 @@ import DropzoneProfile from '../../../../components/DropzoneProfile';
 import Input from '../../../../components/Input';
 import Section from '../../../../components/Section';
 import { AppNotificationContext, AppNotificationCtx } from '../../../../context/AppNotificationContext';
+import { Context, Ctx } from '../../../../context/AuthContext';
 import { PopupContext, PopupCtx } from '../../../../context/PopupContext';
 import { UserProps } from '../../../../interfaces/interfaces';
 import { postImageProfile } from '../../../../services/images';
@@ -18,6 +19,7 @@ interface EditProfilePopupProps {
 const EditProfilePopup:React.FC<EditProfilePopupProps> = ({ user, updateFunction }) => {
     const { showNotification } = useContext<AppNotificationCtx>(AppNotificationContext);
     const { setPopupActive } = useContext<PopupCtx>(PopupContext);
+    const { changePic, setChangePic } = useContext<Ctx>(Context);
 
     const [userName, setUserName] = useState(user.name);
     const [userEmail, setUserEmail] = useState(user.email);
@@ -29,10 +31,11 @@ const EditProfilePopup:React.FC<EditProfilePopupProps> = ({ user, updateFunction
 
         if(selectedFile) {
             let image = new FormData();
-            image.append("file", selectedFile);
+            image.append("image", selectedFile);
             postImageProfile(user.id, image).then(resImage => {
                 if (resImage) {
                     showNotification("Imagem alterada com sucesso!", 2);
+                    setChangePic(!changePic);
                     setPopupActive(false);
                 } else {
                     showNotification("Erro ao alterar imagem!", 1);
