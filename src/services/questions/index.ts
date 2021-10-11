@@ -102,7 +102,7 @@ export async function postVoteUp(questionId:number, userId:number) {
 }
 
 export async function postVoteDown(questionId:number, userId:number) {
-    const vote = api.post(`questions/${questionId}/vote?userId=${userId}`).then(() => {
+    const vote = api.post(`questions/${questionId}/vote?direction=1&userId=${userId}`).then(() => {
         return true;
     }).catch(() => {
         return false;

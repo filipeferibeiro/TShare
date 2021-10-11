@@ -8,7 +8,7 @@ import PageName from '../../components/PageName';
 import QuestionCardDefault from '../../components/QuestionCardDefault';
 import { PopupContext, PopupCtx } from '../../context/PopupContext';
 import { BankProps, PdfCreationProps, QuestionProps } from '../../interfaces/interfaces';
-import { getBank, getQuesntionsFromBank } from '../../services/banks';
+import { getBank, getQuestionsFromBank } from '../../services/banks';
 import { postExam } from '../../services/exam';
 import DeleteBankPopup from '../ListBanks/components/DeleteBankPopup';
 import EditBankPopup from '../ListBanks/components/EditBankPopup';
@@ -27,7 +27,7 @@ const BankDetail = () => {
     const [questions, setQuestions] = useState<QuestionProps[]>([]);
 
     async function getAllQuestions() {
-        getQuesntionsFromBank(bankId || "-1").then(res => {
+        getQuestionsFromBank(bankId || "-1").then(res => {
             setQuestions(res);
         })
     }
@@ -52,18 +52,6 @@ const BankDetail = () => {
 
     function handleGeneratePdf() {
         createPopup("Gerar PDF", () => <GeneratePdfPopup bankId={bankId || "-1"} />)
-    }
-
-    function generatePdf() {
-        const data: PdfCreationProps = {
-            author: 'Nome',
-            school_name: 'Escola',
-            class_name: 'Disciplina',
-            test_title: 'Primeira prova',
-            subject: 'Polígonos'
-        }
-        
-        postExam((bankId || "-1"), data);
     }
 
     useEffect(() => {
