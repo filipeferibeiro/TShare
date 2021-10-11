@@ -92,7 +92,7 @@ export async function deleteComment(question_id: number, commentId: number) {
 }
 
 export async function postVoteUp(questionId:number, userId:number) {
-    const vote = api.post(`questions/${questionId}/vote?direction=0&userId=${userId}`).then(() => {
+    const vote = api.post(`questions/${questionId}/vote?direction=1&userId=${userId}`).then(() => {
         return true;
     }).catch(() => {
         return false;
@@ -102,7 +102,7 @@ export async function postVoteUp(questionId:number, userId:number) {
 }
 
 export async function postVoteDown(questionId:number, userId:number) {
-    const vote = api.post(`questions/${questionId}/vote?direction=1&userId=${userId}`).then(() => {
+    const vote = api.post(`questions/${questionId}/vote?direction=0&userId=${userId}`).then(() => {
         return true;
     }).catch(() => {
         return false;
@@ -113,7 +113,7 @@ export async function postVoteDown(questionId:number, userId:number) {
 
 export async function getVote(questionId:number, userId:number) {
     const vote = api.get(`questions/${questionId}/vote?userId=${userId}`).then((res) => {
-        return res.data;
+        return res.data.vote;
     }).catch(() => {
         return undefined;
     });

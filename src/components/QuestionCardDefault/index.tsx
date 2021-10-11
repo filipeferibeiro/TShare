@@ -136,7 +136,7 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
 
     useEffect(() => {
         getVote(question.id, userId).then(res => {
-            if (res) {
+            if (res && res === 1) {
                 setQuestionVoted(true);
             } else {
                 setQuestionVoted(false);
