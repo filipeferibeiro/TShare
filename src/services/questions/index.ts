@@ -72,6 +72,7 @@ export async function postQuestionComments(questionId: string, data:CommentCreat
 }
 
 export async function putQuestionComments(question_id: number, commentId: number, data: CommentCreateProps) {
+    console.log(commentId)
     const comment = api.put(`questions/${question_id}/comments/${commentId}`, data).then(() => {
         return true;
     }).catch(() => {

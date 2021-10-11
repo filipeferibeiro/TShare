@@ -31,7 +31,7 @@ const EditCommentPopup:React.FC<EditCommentPopupProps> = ({ updateFunction, auth
             author_id: authorId
         }
 
-        putQuestionComments(commentId, questionId, data).then(res => {
+        putQuestionComments(questionId, commentId, data).then(res => {
             if (res) {
                 showNotification("Comentário editado com sucesso", 2);
                 updateFunction();
