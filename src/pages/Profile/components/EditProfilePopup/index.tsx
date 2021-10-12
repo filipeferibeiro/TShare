@@ -9,6 +9,7 @@ import { Context, Ctx } from '../../../../context/AuthContext';
 import { PopupContext, PopupCtx } from '../../../../context/PopupContext';
 import { UserProps } from '../../../../interfaces/interfaces';
 import { getImageProfile, postImageProfile } from '../../../../services/images';
+import { putUser } from '../../../../services/users';
 import { button, RemoveButton } from '../../../../styles/styles';
 
 interface EditProfilePopupProps {
@@ -22,8 +23,8 @@ const EditProfilePopup:React.FC<EditProfilePopupProps> = ({ user, updateFunction
     const { changePic, setChangePic } = useContext<Ctx>(Context);
 
     const [userName, setUserName] = useState<string>(user.name);
-    const [userSchool, setUserSchool] = useState<string>("");
-    const [userSubject, setUserSubject] = useState<string>("");
+    const [userSchool, setUserSchool] = useState<string>(user.school);
+    const [userSubject, setUserSubject] = useState<string>(user.subject);
     const [userEmail, setUserEmail] = useState<string>(user.email);
     const [selectedFile, setSelectedFile] = useState<File>();
     const [imageLoaded, setImageLoaded] = useState<string>();
@@ -34,20 +35,31 @@ const EditProfilePopup:React.FC<EditProfilePopupProps> = ({ user, updateFunction
     function handleEditBank(e: FormEvent) {
         e.preventDefault();
 
-        if(selectedFile) {
-            let image = new FormData();
-            image.append("image", selectedFile);
-            postImageProfile(user.id, image).then(resImage => {
-                if (resImage) {
-                    showNotification("Imagem alterada com sucesso!", 2);
-                    setChangePic(!changePic);
-                    setPopupActive(false);
-                } else {
-                    showNotification("Erro ao alterar imagem!", 1);
-                }
-            })
+        let userChange = new FormData();
+
+        const data = {
+            name: userName,
+            email: userEmail,
+            subject: userSubject,
+            school: userSchool
         }
 
+        userChange.append('user', JSON.stringify(data));
+
+        if (selectedFile) {
+            userChange.append('image', selectedFile);
+        }
+
+        putUser(user.id, userChange, deleteImage).then(res => {
+            if (res) {
+                showNotification("Perfil alterado com sucesso!", 2);
+                updateFunction();
+                setChangePic(!changePic);
+                setPopupActive(false);
+            } else {
+                showNotification("Erro ao alterar perfil!", 1);
+            }
+        });
     }
 
     function removePicture() {
@@ -58,7 +70,13 @@ const EditProfilePopup:React.FC<EditProfilePopupProps> = ({ user, updateFunction
 
     useEffect(() => {
         getImageProfile(`${user.id}` || "-1", setImageLoaded);
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (selectedFile && imageLoaded) {
+            setImageLoaded(undefined);
+        }
+    }, [selectedFile]);
 
     const removePictureButton = () => {
         if (selectedFile || imageLoaded) {

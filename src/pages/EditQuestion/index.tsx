@@ -109,9 +109,9 @@ const EditQuestion = () => {
     }
     
     function addTag() {
-        const duplicated = tags.filter(tag => tag === tagInput.trim());
+        const duplicated = tags.filter(tag => tag === tagInput.toLowerCase().trim());
         if (tagInput.trim().length > 0 && duplicated.length === 0) {
-            setTags([ ...tags, tagInput ]);
+            setTags([ ...tags, tagInput.toLowerCase() ]);
             setTagInput("");
         } else {
             showNotification("Não é possível adicionar tags com o mesmo nome.", 1);
@@ -242,6 +242,12 @@ const EditQuestion = () => {
             </>
         );
     }
+
+    useEffect(() => {
+        if (selectedFile && imageLoaded) {
+            setImageLoaded(undefined);
+        }
+    }, [selectedFile]);
 
     return (
         <div className="flex flex-col gap-5 overflow-y-auto">
