@@ -26,7 +26,7 @@ const QuestionAnswerCard:React.FC<QuestionAnswerCardProps> = ({ alternative, jus
             {justificative &&
                 <div>
                     <p className={`text-white text-sm my-4`}>Resposta justificada</p>
-                    <p className={`${blackContainer} ${rounded} p-3 text-white text-sm`}>{question.long_answer}</p>
+                    <p className={`${blackContainer} ${rounded} p-3 text-white text-sm break-words`}>{question.long_answer}</p>
                 </div>
             }
         </div>

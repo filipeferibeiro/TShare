@@ -55,6 +55,8 @@ const EditQuestion = () => {
     const [longAnswer, setLongAnswer] = useState<string>("");
     const [alternativeInput, setAlternativeInput] = useState<string>("");
     const [tagInput, setTagInput] = useState<string>("");
+    
+    const [deleteImage, setDeleteImage] = useState<boolean>(false);
 
     useEffect(() => {
         getQuestion(idQuestion || "-1").then((question: QuestionProps) => {
@@ -197,7 +199,7 @@ const EditQuestion = () => {
                 formData.append('image', selectedFile);
             }
     
-            putQuestion(idQuestion || "-1", formData).then(res => {
+            putQuestion(idQuestion || "-1", formData, deleteImage).then(res => {
                 if (res) {
                     showNotification("Questão editada com sucesso!", 2);
                     history.push('/home');
@@ -225,6 +227,7 @@ const EditQuestion = () => {
     function removePicture() {
         setSelectedFile(undefined);
         setImageLoaded(undefined);
+        setDeleteImage(true);
     }
     
     const removePictureButton = () => {
