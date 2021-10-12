@@ -40,6 +40,11 @@ const QuestionDetail:React.FC = () => {
         setComments(await getQuestionComments(idQuestion || "-1"));
     }
 
+    function updateData() {
+        getQuestionAsync();
+        getQuestionCommentsAsync();
+    }
+
     async function handleAddComment(e: FormEvent) {
         e.preventDefault();
 
@@ -102,7 +107,7 @@ const QuestionDetail:React.FC = () => {
                                 ?
                                 <div className={`flex flex-col mt-5 gap-4`}>
                                     {comments.map(comment => (
-                                        <CommentCard key={comment.id} questionId={question.id} comment={comment} updateFunc={getQuestionCommentsAsync} />
+                                        <CommentCard key={comment.id} questionId={question.id} comment={comment} updateFunc={updateData} />
                                     ))}
                                 </div>
                                 :

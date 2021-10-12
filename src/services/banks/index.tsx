@@ -42,7 +42,7 @@ export async function getAllBanks(userId:number) {
 }
 
 export async function getBank(bankId:string) {
-    const questions = api.get(`banks?id=${bankId}`).then(response => {
+    const questions = api.get(`banks/${bankId}`).then(response => {
         return response.data;
     }).catch(() => {
         return [];

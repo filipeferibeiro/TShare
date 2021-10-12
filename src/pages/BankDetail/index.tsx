@@ -34,6 +34,7 @@ const BankDetail = () => {
 
     async function handleGetBanks() {
         getBank(bankId || "-1").then(res => {
+            console.log(res)
             setBanks(res[0]);
         });
     }
