@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FiChevronRight, FiEdit, FiFolder, FiLink, FiMessageCircle, FiMoreHorizontal, FiStar, FiTrash2 } from 'react-icons/fi';
 import { iconColor } from '../../constants/constants';
 import { blackContainer, blackContainerHover, buttonIconName, rounded, starCommentCard, starCommentCardP, transition, whiteContainer } from '../../styles/styles';
@@ -15,7 +15,7 @@ import { deleteFromBank } from '../../services/banks';
 import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNotificationContext';
 import DeleteQuestionPopup from './components/DeleteQuestionPopup';
 import { copyToClipboard, linkBase } from '../../functions';
-import { postVoteUp } from '../../services/questions';
+import { getVote, postVoteDown, postVoteUp } from '../../services/questions';
 
 interface QuestionCardDefaultProps {
     isDetail?: boolean;
@@ -38,6 +38,8 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
     const countComments = question.comments?.length;
 
     const [dropMenu, setDropMenu] = useState(false);
+    const [questionVoted, setQuestionVoted] = useState(false);
+    const [score, setScore] = useState(question.score);
 
     function handleSeeMore() {
         history.push(`/questionDetail/${question.id}`)
@@ -80,13 +82,28 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
         }
     }
 
-    function handlePostVote() {
+    function handlePostVoteUp() {
         postVoteUp(question.id, userId).then(res => {
             if (res) {
+                setScore(score + 1);
+                setQuestionVoted(true);
                 showNotification("Voto adicionado!", 0)
             }
             else {
                 showNotification("Erro ao registrar voto", 1)
+            }
+        })
+    }
+    
+    function handlePostVoteDown() {
+        postVoteDown(question.id, userId).then(res => {
+            if (res) {
+                setScore(score - 1);
+                setQuestionVoted(false);
+                showNotification("Voto removido!", 0)
+            }
+            else {
+                showNotification("Erro ao remover voto", 1)
             }
         })
     }
@@ -116,6 +133,16 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
 
         return dataFormatada;
     }
+
+    useEffect(() => {
+        getVote(question.id, userId).then(res => {
+            if (res && res === 1) {
+                setQuestionVoted(true);
+            } else {
+                setQuestionVoted(false);
+            }
+        })
+    }, [question]);
 
     return (
         <div className="relative">
@@ -165,11 +192,19 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
 
                 <div className="flex justify-between items-center">
                     <div className="flex gap-4">
-                        <button className={`${starCommentCard}`} onClick={handlePostVote}>
-                            <FiStar color={iconColor} />
-                            <p className={`${starCommentCardP}`}>{question.score}</p>
-                        </button>
-                        <div className={`${starCommentCard}`}>
+                        {questionVoted
+                            ?
+                            <button className={`${starCommentCard}`} onClick={handlePostVoteDown}>
+                                <FiStar color="#FFD666" />
+                                <p className={`font-light text-tshareYellow`}>{score}</p>
+                            </button>
+                            :
+                            <button className={`${starCommentCard}`} onClick={handlePostVoteUp}>
+                                <FiStar color={iconColor} />
+                                <p className={`text-white font-light`}>{score}</p>
+                            </button>
+                        }
+                        <div className={`flex gap-1 items-center cursor-default`}>
                             <FiMessageCircle color={iconColor} />
                             <p className={`${starCommentCardP}`}>{qntComments ? qntComments : countComments}</p>
                         </div>

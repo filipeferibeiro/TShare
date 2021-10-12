@@ -13,13 +13,13 @@ interface ProfileItemProps {
 
 const ProfileItem:React.FC<ProfileItemProps> = ({ text, Icon, copy, copyFunc }) => {
     return (
-        <div className={`${whiteContainerHover} ${rounded} ${transition} flex justify-between py-2 px-4 h-16 items-center ${copy ? "cursor-pointer" : ""}`}>
+        <div className={`${whiteContainerHover} ${rounded} ${transition} flex justify-between py-2 px-4 h-16 items-center cursor-default`}>
             <div className={`flex gap-3 items-center`}>
                 <Icon color={iconColor} size={iconSize} />
                 <p className={`text-white font-light`}>{text}</p>
             </div>
             {(copy && copyFunc) &&
-                <button className={`${rounded} ${blackContainerHover} ${transition} p-3`} onClick={() => copyFunc()}>
+                <button className={`${rounded} ${blackContainerHover} ${transition} p-3 cursor-pointer`} onClick={() => copyFunc()}>
                     <FiCopy color={iconColor} size={iconSize} />
                 </button>
             }

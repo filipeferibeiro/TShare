@@ -8,6 +8,7 @@ import PageName from '../../components/PageName';
 import QuestionAnswerCard from '../../components/QuestionAnswerCard';
 import QuestionCardDefault from '../../components/QuestionCardDefault';
 import Section from '../../components/Section';
+import { AppNotificationContext, AppNotificationCtx } from '../../context/AppNotificationContext';
 import { Context, Ctx } from '../../context/AuthContext';
 import { CommentProps, QuestionProps } from '../../interfaces/interfaces';
 import { getImage } from '../../services/images';
@@ -22,6 +23,7 @@ interface DetailParams {
 const QuestionDetail:React.FC = () => {
     const { id: userID } = useContext<Ctx>(Context);
     const { idQuestion } = useParams<DetailParams>();
+    const { showNotification } = useContext<AppNotificationCtx>(AppNotificationContext);
 
     const history = useHistory();
 
@@ -38,21 +40,34 @@ const QuestionDetail:React.FC = () => {
         setComments(await getQuestionComments(idQuestion || "-1"));
     }
 
+    function updateData() {
+        getQuestionAsync();
+        getQuestionCommentsAsync();
+    }
+
     async function handleAddComment(e: FormEvent) {
         e.preventDefault();
 
-        const data = {
-            text: comment,
-            author_id: userID
+        if (comment.length > 0) {
+            const data = {
+                text: comment,
+                author_id: userID
+            }
+    
+            await postQuestionComments((idQuestion || "-1"), data).then(res => {
+                if (res) {
+                    setComment("");
+                    getQuestionCommentsAsync();
+                    getQuestionAsync();
+                    showNotification("Comentário adicionado com sucesso!", 2);
+                } else {
+                    showNotification("Erro ao adicionar comentário!", 1);
+                }
+            });
+        } else {
+            showNotification("Digite algo para comentar!", 1);
         }
 
-        await postQuestionComments((idQuestion || "-1"), data).then(res => {
-            if (res) {
-                setComment("");
-                getQuestionCommentsAsync();
-                getQuestionAsync();
-            }
-        })
     }
 
     async function getImageAsync() {
@@ -92,7 +107,7 @@ const QuestionDetail:React.FC = () => {
                                 ?
                                 <div className={`flex flex-col mt-5 gap-4`}>
                                     {comments.map(comment => (
-                                        <CommentCard key={comment.id} questionId={question.id} comment={comment} updateFunc={getQuestionCommentsAsync} />
+                                        <CommentCard key={comment.id} questionId={question.id} comment={comment} updateFunc={updateData} />
                                     ))}
                                 </div>
                                 :

@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { FiPlus, FiX } from 'react-icons/fi';
 import IconButton from '../../components/IconButton';
 import Input from '../../components/Input';
@@ -7,9 +7,14 @@ import Section from '../../components/Section';
 import Tag from '../../components/Tag';
 import { iconColor } from '../../constants/constants';
 import { AppNotificationCtx, AppNotificationContext } from '../../context/AppNotificationContext';
+import { Context, Ctx } from '../../context/AuthContext';
+import { ChangePasswordProps } from '../../interfaces/interfaces';
+import { putPassword } from '../../services/login';
+import { getTags, postTags } from '../../services/tags';
 import { button, redContainerHover, RemoveButton, transition } from '../../styles/styles';
 
 const Settings = () => {
+    const { id: userId } = useContext<Ctx>(Context);
     const { showNotification } = useContext<AppNotificationCtx>(AppNotificationContext);
 
     const [tags, setTags] = useState<string[]>([]);
@@ -37,7 +42,23 @@ const Settings = () => {
     function changePassword(e: FormEvent) {
         e.preventDefault();
 
-        showNotification("Ainda não implementado", 0);
+        if (newPasswordInput !== newPasswordRepeatInput) {
+            showNotification("Os campos de nova senha devem coincidir", 1);
+        } else {
+            const data: ChangePasswordProps = {
+                oldPassword: oldPasswordInput,
+                password: newPasswordInput
+            }
+
+            putPassword(userId, data).then(res => {
+                if (res) {
+                    showNotification("Senha modificada com sucesso", 2);
+                    clearPasswordFields();
+                } else {
+                    showNotification("Falha ao modificar senha", 1);
+                }
+            })
+        }
     }
 
     const removeButton = (size: number, onClick:any) => {
@@ -72,6 +93,24 @@ const Settings = () => {
         );
     }
 
+    function saveTags() {
+        postTags(userId, tags).then(res => {
+            if (res) {
+                showNotification("Tags salvas com sucesso!", 2);
+            } else {
+                showNotification("Erro ao salvar tags.", 1);
+            }
+        })
+    }
+
+    useEffect(() => {
+        getTags(userId).then((res: string[]) => {
+            if (res.length > 0) {
+                setTags(res);
+            }
+        })
+    }, []);
+
     return (
         <div className="flex flex-col gap-5 overflow-y-auto">
             <PageName name="Configurações" />
@@ -84,7 +123,7 @@ const Settings = () => {
                         <div className="flex gap-3 my-3 flex-wrap">
                             {tags.map((tag, index) => (
                                 <div className={`flex items-center gap-1}`} key={index}>
-                                    <button className={`p-2 ${transition} ${redContainerHover} rounded-full mr-2`} onClick={() => {}}>
+                                    <button className={`p-2 ${transition} ${redContainerHover} rounded-full mr-2`} onClick={() => removeTag(index)}>
                                         <FiX color={iconColor} />
                                     </button>
                                     <Tag title={tag} createQuestion />
@@ -100,7 +139,7 @@ const Settings = () => {
                         <Input placeholder="Nome da tag" value={tagInput} onChange={setTagInput} onKeyPress={e => e.key === 'Enter' && addTag()} />
                         <IconButton white Icon={FiPlus} onClick={addTag} type="button" tooltip="Adicionar Tag" />
                     </div>
-                    <button className={`bg-tshare ${button} mt-3`}>Salvar tags</button>
+                    <button className={`bg-tshare ${button} mt-3`} onClick={saveTags}>Salvar tags</button>
                 </Section>
                 <Section 
                     title="Trocar senha"

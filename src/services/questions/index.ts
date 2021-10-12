@@ -31,8 +31,8 @@ export async function postQuestion(data: FormData) {
     return question;
 }
 
-export async function putQuestion(questionId: string, data: FormData) {
-    const question = api.put(`questions/${questionId}`, data, { headers: { "Content-Type": "multipart/form-data" } }).then((res) => {
+export async function putQuestion(questionId: string, data: FormData, deleteImage: boolean) {
+    const question = api.put(`questions/${questionId}?deleteImage=${deleteImage}`, data, { headers: { "Content-Type": "multipart/form-data" } }).then((res) => {
         return true;
     }).catch(() => {
         return false;
@@ -72,6 +72,7 @@ export async function postQuestionComments(questionId: string, data:CommentCreat
 }
 
 export async function putQuestionComments(question_id: number, commentId: number, data: CommentCreateProps) {
+    console.log(commentId)
     const comment = api.put(`questions/${question_id}/comments/${commentId}`, data).then(() => {
         return true;
     }).catch(() => {
@@ -92,7 +93,7 @@ export async function deleteComment(question_id: number, commentId: number) {
 }
 
 export async function postVoteUp(questionId:number, userId:number) {
-    const vote = api.post(`questions/${questionId}/vote?direction=0&userId=${userId}`).then(() => {
+    const vote = api.post(`questions/${questionId}/vote?direction=1&userId=${userId}`).then(() => {
         return true;
     }).catch(() => {
         return false;
@@ -102,7 +103,7 @@ export async function postVoteUp(questionId:number, userId:number) {
 }
 
 export async function postVoteDown(questionId:number, userId:number) {
-    const vote = api.post(`questions/${questionId}/vote?userId=${userId}`).then(() => {
+    const vote = api.post(`questions/${questionId}/vote?direction=0&userId=${userId}`).then(() => {
         return true;
     }).catch(() => {
         return false;
@@ -113,7 +114,7 @@ export async function postVoteDown(questionId:number, userId:number) {
 
 export async function getVote(questionId:number, userId:number) {
     const vote = api.get(`questions/${questionId}/vote?userId=${userId}`).then((res) => {
-        return res.data;
+        return res.data.vote;
     }).catch(() => {
         return undefined;
     });

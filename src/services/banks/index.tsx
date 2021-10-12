@@ -42,7 +42,7 @@ export async function getAllBanks(userId:number) {
 }
 
 export async function getBank(bankId:string) {
-    const questions = api.get(`banks?id=${bankId}`).then(response => {
+    const questions = api.get(`banks/${bankId}`).then(response => {
         return response.data;
     }).catch(() => {
         return [];
@@ -51,8 +51,9 @@ export async function getBank(bankId:string) {
     return questions;
 }
 
-export async function getQuesntionsFromBank(bankId:string) {
-    const questions = api.get(`banks/${bankId}`).then(response => {
+export async function getQuestionsFromBank(bankId:string) {
+    const questions = api.get(`banks/${bankId}/questions`).then(response => {
+        console.log(response.data)
         return response.data;
     }).catch(() => {
         return [];

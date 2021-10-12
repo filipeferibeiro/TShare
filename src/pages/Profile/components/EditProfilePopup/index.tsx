@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useEffect } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import DropzoneProfile from '../../../../components/DropzoneProfile';
@@ -8,8 +8,8 @@ import { AppNotificationContext, AppNotificationCtx } from '../../../../context/
 import { Context, Ctx } from '../../../../context/AuthContext';
 import { PopupContext, PopupCtx } from '../../../../context/PopupContext';
 import { UserProps } from '../../../../interfaces/interfaces';
-import { postImageProfile } from '../../../../services/images';
-import { button } from '../../../../styles/styles';
+import { getImageProfile, postImageProfile } from '../../../../services/images';
+import { button, RemoveButton } from '../../../../styles/styles';
 
 interface EditProfilePopupProps {
     updateFunction(): any;
@@ -21,9 +21,14 @@ const EditProfilePopup:React.FC<EditProfilePopupProps> = ({ user, updateFunction
     const { setPopupActive } = useContext<PopupCtx>(PopupContext);
     const { changePic, setChangePic } = useContext<Ctx>(Context);
 
-    const [userName, setUserName] = useState(user.name);
-    const [userEmail, setUserEmail] = useState(user.email);
+    const [userName, setUserName] = useState<string>(user.name);
+    const [userSchool, setUserSchool] = useState<string>("");
+    const [userSubject, setUserSubject] = useState<string>("");
+    const [userEmail, setUserEmail] = useState<string>(user.email);
     const [selectedFile, setSelectedFile] = useState<File>();
+    const [imageLoaded, setImageLoaded] = useState<string>();
+
+    const [deleteImage, setDeleteImage] = useState<boolean>(false);
 
 
     function handleEditBank(e: FormEvent) {
@@ -45,21 +50,54 @@ const EditProfilePopup:React.FC<EditProfilePopupProps> = ({ user, updateFunction
 
     }
 
+    function removePicture() {
+        setSelectedFile(undefined);
+        setImageLoaded(undefined);
+        setDeleteImage(true);
+    }
+
+    useEffect(() => {
+        getImageProfile(`${user.id}` || "-1", setImageLoaded);
+    }, [])
+
+    const removePictureButton = () => {
+        if (selectedFile || imageLoaded) {
+            return (
+                <button onClick={removePicture} className={`${RemoveButton}`} type="button">Remover imagem</button>
+            );
+        }
+
+        return (
+            <>
+            </>
+        );
+    }
+
     return (
         <div className={`flex`}>
             <form onSubmit={handleEditBank} className={`flex flex-col flex-1 gap-3 w-full`}>
-                <Section title="Imagem de Perfil">
+                <Section title="Imagem de Perfil" Component={() => removePictureButton()}>
                     <div className={`flex justify-center `}>
-                        <DropzoneProfile onFileUploaded={setSelectedFile} />
+                        <DropzoneProfile onFileUploaded={setSelectedFile} selectedFile={selectedFile} imageLoaded={imageLoaded} />
                     </div>
                 </Section>
-                <Section title="Nome do usuário">
-                    <Input id="name" type="text" className={`flex-1`} placeholder="Informe o novo nome do usuário" value={userName} onChange={setUserName} />
-                </Section>
-                <Section title="E-mail">
-                    <Input id="email" type="email" className={`flex-1`} placeholder="Informe o novo e-mail" value={userEmail} onChange={setUserEmail} />
-                </Section>
-                    <button type="submit" className={`bg-tshare ${button}`}>Salvar informações</button>
+                <div className="flex flex-1 w-full gap-3">
+                    <Section title="Nome do usuário">
+                        <Input id="name" type="text" className={`flex-1`} placeholder="Informe o novo nome do usuário" value={userName} onChange={setUserName} required />
+                    </Section>
+                    <Section title="E-mail">
+                        <Input id="email" type="email" className={`flex-1`} placeholder="Informe o novo e-mail" value={userEmail} onChange={setUserEmail} required />
+                    </Section>
+                </div>
+                <div className="flex flex-1 w-full gap-3">
+                    <Section title="Escola">
+                        <Input id="school" type="text" className={`flex-1`} placeholder="Informe o novo nome da escola" value={userSchool} onChange={setUserSchool} required />
+                    </Section>
+                    <Section title="Disciplina">
+                        <Input id="subject" type="text" className={`flex-1`} placeholder="Informe o novo nome da disciplina" value={userSubject} onChange={setUserSubject} required />
+                    </Section>
+                </div>
+                <button type="submit" className={`bg-tshare ${button}`}>Salvar informações</button>
             </form>
         </div>
     );
