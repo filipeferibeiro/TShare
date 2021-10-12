@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUpload } from 'react-icons/fi';
 import { iconColor, iconSize } from '../../constants/constants';
@@ -6,9 +6,11 @@ import { blackContainer, transition } from '../../styles/styles';
 
 interface DropzoneProfileProps {
     onFileUploaded: (file: File) => void;
+    selectedFile?: File;
+    imageLoaded?: string;
 }
 
-const DropzoneProfile:React.FC<DropzoneProfileProps> = ({ onFileUploaded }) => {
+const DropzoneProfile:React.FC<DropzoneProfileProps> = ({ onFileUploaded, selectedFile, imageLoaded }) => {
     const [selectedFileUrl, setSelectedFileUrl] = useState('');
 
     const onDrop = useCallback(acceptedFiles => {
@@ -25,6 +27,12 @@ const DropzoneProfile:React.FC<DropzoneProfileProps> = ({ onFileUploaded }) => {
         accept: 'image/*'
     });
 
+    useEffect(() => {
+        if (!selectedFile) {
+            setSelectedFileUrl('');
+        }
+    }, [selectedFile])
+
     return (
         <div className={`${blackContainer}
                         flex
@@ -39,8 +47,8 @@ const DropzoneProfile:React.FC<DropzoneProfileProps> = ({ onFileUploaded }) => {
                         h-44`} { ...getRootProps() }>
             <input { ...getInputProps() } accept="image/*" />
 
-            { selectedFileUrl 
-                ? <img className={`w-full h-full object-cover rounded-full`} src={selectedFileUrl} alt="Imagem da questão" />
+            { (selectedFileUrl || imageLoaded)  
+                ? <img className={`w-full h-full object-cover rounded-full`} src={imageLoaded ? imageLoaded : selectedFileUrl} alt="Imagem de perfil" />
                 : (
                     <p className={`border-dashed border-tshare border-2 drop-profile rounded-full flex flex-col text-sm text-center justify-center items-center text-white gap-3`}>
                         <FiUpload size={iconSize} color={iconColor} />
