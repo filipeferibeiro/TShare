@@ -96,3 +96,8 @@ export interface PdfCreationProps {
     test_title: string;
     subject: string;
 }
+
+export interface ChangePasswordProps {
+    oldPassword: string;
+    password: string;
+}

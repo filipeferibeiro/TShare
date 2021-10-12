@@ -8,6 +8,8 @@ import Tag from '../../components/Tag';
 import { iconColor } from '../../constants/constants';
 import { AppNotificationCtx, AppNotificationContext } from '../../context/AppNotificationContext';
 import { Context, Ctx } from '../../context/AuthContext';
+import { ChangePasswordProps } from '../../interfaces/interfaces';
+import { putPassword } from '../../services/login';
 import { getTags, postTags } from '../../services/tags';
 import { button, redContainerHover, RemoveButton, transition } from '../../styles/styles';
 
@@ -40,7 +42,23 @@ const Settings = () => {
     function changePassword(e: FormEvent) {
         e.preventDefault();
 
-        showNotification("Ainda não implementado", 0);
+        if (newPasswordInput !== newPasswordRepeatInput) {
+            showNotification("Os campos de nova senha devem coincidir", 1);
+        } else {
+            const data: ChangePasswordProps = {
+                oldPassword: oldPasswordInput,
+                password: newPasswordInput
+            }
+
+            putPassword(userId, data).then(res => {
+                if (res) {
+                    showNotification("Senha modificada com sucesso", 2);
+                    clearPasswordFields();
+                } else {
+                    showNotification("Falha ao modificar senha", 1);
+                }
+            })
+        }
     }
 
     const removeButton = (size: number, onClick:any) => {

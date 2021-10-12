@@ -1,3 +1,4 @@
+import { ChangePasswordProps } from "../../interfaces/interfaces";
 import api from "../api";
 
 /**
@@ -46,15 +47,14 @@ export async function postLogin(email: string, password: string) {
  * @param formation 
  * @returns 
  */
-export async function postUsers(name: string, birthday: string, email: string, password: string, main_subject: string, school: string, formation: string) {
+export async function postUsers(name: string, birthday: string, email: string, password: string, main_subject: string, school: string) {
     const data = {
         name,
         birthday,
         email,
         password,
         main_subject,
-        school,
-        formation 
+        school
     };
 
     const isRegistred = api.post('/users', data).then(() => {
@@ -65,4 +65,13 @@ export async function postUsers(name: string, birthday: string, email: string, p
 
     return isRegistred;
 }
- 
+
+export async function putPassword(userId: number, data: ChangePasswordProps) {
+    const changed = api.put(`users/${userId}/password`, data).then(() => {
+        return true;
+    }).catch(() => {
+        return false;
+    });
+
+    return changed;
+}

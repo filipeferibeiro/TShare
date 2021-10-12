@@ -27,7 +27,6 @@ const Login = () => {
     const [passwordRegister, setPasswordRegister] = useState("");
     const [school, setSchool] = useState("");
     const [mainSubject, setMainSubject] = useState("");
-    const [formation, setFormation] = useState("");
 
     useEffect(() => {
         const email = localStorage.getItem('email');
@@ -91,7 +90,7 @@ const Login = () => {
     function handleNewUser(e: FormEvent) {
         e.preventDefault();
 
-        postUsers(name, birthday, emailRegister, passwordRegister, mainSubject, school, formation).then((res) => {
+        postUsers(name, birthday, emailRegister, passwordRegister, mainSubject, school).then((res) => {
             if (res) {
                 handleToggleOffRegisterForm();
                 setEmailLogin(emailRegister);
@@ -143,7 +142,6 @@ const Login = () => {
                             
                             <Input id="school" placeholder="Escola" type="text" value={school} onChange={setSchool} required />
                             <Input id="main-subject" placeholder="Disciplina" type="text" value={mainSubject} onChange={setMainSubject} required />
-                            <Input id="formation" placeholder="Formação" type="text" value={formation} onChange={setFormation} required />
                             <button id="register" type="submit" className={`bg-tshare ${button}`}>Cadastrar</button>
                         </form>
                     </>
