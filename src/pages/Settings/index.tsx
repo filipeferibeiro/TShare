@@ -55,7 +55,7 @@ const Settings = () => {
                     showNotification("Senha modificada com sucesso", 2);
                     clearPasswordFields();
                 } else {
-                    showNotification("Falha ao modificar senha", 1);
+                    showNotification("Senha anterior incorreta.", 1);
                 }
             })
         }
