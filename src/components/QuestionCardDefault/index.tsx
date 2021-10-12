@@ -204,7 +204,7 @@ const QuestionCardDefault:React.FC<QuestionCardDefaultProps> = ({ question, isDe
                                 <p className={`text-white font-light`}>{score}</p>
                             </button>
                         }
-                        <div className={`${starCommentCard}`}>
+                        <div className={`flex gap-1 items-center cursor-default`}>
                             <FiMessageCircle color={iconColor} />
                             <p className={`${starCommentCardP}`}>{qntComments ? qntComments : countComments}</p>
                         </div>
