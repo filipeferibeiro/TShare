@@ -53,7 +53,7 @@ export async function postUsers(name: string, birthday: string, email: string, p
         birthday,
         email,
         password,
-        main_subject,
+        subject: main_subject,
         school
     };
 

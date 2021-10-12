@@ -67,6 +67,8 @@ export interface UserProps {
     email: string;
     reputation: number;
     accountCreation: string;
+    subject: string;
+    school: string;
 }
 
 export interface BankCreateProps {

@@ -24,9 +24,9 @@ const Settings = () => {
     const [newPasswordRepeatInput, setNewPasswordRepeatInput] = useState<string>("");
 
     function addTag() {
-        const duplicated = tags.filter(tag => tag === tagInput.trim());
+        const duplicated = tags.filter(tag => tag === tagInput.toLowerCase().trim());
         if (tagInput.trim().length > 0 && duplicated.length === 0) {
-            setTags([ ...tags, tagInput ]);
+            setTags([ ...tags, tagInput.toLowerCase() ]);
             setTagInput("");
         } else {
             showNotification("Não é possível adicionar tags com o mesmo nome.", 1);
@@ -55,7 +55,7 @@ const Settings = () => {
                     showNotification("Senha modificada com sucesso", 2);
                     clearPasswordFields();
                 } else {
-                    showNotification("Falha ao modificar senha", 1);
+                    showNotification("Senha anterior incorreta.", 1);
                 }
             })
         }

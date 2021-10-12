@@ -5,7 +5,7 @@ export function toDate(text: string) {
 }
 
 export function linkBase() {
-    return "http://localhost:3333";
+    return "https://tshare-afm.netlify.app";
 }
 
 export function copyToClipboard(text:string) {

@@ -97,7 +97,7 @@ const Profile = () => {
 
     function handlePopupEditPerfil() {
         if (user) {
-            createPopup("Editar Perfil", () => <EditProfilePopup user={user} updateFunction={getUserAsync} />)
+            createPopup("Editar Perfil", () => <EditProfilePopup user={user} updateFunction={updateInfo} />)
         }
     }
 
@@ -152,13 +152,19 @@ const Profile = () => {
         return text;
     }
     
+    function updateInfo() {
+        getQuestions();
+        getUserAsync();
+        setOptions(Options);
+    }
+    
     /**
      * Sempre que o userId muda, ele faz a chamada a API para pegar os dados do novo usuário
      */
     useEffect(() => {
         getQuestions();
         getUserAsync();
-    }, [userId])
+    }, [userId]);
     
     return (
         <div className="flex flex-col gap-5 overflow-y-auto">
@@ -174,9 +180,9 @@ const Profile = () => {
                 </div>
                 <div className={`flex flex-1 flex-col gap-3`}>
                     <ProfileItem copy copyFunc={handleCopyEmailToClipboard} text={user?.email || ""} Icon={FiMail} />
-                    <ProfileItem text="Instituto Federal de Algum Lugar" Icon={FiBriefcase} />
+                    <ProfileItem text={user?.school || ""} Icon={FiBriefcase} />
                     <ProfileItem text={`${getUserQuestionInfo(questions.length)}`} Icon={FiShare2} />
-                    <ProfileItem text="Professor de Matemática" Icon={FiBook} />
+                    <ProfileItem text={user?.subject || ""} Icon={FiBook} />
                 </div>
             </div>
             <Section title="Ordernar questões por:">

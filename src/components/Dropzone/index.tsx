@@ -38,7 +38,7 @@ const Dropzone:React.FC<DropzoneProps> = ({ onFileUploaded, selectedFile, imageL
             <input { ...getInputProps() } accept="image/*" />
 
             { (selectedFileUrl || imageLoaded) 
-                ? <img className={`w-full h-full object-cover ${rounded}`} src={imageLoaded ? imageLoaded : selectedFileUrl} alt="Imagem da questão" />
+                ? <img className={`w-full h-full object-cover ${rounded}`} src={selectedFileUrl ? selectedFileUrl : imageLoaded} alt="Imagem da questão" />
                 : (
                     <p className={`m-8 w-full h-72 flex-1 border-dashed border-tshare border-2 ${rounded} flex flex-col justify-center items-center text-white gap-3`}>
                         <FiUpload size={iconSize} color={iconColor} />
