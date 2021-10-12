@@ -15,7 +15,7 @@ export async function getQuestion(id: string) {
     const question = api.get(`questions/${id}`).then(response => {
         return response.data;
     }).catch(() => {
-        return {};
+        return undefined;
     });
 
     return question;
