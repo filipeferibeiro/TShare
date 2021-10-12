@@ -97,7 +97,7 @@ const Profile = () => {
 
     function handlePopupEditPerfil() {
         if (user) {
-            createPopup("Editar Perfil", () => <EditProfilePopup user={user} updateFunction={getUserAsync} />)
+            createPopup("Editar Perfil", () => <EditProfilePopup user={user} updateFunction={updateInfo} />)
         }
     }
 
@@ -150,6 +150,12 @@ const Profile = () => {
         }
 
         return text;
+    }
+    
+    function updateInfo() {
+        getQuestions();
+        getUserAsync();
+        setOptions(Options);
     }
     
     /**
