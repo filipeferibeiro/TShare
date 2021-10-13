@@ -132,7 +132,7 @@ const Settings = () => {
                         </div>
                         :
                         <div className="my-3 flex justify-center content-center">
-                            <p className="text-white">Você ainda não possui tags, tente adicionar uma!</p>
+                            <p className="text-white">Você ainda não possui tags, tente adicionar uma! Questões com as tags aparecerão primeiro no seu feed.</p>
                         </div>
                     }
                     <div className={`flex flex-1 gap-3 w-full`}>
